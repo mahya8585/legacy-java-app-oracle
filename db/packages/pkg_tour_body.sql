@@ -10,6 +10,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_TOUR AS
         p_date_to       IN  DATE     DEFAULT NULL,
         p_price_min     IN  NUMBER   DEFAULT NULL,
         p_price_max     IN  NUMBER   DEFAULT NULL,
+        p_duration_days IN  NUMBER   DEFAULT NULL,
         p_keyword       IN  VARCHAR2 DEFAULT NULL,
         p_page          IN  NUMBER   DEFAULT 1,
         p_page_size     IN  NUMBER   DEFAULT 10,
@@ -26,8 +27,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_TOUR AS
           FROM TOURS t
           LEFT JOIN TOUR_SCHEDULES ts ON t.TOUR_ID = ts.TOUR_ID
          WHERE t.STATUS = 'ACTIVE'
-           AND (p_area IS NULL OR t.AREA = p_area)
+           AND (p_area IS NULL OR t.AREA LIKE '%' || p_area || '%')
            AND (p_difficulty IS NULL OR t.DIFFICULTY = p_difficulty)
+           AND (p_duration_days IS NULL OR t.DURATION_DAYS = p_duration_days)
            AND (p_date_from IS NULL OR ts.TOUR_DATE >= p_date_from)
            AND (p_date_to IS NULL OR ts.TOUR_DATE <= p_date_to)
            AND (p_price_min IS NULL OR t.BASE_PRICE >= p_price_min)
@@ -43,19 +45,23 @@ CREATE OR REPLACE PACKAGE BODY PKG_TOUR AS
                 SELECT DISTINCT
                        t.TOUR_ID,
                        t.TOUR_NAME,
+                       t.DESCRIPTION,
                        t.AREA,
                        t.DIFFICULTY,
+                       t.MAX_PARTICIPANTS,
                        t.BASE_PRICE,
                        t.DURATION_DAYS,
                        t.MIN_DIVE_COUNT,
                        t.FEATURED_FLAG,
+                       t.STATUS,
                        t.CREATED_AT,
                        ROW_NUMBER() OVER (ORDER BY t.CREATED_AT DESC) AS RN
                   FROM TOURS t
                   LEFT JOIN TOUR_SCHEDULES ts ON t.TOUR_ID = ts.TOUR_ID
                  WHERE t.STATUS = 'ACTIVE'
-                   AND (p_area IS NULL OR t.AREA = p_area)
+                   AND (p_area IS NULL OR t.AREA LIKE '%' || p_area || '%')
                    AND (p_difficulty IS NULL OR t.DIFFICULTY = p_difficulty)
+                   AND (p_duration_days IS NULL OR t.DURATION_DAYS = p_duration_days)
                    AND (p_date_from IS NULL OR ts.TOUR_DATE >= p_date_from)
                    AND (p_date_to IS NULL OR ts.TOUR_DATE <= p_date_to)
                    AND (p_price_min IS NULL OR t.BASE_PRICE >= p_price_min)

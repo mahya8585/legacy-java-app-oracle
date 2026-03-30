@@ -14,19 +14,39 @@
 
             <form class="search-form" th:action="@{/tours}" method="get" th:object="${condition}">
                 <div class="form-row">
+                    <div class="form-group" style="flex: 2;">
+                        <label for="keyword">キーワード検索</label>
+                        <input type="text" id="keyword" class="form-control" th:field="*{keyword}" placeholder="ツアー名で検索（あいまい検索）" />
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group">
                         <label for="area">エリア</label>
                         <select id="area" class="form-control" th:field="*{area}">
                             <option value="">すべて</option>
-                            <option value="沖縄">沖縄</option>
-                            <option value="伊豆">伊豆</option>
-                            <option value="屋久島">屋久島</option>
-                            <option value="宮古島">宮古島</option>
-                            <option value="石垣島">石垣島</option>
+                            <optgroup label="沖縄エリア">
+                                <option value="沖縄">沖縄（すべて）</option>
+                                <option value="沖縄・恩納村">沖縄・恩納村</option>
+                                <option value="沖縄・慶良間">沖縄・慶良間</option>
+                                <option value="沖縄・石垣島">沖縄・石垣島</option>
+                                <option value="沖縄・宮古島">沖縄・宮古島</option>
+                                <option value="沖縄・与那国">沖縄・与那国</option>
+                                <option value="沖縄・本部">沖縄・本部</option>
+                                <option value="沖縄・久米島">沖縄・久米島</option>
+                            </optgroup>
+                            <optgroup label="その他エリア">
+                                <option value="静岡・伊豆">静岡・伊豆</option>
+                                <option value="鹿児島">鹿児島（すべて）</option>
+                                <option value="鹿児島・屋久島">鹿児島・屋久島</option>
+                                <option value="鹿児島・奄美大島">鹿児島・奄美大島</option>
+                                <option value="和歌山">和歌山（すべて）</option>
+                                <option value="東京・小笠原">東京・小笠原</option>
+                                <option value="高知・柏島">高知・柏島</option>
+                            </optgroup>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="difficulty">難易度</label>
+                        <label for="difficulty">ダイビングレベル</label>
                         <select id="difficulty" class="form-control" th:field="*{difficulty}">
                             <option value="">すべて</option>
                             <option value="BEGINNER">初心者向け</option>
@@ -35,19 +55,17 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="keyword">キーワード</label>
-                        <input type="text" id="keyword" class="form-control" th:field="*{keyword}" placeholder="キーワードを入力" />
+                        <label for="durationDays">日数</label>
+                        <select id="durationDays" class="form-control" th:field="*{durationDays}">
+                            <option value="">すべて</option>
+                            <option value="1">日帰り（1日）</option>
+                            <option value="2">2日間</option>
+                            <option value="3">3日間</option>
+                            <option value="5">5日間</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group">
-                        <label for="priceMin">最低価格</label>
-                        <input type="number" id="priceMin" class="form-control" th:field="*{priceMin}" placeholder="¥0" />
-                    </div>
-                    <div class="form-group">
-                        <label for="priceMax">最高価格</label>
-                        <input type="number" id="priceMax" class="form-control" th:field="*{priceMax}" placeholder="¥999,999" />
-                    </div>
                     <div class="form-group">
                         <label for="dateFrom">開始日</label>
                         <input type="date" id="dateFrom" class="form-control" th:field="*{dateFrom}" />
@@ -56,11 +74,24 @@
                         <label for="dateTo">終了日</label>
                         <input type="date" id="dateTo" class="form-control" th:field="*{dateTo}" />
                     </div>
+                    <div class="form-group">
+                        <label for="priceMin">最低価格</label>
+                        <input type="number" id="priceMin" class="form-control" th:field="*{priceMin}" placeholder="¥0" step="1000" />
+                    </div>
+                    <div class="form-group">
+                        <label for="priceMax">最高価格</label>
+                        <input type="number" id="priceMax" class="form-control" th:field="*{priceMax}" placeholder="¥999,999" step="1000" />
+                    </div>
                 </div>
                 <div class="search-actions">
                     <button type="submit" class="btn btn-primary">検索</button>
+                    <a th:href="@{/tours}" class="btn btn-secondary">条件クリア</a>
                 </div>
             </form>
+
+            <p class="search-result-count" th:if="${totalCount != null}">
+                <span th:text="${totalCount}">0</span> 件のツアーが見つかりました
+            </p>
 
             <div class="card-grid">
                 <div class="card" th:each="tour : ${tours}">
@@ -81,16 +112,16 @@
             </div>
 
             <nav class="pagination" th:if="${totalPages > 1}">
-                <a class="page-link" th:if="${condition.page > 0}"
-                   th:href="@{/tours(page=${condition.page - 1}, area=${condition.area}, difficulty=${condition.difficulty}, keyword=${condition.keyword}, priceMin=${condition.priceMin}, priceMax=${condition.priceMax}, dateFrom=${condition.dateFrom}, dateTo=${condition.dateTo})}">前へ</a>
-                <th:block th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                <a class="page-link" th:if="${condition.page > 1}"
+                   th:href="@{/tours(page=${condition.page - 1}, area=${condition.area}, difficulty=${condition.difficulty}, durationDays=${condition.durationDays}, keyword=${condition.keyword}, priceMin=${condition.priceMin}, priceMax=${condition.priceMax}, dateFrom=${condition.dateFrom}, dateTo=${condition.dateTo})}">前へ</a>
+                <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
                     <a class="page-link"
                        th:classappend="${i == condition.page} ? 'active'"
-                       th:href="@{/tours(page=${i}, area=${condition.area}, difficulty=${condition.difficulty}, keyword=${condition.keyword}, priceMin=${condition.priceMin}, priceMax=${condition.priceMax}, dateFrom=${condition.dateFrom}, dateTo=${condition.dateTo})}"
-                       th:text="${i + 1}">1</a>
+                       th:href="@{/tours(page=${i}, area=${condition.area}, difficulty=${condition.difficulty}, durationDays=${condition.durationDays}, keyword=${condition.keyword}, priceMin=${condition.priceMin}, priceMax=${condition.priceMax}, dateFrom=${condition.dateFrom}, dateTo=${condition.dateTo})}"
+                       th:text="${i}">1</a>
                 </th:block>
-                <a class="page-link" th:if="${condition.page < totalPages - 1}"
-                   th:href="@{/tours(page=${condition.page + 1}, area=${condition.area}, difficulty=${condition.difficulty}, keyword=${condition.keyword}, priceMin=${condition.priceMin}, priceMax=${condition.priceMax}, dateFrom=${condition.dateFrom}, dateTo=${condition.dateTo})}">次へ</a>
+                <a class="page-link" th:if="${condition.page < totalPages}"
+                   th:href="@{/tours(page=${condition.page + 1}, area=${condition.area}, difficulty=${condition.difficulty}, durationDays=${condition.durationDays}, keyword=${condition.keyword}, priceMin=${condition.priceMin}, priceMax=${condition.priceMax}, dateFrom=${condition.dateFrom}, dateTo=${condition.dateTo})}">次へ</a>
             </nav>
 
         </div>

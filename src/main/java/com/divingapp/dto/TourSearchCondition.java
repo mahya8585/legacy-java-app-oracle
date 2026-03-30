@@ -9,6 +9,7 @@ public class TourSearchCondition {
     private Date dateTo;
     private Integer priceMin;
     private Integer priceMax;
+    private Integer durationDays;
     private String keyword;
     private int page = 1;
     private int pageSize = 10;
@@ -25,6 +26,8 @@ public class TourSearchCondition {
     public void setPriceMin(Integer priceMin) { this.priceMin = priceMin; }
     public Integer getPriceMax() { return priceMax; }
     public void setPriceMax(Integer priceMax) { this.priceMax = priceMax; }
+    public Integer getDurationDays() { return durationDays; }
+    public void setDurationDays(Integer durationDays) { this.durationDays = durationDays; }
     public String getKeyword() { return keyword; }
     public void setKeyword(String keyword) { this.keyword = keyword; }
     public int getPage() { return page; }

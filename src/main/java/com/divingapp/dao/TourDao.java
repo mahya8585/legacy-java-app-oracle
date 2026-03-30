@@ -93,6 +93,7 @@ public class TourDao {
                 new SqlParameter("p_date_to", java.sql.Types.DATE),
                 new SqlParameter("p_price_min", java.sql.Types.NUMERIC),
                 new SqlParameter("p_price_max", java.sql.Types.NUMERIC),
+                new SqlParameter("p_duration_days", java.sql.Types.NUMERIC),
                 new SqlParameter("p_keyword", java.sql.Types.VARCHAR),
                 new SqlParameter("p_page", java.sql.Types.NUMERIC),
                 new SqlParameter("p_page_size", java.sql.Types.NUMERIC),
@@ -107,6 +108,7 @@ public class TourDao {
             .addValue("p_date_to", condition.getDateTo())
             .addValue("p_price_min", condition.getPriceMin())
             .addValue("p_price_max", condition.getPriceMax())
+            .addValue("p_duration_days", condition.getDurationDays())
             .addValue("p_keyword", condition.getKeyword())
             .addValue("p_page", condition.getPage())
             .addValue("p_page_size", condition.getPageSize());

@@ -7,6 +7,7 @@ CREATE OR REPLACE PACKAGE PKG_TOUR AS
         p_date_to       IN  DATE     DEFAULT NULL,
         p_price_min     IN  NUMBER   DEFAULT NULL,
         p_price_max     IN  NUMBER   DEFAULT NULL,
+        p_duration_days IN  NUMBER   DEFAULT NULL,
         p_keyword       IN  VARCHAR2 DEFAULT NULL,
         p_page          IN  NUMBER   DEFAULT 1,
         p_page_size     IN  NUMBER   DEFAULT 10,

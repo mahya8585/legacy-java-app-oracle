@@ -580,6 +580,12 @@ tr:hover {
     padding-top: 1rem;
 }
 
+.search-result-count {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
 /* ===== News ===== */
 .news-list {
     list-style: none;

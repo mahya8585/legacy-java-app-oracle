@@ -25,10 +25,10 @@ public class TourController {
     @SuppressWarnings("unchecked")
     @GetMapping("/tours")
     public String list(@ModelAttribute TourSearchCondition condition, Model model) {
-        if (condition.getPage() == null || condition.getPage() == 0) {
+        if (condition.getPage() <= 0) {
             condition.setPage(1);
         }
-        if (condition.getPageSize() == null || condition.getPageSize() == 0) {
+        if (condition.getPageSize() <= 0) {
             condition.setPageSize(9);
         }
 
