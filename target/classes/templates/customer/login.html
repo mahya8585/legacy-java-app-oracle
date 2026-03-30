@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>ログイン</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="section">
+            <h2 class="section-title">ログイン</h2>
+
+            <div th:if="${param.error}" class="alert alert-error">
+                メールアドレスまたはパスワードが正しくありません
+            </div>
+            <div th:if="${param.registered}" class="alert alert-success">
+                会員登録が完了しました。ログインしてください。
+            </div>
+
+            <div class="form-card">
+                <form th:action="@{/customer/login}" method="post">
+                    <div class="form-group">
+                        <label for="email">メールアドレス</label>
+                        <input type="email" id="email" name="email" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">パスワード</label>
+                        <input type="password" id="password" name="password" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">ログイン</button>
+                    </div>
+                </form>
+                <p>アカウントをお持ちでない方は <a th:href="@{/customer/register}">会員登録</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

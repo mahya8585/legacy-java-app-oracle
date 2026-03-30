@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  oracle-db:
+    build:
+      context: ./docker/oracle
+      dockerfile: Dockerfile
+    container_name: diving-oracle-db
+    ports:
+      - "1521:1521"
+    environment:
+      - ORACLE_PASSWORD=${ORACLE_PASSWORD:-oracle123}
+      - APP_USER=${APP_DB_USERNAME:-DIVINGAPP}
+      - APP_USER_PASSWORD=${APP_DB_PASSWORD:-divingapp123}
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+      - ./db/migration:/opt/oracle/scripts/migration:ro
+      - ./db/packages:/opt/oracle/scripts/packages:ro
+      - ./db/seed:/opt/oracle/scripts/seed:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: diving-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@oracle-db:1521/XEPDB1
+      - SPRING_DATASOURCE_USERNAME=${APP_DB_USERNAME:-DIVINGAPP}
+      - SPRING_DATASOURCE_PASSWORD=${APP_DB_PASSWORD:-divingapp123}
+    depends_on:
+      oracle-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  oracle-data:
+    driver: local

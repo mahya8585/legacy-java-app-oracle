@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>ツアー管理</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <nav class="admin-nav">
+        <a th:href="@{/admin}">ダッシュボード</a>
+        <a th:href="@{/admin/tours}" class="active">ツアー管理</a>
+        <a th:href="@{/admin/reservations}">予約管理</a>
+        <a th:href="@{/admin/customers}">顧客管理</a>
+        <a th:href="@{/admin/reports}">レポート</a>
+    </nav>
+
+    <section class="section">
+        <div class="container">
+            <h1 class="section-title">ツアー管理</h1>
+
+            <div class="search-actions">
+                <a th:href="@{/admin/tours/new}" class="btn btn-primary">新規ツアー追加</a>
+            </div>
+
+            <p>全 <span th:text="${totalCount}">0</span> 件</p>
+
+            <div class="table-wrapper">
+                <table th:if="${tours != null and !tours.isEmpty()}">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>ツアー名</th>
+                            <th>エリア</th>
+                            <th>難易度</th>
+                            <th>基本料金</th>
+                            <th>ステータス</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="tour : ${tours}">
+                            <td th:text="${tour.tourId}">1</td>
+                            <td th:text="${tour.tourName}">ツアー名</td>
+                            <td th:text="${tour.area}">エリア</td>
+                            <td th:text="${tour.difficulty}">難易度</td>
+                            <td th:text="'¥' + ${#numbers.formatInteger(tour.basePrice, 1, 'COMMA')}">¥0</td>
+                            <td>
+                                <span class="badge-active" th:if="${tour.status == 'ACTIVE'}">有効</span>
+                                <span class="badge-inactive" th:if="${tour.status != 'ACTIVE'}" th:text="${tour.status}">無効</span>
+                            </td>
+                            <td>
+                                <a th:href="@{/admin/tours/{id}/edit(id=${tour.tourId})}" class="btn btn-sm">編集</a>
+                                <form th:action="@{/admin/tours/{id}/delete(id=${tour.tourId})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('本当に削除しますか？')">削除</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert" th:if="${tours == null or tours.isEmpty()}">
+                    <p>ツアーが登録されていません。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title th:text="|${instructor.lastName} ${instructor.firstName}|">インストラクター詳細</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <section class="section">
+        <div class="container">
+
+            <div class="detail-header">
+                <h1 th:text="|${instructor.lastName} ${instructor.firstName}|">氏名</h1>
+            </div>
+
+            <div class="detail-info">
+                <div class="detail-info-item">
+                    <span class="detail-info-label">資格</span>
+                    <span class="detail-info-value" th:text="${instructor.certification}">資格名</span>
+                </div>
+                <div class="detail-info-item">
+                    <span class="detail-info-label">経験年数</span>
+                    <span class="detail-info-value" th:text="|${instructor.experienceYears}年|">0年</span>
+                </div>
+                <div class="detail-info-item">
+                    <span class="detail-info-label">専門分野</span>
+                    <span class="detail-info-value" th:text="${instructor.specialty}">専門分野</span>
+                </div>
+            </div>
+
+            <h2 class="section-title">プロフィール</h2>
+            <p th:text="${instructor.profile}">プロフィールの説明文が入ります。</p>
+
+            <h2 class="section-title">担当ツアー</h2>
+            <div class="card-grid">
+                <div class="card" th:each="tour : ${tours}">
+                    <div class="card-body">
+                        <h3 class="card-title" th:text="${tour.tourName}">ツアー名</h3>
+                        <p class="card-meta" th:text="${tour.area}">エリア</p>
+                        <span class="badge"
+                              th:classappend="${tour.difficulty == 'BEGINNER'} ? 'badge-beginner' : (${tour.difficulty == 'INTERMEDIATE'} ? 'badge-intermediate' : 'badge-advanced')"
+                              th:text="${tour.difficulty == 'BEGINNER'} ? '初心者向け' : (${tour.difficulty == 'INTERMEDIATE'} ? '中級者向け' : '上級者向け')">レベル</span>
+                        <p class="card-price" th:text="|¥${#numbers.formatInteger(tour.basePrice, 1, 'COMMA')}|">¥0</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" th:href="@{/tours/{id}(id=${tour.tourId})}">詳細を見る</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

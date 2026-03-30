@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>ホーム</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <section class="hero">
+        <div class="container">
+            <h1>素晴らしい海中世界へ</h1>
+            <p>プロのインストラクターと一緒に、忘れられないダイビング体験を</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">おすすめツアー</h2>
+            <div class="card-grid">
+                <div class="card" th:each="tour : ${featuredTours}">
+                    <div class="card-body">
+                        <h3 class="card-title" th:text="${tour.tourName}">ツアー名</h3>
+                        <p class="card-meta" th:text="${tour.area}">エリア</p>
+                        <span class="badge"
+                              th:classappend="${tour.difficulty == 'BEGINNER'} ? 'badge-beginner' : (${tour.difficulty == 'INTERMEDIATE'} ? 'badge-intermediate' : 'badge-advanced')"
+                              th:text="${tour.difficulty == 'BEGINNER'} ? '初心者向け' : (${tour.difficulty == 'INTERMEDIATE'} ? '中級者向け' : '上級者向け')">レベル</span>
+                        <p class="card-price" th:text="|¥${#numbers.formatInteger(tour.basePrice, 1, 'COMMA')}|">¥0</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" th:href="@{/tours/{id}(id=${tour.tourId})}">詳細を見る</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">新着情報</h2>
+            <ul class="news-list">
+                <li class="news-item" th:each="news : ${newsItems}">
+                    <span class="news-date" th:text="${#dates.format(news.publishDate, 'yyyy/MM/dd')}">2026/01/01</span>
+                    <span class="news-category" th:text="${news.category}">カテゴリ</span>
+                    <span th:text="${news.title}">ニュースタイトル</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

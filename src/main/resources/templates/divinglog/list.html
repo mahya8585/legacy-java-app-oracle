@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>ダイビングログ</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="section">
+            <h2 class="section-title">ダイビングログ</h2>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>日付</th>
+                            <th>ポイント名</th>
+                            <th>最大深度</th>
+                            <th>潜水時間</th>
+                            <th>水温</th>
+                            <th>天気</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="log : ${logs}">
+                            <td th:text="${log.diveDate}"></td>
+                            <td th:text="${log.siteName}"></td>
+                            <td th:text="${log.maxDepth} + 'm'"></td>
+                            <td th:text="${log.diveTime} + '分'"></td>
+                            <td th:text="${log.waterTemp} + '℃'"></td>
+                            <td th:text="${log.weather}"></td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(logs)}">
+                            <td colspan="6">ログはまだありません</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" th:if="${totalPages > 1}">
+            <div class="pagination">
+                <a th:if="${currentPage > 0}"
+                   th:href="@{/divinglogs(page=${currentPage - 1})}"
+                   class="page-link">前へ</a>
+                <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a th:href="@{/divinglogs(page=${i})}"
+                       th:text="${i + 1}"
+                       th:classappend="${i == currentPage} ? 'active'"
+                       class="page-link"></a>
+                </span>
+                <a th:if="${currentPage < totalPages - 1}"
+                   th:href="@{/divinglogs(page=${currentPage + 1})}"
+                   class="page-link">次へ</a>
+            </div>
+        </div>
+
+        <div class="section">
+            <a th:href="@{/divinglogs/new}" class="btn btn-primary">新規ログ作成</a>
+            <a th:href="@{/customer/mypage}" class="btn btn-outline">マイページへ戻る</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

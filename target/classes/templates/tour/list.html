@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>ツアー一覧</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <section class="section">
+        <div class="container">
+            <h1 class="section-title">ツアー一覧</h1>
+
+            <form class="search-form" th:action="@{/tours}" method="get" th:object="${condition}">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="area">エリア</label>
+                        <select id="area" class="form-control" th:field="*{area}">
+                            <option value="">すべて</option>
+                            <option value="沖縄">沖縄</option>
+                            <option value="伊豆">伊豆</option>
+                            <option value="屋久島">屋久島</option>
+                            <option value="宮古島">宮古島</option>
+                            <option value="石垣島">石垣島</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="difficulty">難易度</label>
+                        <select id="difficulty" class="form-control" th:field="*{difficulty}">
+                            <option value="">すべて</option>
+                            <option value="BEGINNER">初心者向け</option>
+                            <option value="INTERMEDIATE">中級者向け</option>
+                            <option value="ADVANCED">上級者向け</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="keyword">キーワード</label>
+                        <input type="text" id="keyword" class="form-control" th:field="*{keyword}" placeholder="キーワードを入力" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="priceMin">最低価格</label>
+                        <input type="number" id="priceMin" class="form-control" th:field="*{priceMin}" placeholder="¥0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="priceMax">最高価格</label>
+                        <input type="number" id="priceMax" class="form-control" th:field="*{priceMax}" placeholder="¥999,999" />
+                    </div>
+                    <div class="form-group">
+                        <label for="dateFrom">開始日</label>
+                        <input type="date" id="dateFrom" class="form-control" th:field="*{dateFrom}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="dateTo">終了日</label>
+                        <input type="date" id="dateTo" class="form-control" th:field="*{dateTo}" />
+                    </div>
+                </div>
+                <div class="search-actions">
+                    <button type="submit" class="btn btn-primary">検索</button>
+                </div>
+            </form>
+
+            <div class="card-grid">
+                <div class="card" th:each="tour : ${tours}">
+                    <div class="card-body">
+                        <h3 class="card-title" th:text="${tour.tourName}">ツアー名</h3>
+                        <p class="card-text" th:text="${#strings.abbreviate(tour.description, 100)}">説明文</p>
+                        <p class="card-meta" th:text="${tour.area}">エリア</p>
+                        <span class="badge"
+                              th:classappend="${tour.difficulty == 'BEGINNER'} ? 'badge-beginner' : (${tour.difficulty == 'INTERMEDIATE'} ? 'badge-intermediate' : 'badge-advanced')"
+                              th:text="${tour.difficulty == 'BEGINNER'} ? '初心者向け' : (${tour.difficulty == 'INTERMEDIATE'} ? '中級者向け' : '上級者向け')">レベル</span>
+                        <p class="card-meta" th:text="|${tour.durationDays}日間|">0日間</p>
+                        <p class="card-price" th:text="|¥${#numbers.formatInteger(tour.basePrice, 1, 'COMMA')}|">¥0</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" th:href="@{/tours/{id}(id=${tour.tourId})}">詳細を見る</a>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="pagination" th:if="${totalPages > 1}">
+                <a class="page-link" th:if="${condition.page > 0}"
+                   th:href="@{/tours(page=${condition.page - 1}, area=${condition.area}, difficulty=${condition.difficulty}, keyword=${condition.keyword}, priceMin=${condition.priceMin}, priceMax=${condition.priceMax}, dateFrom=${condition.dateFrom}, dateTo=${condition.dateTo})}">前へ</a>
+                <th:block th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a class="page-link"
+                       th:classappend="${i == condition.page} ? 'active'"
+                       th:href="@{/tours(page=${i}, area=${condition.area}, difficulty=${condition.difficulty}, keyword=${condition.keyword}, priceMin=${condition.priceMin}, priceMax=${condition.priceMax}, dateFrom=${condition.dateFrom}, dateTo=${condition.dateTo})}"
+                       th:text="${i + 1}">1</a>
+                </th:block>
+                <a class="page-link" th:if="${condition.page < totalPages - 1}"
+                   th:href="@{/tours(page=${condition.page + 1}, area=${condition.area}, difficulty=${condition.difficulty}, keyword=${condition.keyword}, priceMin=${condition.priceMin}, priceMax=${condition.priceMax}, dateFrom=${condition.dateFrom}, dateTo=${condition.dateTo})}">次へ</a>
+            </nav>
+
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

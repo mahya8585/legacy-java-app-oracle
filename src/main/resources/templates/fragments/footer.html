@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<footer th:fragment="footer">
+    <div class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Ocean Dive Tours</h3>
+                    <p>素晴らしい海中世界への扉を開く、あなたのダイビングパートナー。</p>
+                </div>
+                <div class="footer-section">
+                    <h4>メニュー</h4>
+                    <ul>
+                        <li><a th:href="@{/tours}">ツアー一覧</a></li>
+                        <li><a th:href="@{/divesites}">ダイブサイト</a></li>
+                        <li><a th:href="@{/instructors}">インストラクター</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>お問い合わせ</h4>
+                    <p>TEL: 03-1234-5678</p>
+                    <p>Email: info@oceandive.example.com</p>
+                    <p>営業時間: 9:00 〜 18:00</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ocean Dive Tours. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

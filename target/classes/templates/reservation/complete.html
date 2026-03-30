@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>予約完了</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="section">
+            <h2 class="section-title">予約完了</h2>
+
+            <div class="alert alert-success">
+                ご予約ありがとうございます
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="detail-info">
+                        <div class="detail-info-item">
+                            <span class="detail-info-label">予約ID</span>
+                            <span class="detail-info-value" th:text="${reservation.reservationId}"></span>
+                        </div>
+                        <div class="detail-info-item">
+                            <span class="detail-info-label">ツアー名</span>
+                            <span class="detail-info-value" th:text="${reservation.tourName}"></span>
+                        </div>
+                        <div class="detail-info-item">
+                            <span class="detail-info-label">日程</span>
+                            <span class="detail-info-value" th:text="${reservation.tourDate}"></span>
+                        </div>
+                        <div class="detail-info-item">
+                            <span class="detail-info-label">参加人数</span>
+                            <span class="detail-info-value" th:text="${reservation.numParticipants} + '名'"></span>
+                        </div>
+                        <div class="detail-info-item">
+                            <span class="detail-info-label">合計金額</span>
+                            <span class="detail-info-value" th:text="'¥' + ${#numbers.formatInteger(reservation.totalPrice, 1, 'COMMA')}"></span>
+                        </div>
+                    </div>
+
+                    <div th:if="${not #lists.isEmpty(reservation.options)}" class="section">
+                        <h4>オプション</h4>
+                        <ul>
+                            <li th:each="opt : ${reservation.options}">
+                                <span th:text="${opt.optionName}"></span> ×
+                                <span th:text="${opt.quantity}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <a th:href="@{/customer/mypage}" class="btn btn-primary">マイページへ</a>
+            <a th:href="@{/tours}" class="btn btn-outline">ツアー一覧へ</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
