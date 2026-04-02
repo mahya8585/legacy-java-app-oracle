@@ -1,0 +1,58 @@
+-- =============================================================
+-- V004__create_dashboard_tables.sql
+-- ダッシュボードレポート用テーブル定義
+-- REPORT_CACHE: レポート結果キャッシュ
+-- REPORT_ALERTS: 異常検知アラート
+-- =============================================================
+
+-- =====================
+-- シーケンス
+-- =====================
+CREATE SEQUENCE SEQ_REPORT_CACHE    START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_REPORT_ALERTS   START WITH 1 INCREMENT BY 1 NOCACHE;
+
+-- =====================
+-- レポートキャッシュテーブル
+-- =====================
+CREATE TABLE REPORT_CACHE (
+    CACHE_ID        NUMBER          NOT NULL,
+    REPORT_KEY      VARCHAR2(100)   NOT NULL,
+    SECTION         VARCHAR2(50)    NOT NULL,
+    REPORT_DATE     DATE,
+    METRIC_NAME     VARCHAR2(100)   NOT NULL,
+    METRIC_VALUE    NUMBER(15,2),
+    DIMENSION1      VARCHAR2(200),
+    DIMENSION2      VARCHAR2(200),
+    DIMENSION3      VARCHAR2(200),
+    GENERATED_AT    TIMESTAMP       DEFAULT SYSTIMESTAMP NOT NULL,
+    CONSTRAINT PK_REPORT_CACHE PRIMARY KEY (CACHE_ID)
+);
+
+-- =====================
+-- 異常検知アラートテーブル
+-- =====================
+CREATE TABLE REPORT_ALERTS (
+    ALERT_ID        NUMBER          NOT NULL,
+    ALERT_TYPE      VARCHAR2(50)    NOT NULL,
+    SEVERITY        VARCHAR2(10)    NOT NULL,
+    METRIC_NAME     VARCHAR2(100)   NOT NULL,
+    CURRENT_VALUE   NUMBER(15,2),
+    THRESHOLD_VALUE NUMBER(15,2),
+    DEVIATION       NUMBER(10,4),
+    MESSAGE         VARCHAR2(500),
+    DETECTED_AT     TIMESTAMP       DEFAULT SYSTIMESTAMP NOT NULL,
+    STATUS          VARCHAR2(20)    DEFAULT 'NEW' NOT NULL,
+    CONSTRAINT PK_REPORT_ALERTS PRIMARY KEY (ALERT_ID),
+    CONSTRAINT CK_RA_SEVERITY CHECK (SEVERITY IN ('HIGH', 'MEDIUM', 'LOW')),
+    CONSTRAINT CK_RA_STATUS CHECK (STATUS IN ('NEW', 'ACKNOWLEDGED', 'RESOLVED'))
+);
+
+-- =====================
+-- インデックス
+-- =====================
+CREATE INDEX IDX_RC_KEY_SECTION ON REPORT_CACHE(REPORT_KEY, SECTION);
+CREATE INDEX IDX_RC_GENERATED ON REPORT_CACHE(GENERATED_AT);
+CREATE INDEX IDX_RA_DETECTED ON REPORT_ALERTS(DETECTED_AT, STATUS);
+CREATE INDEX IDX_RA_SEVERITY ON REPORT_ALERTS(SEVERITY, STATUS);
+
+COMMIT;

@@ -177,6 +177,12 @@ docker exec -it diving-oracle-db sqlplus DIVINGAPP/divingapp123@//localhost:1521
 @/opt/oracle/scripts/migration/V001__create_tables.sql
 ```
 
+#### Step 1.5: ダッシュボードレポート用テーブル作成
+
+```sql
+@/opt/oracle/scripts/migration/V004__create_dashboard_tables.sql
+```
+
 #### Step 2: PL/SQL パッケージ作成
 
 パッケージは **仕様部 → 本体** の順に実行する必要があります。

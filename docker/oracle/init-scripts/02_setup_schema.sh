@@ -60,14 +60,21 @@ EOF
 done
 
 # --- V003: マスタデータ投入 ---
-echo "[4/5] マスタデータ投入..."
+echo "[4/6] マスタデータ投入..."
 sqlplus -S "${CONN_STR}" <<'EOF'
 WHENEVER SQLERROR EXIT SQL.SQLCODE;
 @/opt/oracle/scripts/migration/V003__insert_master_data.sql
 EOF
 
+# --- V004: ダッシュボードレポート用テーブル ---
+echo "[5/6] ダッシュボードレポート用テーブル作成..."
+sqlplus -S "${CONN_STR}" <<'EOF'
+WHENEVER SQLERROR EXIT SQL.SQLCODE;
+@/opt/oracle/scripts/migration/V004__create_dashboard_tables.sql
+EOF
+
 # --- サンプルデータ投入 ---
-echo "[5/5] サンプルデータ投入..."
+echo "[6/6] サンプルデータ投入..."
 sqlplus -S "${CONN_STR}" <<'EOF'
 WHENEVER SQLERROR EXIT SQL.SQLCODE;
 @/opt/oracle/scripts/seed/sample_data.sql

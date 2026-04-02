@@ -29,4 +29,8 @@ public class ReportService {
     public Map<String, Object> getOccupancyRate(int year, Integer month) {
         return reportDao.getOccupancyRate(year, month);
     }
+
+    public Map<String, Object> getDashboardReport(int year, Integer month) {
+        return reportDao.getDashboardReport(year, month);
+    }
 }

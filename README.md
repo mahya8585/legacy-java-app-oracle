@@ -38,7 +38,8 @@ Controller → Service (@Transactional) → DAO (SimpleJdbcCall) → Oracle PL/S
 │   ├── migration/
 │   │   ├── V001__create_tables.sql # テーブル・シーケンス・インデックス
 │   │   ├── V002__create_packages.sql
-│   │   └── V003__insert_master_data.sql
+│   │   ├── V003__insert_master_data.sql
+│   │   └── V004__create_dashboard_tables.sql # ダッシュボードレポート用テーブル
 │   ├── packages/                   # PL/SQLパッケージ（8パッケージ×spec/body）
 │   └── seed/
 │       └── sample_data.sql
@@ -71,7 +72,7 @@ Controller → Service (@Transactional) → DAO (SimpleJdbcCall) → Oracle PL/S
 | PKG_DIVE_SITE | ダイブサイト一覧・詳細 |
 | PKG_INSTRUCTOR | インストラクター一覧・詳細 |
 | PKG_DIVING_LOG | ダイビングログ一覧・保存 |
-| PKG_REPORT | 月次売上・ツアー人気（RANK）・稼働率 |
+| PKG_REPORT | 月次売上・ツアー人気（RANK）・稼働率・総合ダッシュボードレポート生成 |
 | PKG_NEWS | ニュース一覧・保存 |
 
 ## セットアップ

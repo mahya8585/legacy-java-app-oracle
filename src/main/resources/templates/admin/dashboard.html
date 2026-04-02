@@ -20,6 +20,32 @@
         <div class="container">
             <h1 class="section-title">管理者ダッシュボード</h1>
 
+            <!-- 年月フィルター -->
+            <form class="search-form" th:action="@{/admin/dashboard}" method="get" style="margin-bottom: 1.5rem;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="year">年</label>
+                        <select id="year" name="year" class="form-control">
+                            <option th:each="y : ${#numbers.sequence(2024, 2030)}"
+                                    th:value="${y}" th:text="${y} + '年'"
+                                    th:selected="${y == year}">2026年</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="month">月</label>
+                        <select id="month" name="month" class="form-control">
+                            <option value="">全月</option>
+                            <option th:each="m : ${#numbers.sequence(1, 12)}"
+                                    th:value="${m}" th:text="${m} + '月'"
+                                    th:selected="${m == month}">1月</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="align-self: flex-end;">
+                        <button type="submit" class="btn btn-primary">表示</button>
+                    </div>
+                </div>
+            </form>
+
             <div class="card-grid" th:if="${salesReport != null}">
                 <div class="stat-card">
                     <div class="stat-label">対象年度</div>
@@ -27,6 +53,9 @@
                 </div>
             </div>
 
+            <!-- =========================================================
+                 既存: 月次売上レポート
+                 ========================================================= -->
             <h2>月次売上レポート</h2>
             <div class="table-wrapper">
                 <table th:if="${salesReport != null and !salesReport.isEmpty()}">
@@ -51,6 +80,269 @@
                     <p>売上データがありません。</p>
                 </div>
             </div>
+
+            <!-- =========================================================
+                 セクション1: 売上推移分析
+                 ========================================================= -->
+            <h2>売上推移分析（前月比・前年同月比・累計）</h2>
+            <div class="table-wrapper">
+                <table th:if="${salesTrend != null and !salesTrend.isEmpty()}">
+                    <thead>
+                        <tr>
+                            <th>月</th>
+                            <th>売上</th>
+                            <th>前月比</th>
+                            <th>前年同月比</th>
+                            <th>累計売上</th>
+                            <th>構成比</th>
+                            <th>トレンド</th>
+                            <th>予約数</th>
+                            <th>キャンセル</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="row : ${salesTrend}">
+                            <td th:text="${row.month} + '月'">1月</td>
+                            <td th:text="'¥' + ${#numbers.formatInteger(row.revenue, 1, 'COMMA')}">¥0</td>
+                            <td>
+                                <span th:if="${row.momChangeRate != null}"
+                                      th:text="${row.momChangeRate} + '%'"
+                                      th:classappend="${row.momChangeRate > 0} ? ' text-success' : (${row.momChangeRate < 0} ? ' text-danger' : '')">0%</span>
+                                <span th:if="${row.momChangeRate == null}">-</span>
+                            </td>
+                            <td>
+                                <span th:if="${row.yoyChangeRate != null}"
+                                      th:text="${row.yoyChangeRate} + '%'">0%</span>
+                                <span th:if="${row.yoyChangeRate == null}">-</span>
+                            </td>
+                            <td th:text="'¥' + ${#numbers.formatInteger(row.cumulativeRevenue, 1, 'COMMA')}">¥0</td>
+                            <td th:text="${row.sharePct} + '%'">0%</td>
+                            <td>
+                                <span th:if="${row.trend == 'UP'}" style="color: green;">↑上昇</span>
+                                <span th:if="${row.trend == 'DOWN'}" style="color: red;">↓下降</span>
+                                <span th:if="${row.trend == 'FLAT'}" style="color: gray;">→横ばい</span>
+                                <span th:if="${row.trend == 'N/A'}">-</span>
+                            </td>
+                            <td th:text="${row.reservationCount}">0</td>
+                            <td th:text="${row.cancelCount}">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert" th:if="${salesTrend == null or salesTrend.isEmpty()}">
+                    <p>売上推移データがありません。</p>
+                </div>
+            </div>
+
+            <!-- =========================================================
+                 セクション2: エリア×難易度クロス集計
+                 ========================================================= -->
+            <h2>エリア × 難易度 クロス集計</h2>
+            <div class="table-wrapper">
+                <table th:if="${areaMatrix != null and !areaMatrix.isEmpty()}">
+                    <thead>
+                        <tr>
+                            <th>エリア</th>
+                            <th>難易度</th>
+                            <th>予約数</th>
+                            <th>売上</th>
+                            <th>平均参加者</th>
+                            <th>初級</th>
+                            <th>中級</th>
+                            <th>上級</th>
+                            <th>エキスパート</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="row : ${areaMatrix}"
+                            th:classappend="${row.groupingLevel > 0} ? 'subtotal-row' : ''">
+                            <td th:text="${row.area}">沖縄</td>
+                            <td th:text="${row.difficulty}">BEGINNER</td>
+                            <td th:text="${row.reservationCount}">0</td>
+                            <td th:text="'¥' + ${#numbers.formatInteger(row.totalRevenue, 1, 'COMMA')}">¥0</td>
+                            <td th:text="${row.avgParticipants}">0</td>
+                            <td th:text="${row.beginnerCount}">0</td>
+                            <td th:text="${row.intermediateCount}">0</td>
+                            <td th:text="${row.advancedCount}">0</td>
+                            <td th:text="${row.expertCount}">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert" th:if="${areaMatrix == null or areaMatrix.isEmpty()}">
+                    <p>クロス集計データがありません。</p>
+                </div>
+            </div>
+
+            <!-- =========================================================
+                 セクション3: インストラクターKPI
+                 ========================================================= -->
+            <h2>インストラクターKPI</h2>
+            <div class="table-wrapper">
+                <table th:if="${instructorKpi != null and !instructorKpi.isEmpty()}">
+                    <thead>
+                        <tr>
+                            <th>順位</th>
+                            <th>インストラクター</th>
+                            <th>資格</th>
+                            <th>売上</th>
+                            <th>売上シェア</th>
+                            <th>予約数</th>
+                            <th>ユニーク顧客</th>
+                            <th>リピート率</th>
+                            <th>担当エリア</th>
+                            <th>直近稼働日</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="row : ${instructorKpi}">
+                            <td th:text="${row.revenueRank}">1</td>
+                            <td th:text="${row.instructorName}">山田太郎</td>
+                            <td th:text="${row.certification}">PADI</td>
+                            <td th:text="'¥' + ${#numbers.formatInteger(row.totalRevenue, 1, 'COMMA')}">¥0</td>
+                            <td th:text="${row.revenueSharePct} + '%'">0%</td>
+                            <td th:text="${row.reservationCount}">0</td>
+                            <td th:text="${row.uniqueCustomers}">0</td>
+                            <td th:text="${row.repeatRate} + '%'">0%</td>
+                            <td th:text="${row.areaList}">沖縄</td>
+                            <td th:text="${row.recentActiveDays} + '日'">0日</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert" th:if="${instructorKpi == null or instructorKpi.isEmpty()}">
+                    <p>インストラクターKPIデータがありません。</p>
+                </div>
+            </div>
+
+            <!-- =========================================================
+                 セクション4: 顧客セグメント分析
+                 ========================================================= -->
+            <h2>顧客セグメント分析（RFM）</h2>
+            <div class="table-wrapper">
+                <table th:if="${customerSegment != null and !customerSegment.isEmpty()}">
+                    <thead>
+                        <tr>
+                            <th>セグメント</th>
+                            <th>人数</th>
+                            <th>構成比</th>
+                            <th>平均LTV</th>
+                            <th>平均利用回数</th>
+                            <th>平均ダイブ本数</th>
+                            <th>キャンセル率</th>
+                            <th>合計売上</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="row : ${customerSegment}">
+                            <td>
+                                <span th:text="${row.segment}"
+                                      th:classappend="${row.segment == 'VIP'} ? 'badge badge-vip' : (${row.segment == 'DORMANT'} ? 'badge badge-dormant' : 'badge')">VIP</span>
+                            </td>
+                            <td th:text="${row.customerCount}">0</td>
+                            <td th:text="${row.sharePct} + '%'">0%</td>
+                            <td th:text="'¥' + ${#numbers.formatInteger(row.avgLtv, 1, 'COMMA')}">¥0</td>
+                            <td th:text="${row.avgFrequency}">0</td>
+                            <td th:text="${row.avgDiveCount}">0</td>
+                            <td th:text="${row.avgCancelRate} + '%'">0%</td>
+                            <td th:text="'¥' + ${#numbers.formatInteger(row.totalRevenue, 1, 'COMMA')}">¥0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert" th:if="${customerSegment == null or customerSegment.isEmpty()}">
+                    <p>顧客セグメントデータがありません。</p>
+                </div>
+            </div>
+
+            <!-- =========================================================
+                 セクション5: キャンセル傾向分析
+                 ========================================================= -->
+            <h2>キャンセル傾向・損失分析</h2>
+            <div class="table-wrapper">
+                <table th:if="${cancelAnalysis != null and !cancelAnalysis.isEmpty()}">
+                    <thead>
+                        <tr>
+                            <th>分析区分</th>
+                            <th>区分</th>
+                            <th>キャンセル数</th>
+                            <th>損失額</th>
+                            <th>返金額</th>
+                            <th>純収入</th>
+                            <th>前月比</th>
+                            <th>移動平均</th>
+                            <th>アラート</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="row : ${cancelAnalysis}"
+                            th:classappend="${row.alertFlag == 'ANOMALY' or row.alertFlag == 'HIGH'} ? 'alert-row' : ''">
+                            <td th:text="${row.analysisType}">RANGE</td>
+                            <td th:text="${row.dimension}">0-2日前</td>
+                            <td th:text="${row.cancelCount}">0</td>
+                            <td th:if="${row.lossAmount != null}" th:text="'¥' + ${#numbers.formatInteger(row.lossAmount, 1, 'COMMA')}">¥0</td>
+                            <td th:if="${row.lossAmount == null}">-</td>
+                            <td th:if="${row.refundAmount != null}" th:text="'¥' + ${#numbers.formatInteger(row.refundAmount, 1, 'COMMA')}">¥0</td>
+                            <td th:if="${row.refundAmount == null}">-</td>
+                            <td th:if="${row.netRevenue != null}" th:text="'¥' + ${#numbers.formatInteger(row.netRevenue, 1, 'COMMA')}">¥0</td>
+                            <td th:if="${row.netRevenue == null}">-</td>
+                            <td>
+                                <span th:if="${row.momChange != null}" th:text="${row.momChange} + '%'">0%</span>
+                                <span th:if="${row.momChange == null}">-</span>
+                            </td>
+                            <td>
+                                <span th:if="${row.movingAvg != null}" th:text="${row.movingAvg}">0</span>
+                                <span th:if="${row.movingAvg == null}">-</span>
+                            </td>
+                            <td>
+                                <span th:if="${row.alertFlag == 'ANOMALY'}" style="color: red; font-weight: bold;">⚠ 異常</span>
+                                <span th:if="${row.alertFlag == 'HIGH'}" style="color: orange;">高頻度</span>
+                                <span th:if="${row.alertFlag == 'NORMAL'}">正常</span>
+                                <span th:if="${row.alertFlag == null}">-</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert" th:if="${cancelAnalysis == null or cancelAnalysis.isEmpty()}">
+                    <p>キャンセルデータがありません。</p>
+                </div>
+            </div>
+
+            <!-- =========================================================
+                 セクション6: 異常検知アラート
+                 ========================================================= -->
+            <h2>異常検知アラート</h2>
+            <div class="table-wrapper">
+                <table th:if="${anomalyAlerts != null and !anomalyAlerts.isEmpty()}">
+                    <thead>
+                        <tr>
+                            <th>重要度</th>
+                            <th>指標</th>
+                            <th>現在値</th>
+                            <th>基準値</th>
+                            <th>偏差(Z)</th>
+                            <th>メッセージ</th>
+                            <th>検出日時</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="row : ${anomalyAlerts}"
+                            th:classappend="${row.severity == 'HIGH'} ? 'alert-high' : (${row.severity == 'MEDIUM'} ? 'alert-medium' : '')">
+                            <td>
+                                <span th:if="${row.severity == 'HIGH'}" style="color: red; font-weight: bold;">🔴 HIGH</span>
+                                <span th:if="${row.severity == 'MEDIUM'}" style="color: orange;">🟡 MEDIUM</span>
+                                <span th:if="${row.severity == 'LOW'}" style="color: green;">🟢 LOW</span>
+                            </td>
+                            <td th:text="${row.metricName}">REVENUE_M1</td>
+                            <td th:text="${row.currentValue}">0</td>
+                            <td th:text="${row.thresholdValue}">0</td>
+                            <td th:text="${row.deviation}">0</td>
+                            <td th:text="${row.message}">-</td>
+                            <td th:text="${#temporals.format(row.detectedAt, 'yyyy/MM/dd HH:mm')}">2026/04/01 12:00</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert" th:if="${anomalyAlerts == null or anomalyAlerts.isEmpty()}">
+                    <p>検出されたアラートはありません。</p>
+                </div>
+            </div>
+
         </div>
     </section>
 

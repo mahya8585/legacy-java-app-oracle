@@ -45,7 +45,7 @@ Ocean Dive Tours は、ダイビングツアーの予約管理を行うWebアプ
                                                                               │
                                                                      ┌────────▼────────┐
                                                                      │  Oracle 19c XE   │
-                                                                     │  (13テーブル)     │
+                                                                     │  (15テーブル)     │
                                                                      └─────────────────┘
 ```
 
@@ -153,9 +153,13 @@ Ocean Dive Tours は、ダイビングツアーの予約管理を行うWebアプ
     ┌──────────┐  ┌──────────────┐
     │   NEWS   │  │ ADMIN_USERS  │
     └──────────┘  └──────────────┘
+
+    ┌──────────────┐  ┌──────────────┐
+    │ REPORT_CACHE │  │REPORT_ALERTS │
+    └──────────────┘  └──────────────┘
 ```
 
-### 5.2 テーブル一覧（13テーブル）
+### 5.2 テーブル一覧（15テーブル）
 
 | テーブル | 主キー | 説明 | 外部キー |
 |---|---|---|---|
@@ -172,10 +176,12 @@ Ocean Dive Tours は、ダイビングツアーの予約管理を行うWebアプ
 | **DIVING_LOGS** | LOG_ID | ダイビングログ。ダイブ日、最大深度、潜水時間、水温、透明度、天候、バディ等 | FK → CUSTOMERS, DIVE_SITES, RESERVATIONS |
 | **NEWS** | NEWS_ID | ニュース。タイトル、CONTENT(CLOB)、カテゴリ、公開日、ステータス | — |
 | **ADMIN_USERS** | ADMIN_ID | 管理者ユーザー。ユーザー名、PASSWORD_HASH(RAW)、表示名、役割 | — |
+| **REPORT_CACHE** | CACHE_ID | ダッシュボードレポートキャッシュ。REPORT_KEY、SECTION、REPORT_DATE、METRIC_NAME、METRIC_VALUE、DIMENSION1-3 | — |
+| **REPORT_ALERTS** | ALERT_ID | レポート異常検知アラート。ALERT_TYPE、SEVERITY(HIGH/MEDIUM/LOW)、METRIC_NAME、CURRENT_VALUE、THRESHOLD_VALUE、DEVIATION、STATUS(NEW/ACKNOWLEDGED/RESOLVED) | — |
 
-### 5.3 シーケンス（11個）
+### 5.3 シーケンス（13個）
 
-各テーブルの主キー採番用: `SEQ_CUSTOMERS`, `SEQ_TOURS`, `SEQ_TOUR_SCHEDULES`, `SEQ_DIVE_SITES`, `SEQ_INSTRUCTORS`, `SEQ_OPTIONS_MASTER`, `SEQ_RESERVATIONS`, `SEQ_RES_OPTIONS`, `SEQ_DIVING_LOGS`, `SEQ_NEWS`, `SEQ_ADMIN_USERS`
+各テーブルの主キー採番用: `SEQ_CUSTOMERS`, `SEQ_TOURS`, `SEQ_TOUR_SCHEDULES`, `SEQ_DIVE_SITES`, `SEQ_INSTRUCTORS`, `SEQ_OPTIONS_MASTER`, `SEQ_RESERVATIONS`, `SEQ_RES_OPTIONS`, `SEQ_DIVING_LOGS`, `SEQ_NEWS`, `SEQ_ADMIN_USERS`, `SEQ_REPORT_CACHE`, `SEQ_REPORT_ALERTS`
 
 ---
 
@@ -192,7 +198,7 @@ Ocean Dive Tours は、ダイビングツアーの予約管理を行うWebアプ
 | **PKG_INSTRUCTOR** | INSTRUCTORS | インストラクター一覧、詳細+担当ツアー |
 | **PKG_DIVING_LOG** | DIVING_LOGS | ダイビングログ一覧（ページング）、保存 |
 | **PKG_NEWS** | NEWS | 最新ニュース取得、保存 |
-| **PKG_REPORT** | RESERVATIONS, TOUR_SCHEDULES, TOURS | 月次売上集計、ツアー人気ランキング（RANK）、稼働率 |
+| **PKG_REPORT** | RESERVATIONS, TOUR_SCHEDULES, TOURS, REPORT_CACHE, REPORT_ALERTS | 月次売上集計、ツアー人気ランキング（RANK）、稼働率、総合ダッシュボードレポート生成 |
 
 ### 6.2 プロシージャ詳細
 
@@ -262,6 +268,7 @@ Ocean Dive Tours は、ダイビングツアーの予約管理を行うWebアプ
 | GET_MONTHLY_SALES | IN: p_year, p_month / OUT: o_report (SYS_REFCURSOR) | 月次売上集計 |
 | GET_TOUR_POPULARITY | IN: p_date_from, p_date_to, p_limit / OUT: o_report (SYS_REFCURSOR) | ツアー人気RANKランキング |
 | GET_OCCUPANCY_RATE | IN: p_year, p_month / OUT: o_report (SYS_REFCURSOR) | ツアースケジュール稼働率 |
+| GENERATE_DASHBOARD_REPORT | IN: p_year, p_month / OUT: o_sales_trend, o_area_matrix, o_instructor_kpi, o_customer_segment, o_cancel_analysis, o_anomaly_alerts (各SYS_REFCURSOR) | 総合ダッシュボードレポート生成（約700行）。CONNECT BY LEVELカレンダー生成、GROUPING SETS集計、RFM分析（NTILE）、ウィンドウ関数（LAG/DENSE_RANK/PERCENT_RANK/RATIO_TO_REPORT）、σ異常検知、MERGE INTO キャッシュ更新 |
 
 ---
 
@@ -285,7 +292,7 @@ Ocean Dive Tours は、ダイビングツアーの予約管理を行うWebアプ
 
 | クラス | エンドポイント | 説明 |
 |---|---|---|
-| **AdminDashboardController** | `GET /admin`, `/admin/dashboard` | 管理ダッシュボード |
+| **AdminDashboardController** | `GET /admin`, `/admin/dashboard` | 管理ダッシュボード（年月指定パラメータ対応、6セクションレポート表示） |
 | **AdminTourController** | `GET/POST /admin/tours/*` | ツアーCRUD |
 | **AdminReservationController** | `GET /admin/reservations` | 予約管理一覧 |
 | **AdminCustomerController** | `GET /admin/customers` | 顧客管理一覧 |
@@ -310,7 +317,7 @@ Ocean Dive Tours は、ダイビングツアーの予約管理を行うWebアプ
 | **InstructorService** | getInstructors, getInstructorDetail |
 | **DivingLogService** | getCustomerLogs, saveDivingLog |
 | **NewsService** | getLatestNews, saveNews |
-| **ReportService** | getMonthlySales, getTourPopularity, getOccupancyRate |
+| **ReportService** | getMonthlySales, getTourPopularity, getOccupancyRate, getDashboardReport |
 
 ### 7.3 DAO層（9クラス）
 
@@ -325,12 +332,12 @@ Ocean Dive Tours は、ダイビングツアーの予約管理を行うWebアプ
 | **InstructorDao** | PKG_INSTRUCTOR | INSTRUCTOR_ROW_MAPPER, TOUR_ROW_MAPPER |
 | **DivingLogDao** | PKG_DIVING_LOG | LOG_ROW_MAPPER |
 | **NewsDao** | PKG_NEWS | NEWS_ROW_MAPPER |
-| **ReportDao** | PKG_REPORT | REPORT_ROW_MAPPER |
+| **ReportDao** | PKG_REPORT | REPORT_ROW_MAPPER, SALES_TREND_ROW_MAPPER, AREA_MATRIX_ROW_MAPPER, INSTRUCTOR_KPI_ROW_MAPPER, CUSTOMER_SEGMENT_ROW_MAPPER, CANCEL_ANALYSIS_ROW_MAPPER, ANOMALY_ALERT_ROW_MAPPER |
 | **OptionMasterDao** | —（直接SQL） | OPTION_ROW_MAPPER |
 
 ### 7.4 DTO・Formクラス
 
-#### DTO（12クラス）
+#### DTO（13クラス）
 
 | クラス | 説明 |
 |---|---|
@@ -346,6 +353,7 @@ Ocean Dive Tours は、ダイビングツアーの予約管理を行うWebアプ
 | DivingLogDto | ダイビングログ（深度、時間、水温、透明度等） |
 | NewsDto | ニュース（タイトル、本文、カテゴリ、公開日） |
 | ReportDto | レポート汎用（売上、予約数、稼働率等） |
+| DashboardReportDto | ダッシュボードレポート（SalesTrendRow, AreaMatrixRow, InstructorKpiRow, CustomerSegmentRow, CancelAnalysisRow, AnomalyAlertRow の6内部クラス） |
 
 #### Form（4クラス）— Bean Validationアノテーション付き
 
@@ -533,7 +541,8 @@ legacy-java-app-oracle/
 │   ├── migration/                  # DDL・初期データ
 │   │   ├── V001__create_tables.sql #   テーブル・シーケンス・インデックス
 │   │   ├── V002__create_packages.sql#  PL/SQLパッケージ生成
-│   │   └── V003__insert_master_data.sql# マスタデータ
+│   │   ├── V003__insert_master_data.sql# マスタデータ
+│   │   └── V004__create_dashboard_tables.sql# ダッシュボードレポート用テーブル
 │   ├── packages/                   # PL/SQLパッケージソース（8パッケージ×spec/body）
 │   │   ├── pkg_customer_spec.sql
 │   │   ├── pkg_customer_body.sql
@@ -569,13 +578,15 @@ legacy-java-app-oracle/
     │   ├── controller/                 # 公開・顧客画面コントローラ（7クラス＋例外ハンドラ）
     │   │   └── admin/                  #   管理画面コントローラ（5クラス）
     │   ├── dao/                        # DAOクラス（9クラス）
-    │   ├── dto/                        # DTOクラス（12クラス）
+    │   ├── dto/                        # DTOクラス（13クラス）
     │   ├── form/                       # フォームクラス（4クラス）
     │   └── service/                    # サービスクラス（8クラス）
     └── resources/
         ├── application.yml             # アプリケーション設定
         ├── messages.properties         # メッセージ定義
         ├── templates/                  # Thymeleafテンプレート（26ファイル）
+        ├── static/css/style.css        # カスタムCSS
+        └── static/js/app.js           # JavaScript
         ├── static/css/style.css        # カスタムCSS
         └── static/js/app.js           # JavaScript
 ```
