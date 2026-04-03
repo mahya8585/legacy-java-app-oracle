@@ -4,7 +4,11 @@
 -- Oracle source: DIVINGAPP/PACKAGE/PKG_TOUR.sql
 -- Generated at: 2026-04-03T15:26:02.059897
 
-CREATE OR REPLACE PROCEDURE divingapp.search_tours(
+-- =========================================================================
+-- ツアー検索（動的WHERE構築 + ページネーション）
+-- Oracle: PROCEDURE SEARCH_TOURS with SYS_REFCURSOR OUT
+-- =========================================================================
+CREATE OR REPLACE PROCEDURE divingapp.pkg_tour_search_tours(
     IN p_area VARCHAR,
     IN p_difficulty VARCHAR,
     IN p_date_from TIMESTAMP,
@@ -95,7 +99,11 @@ EXCEPTION
 END;
 $$;
 
-CREATE OR REPLACE PROCEDURE divingapp.get_tour_detail(
+-- =========================================================================
+-- ツアー詳細取得（4カーソル返却）
+-- Oracle: PROCEDURE GET_TOUR_DETAIL with 4 SYS_REFCURSOR OUT
+-- =========================================================================
+CREATE OR REPLACE PROCEDURE divingapp.pkg_tour_get_tour_detail(
     IN p_tour_id NUMERIC,
     INOUT o_tour refcursor,
     INOUT o_sites refcursor,
@@ -198,7 +206,11 @@ EXCEPTION
 END;
 $$;
 
-CREATE OR REPLACE PROCEDURE divingapp.get_featured_tours(
+-- =========================================================================
+-- おすすめツアー取得
+-- Oracle: PROCEDURE GET_FEATURED_TOURS with SYS_REFCURSOR OUT
+-- =========================================================================
+CREATE OR REPLACE PROCEDURE divingapp.pkg_tour_get_featured_tours(
     IN p_limit NUMERIC,
     INOUT o_tours refcursor
 )
@@ -234,7 +246,11 @@ EXCEPTION
 END;
 $$;
 
-CREATE OR REPLACE PROCEDURE divingapp.save_tour(
+-- =========================================================================
+-- ツアー保存（登録・更新）
+-- Oracle: PROCEDURE SAVE_TOUR with IN OUT p_tour_id
+-- =========================================================================
+CREATE OR REPLACE PROCEDURE divingapp.pkg_tour_save_tour(
     INOUT p_tour_id NUMERIC,
     IN p_tour_name VARCHAR,
     IN p_description TEXT,
@@ -329,7 +345,11 @@ EXCEPTION
 END;
 $$;
 
-CREATE OR REPLACE PROCEDURE divingapp.delete_tour(
+-- =========================================================================
+-- ツアー論理削除
+-- 未来の確定済み予約がある場合は削除不可
+-- =========================================================================
+CREATE OR REPLACE PROCEDURE divingapp.pkg_tour_delete_tour(
     IN p_tour_id NUMERIC,
     OUT o_result_code NUMERIC,
     OUT o_result_msg VARCHAR

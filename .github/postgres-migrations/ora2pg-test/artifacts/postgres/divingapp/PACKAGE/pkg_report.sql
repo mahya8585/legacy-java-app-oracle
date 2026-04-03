@@ -180,7 +180,7 @@ BEGIN
 
     IF p_month IS NOT NULL THEN
         v_date_from := to_date(p_year::text || '-' || lpad(p_month::text, 2, '0') || '-01', 'YYYY-MM-DD');
-        v_date_to   := (date_trunc('month', v_date_from) + interval '1 month - 1 day')::date;
+        v_date_to   := (date_trunc('month', v_date_from) + interval '1 month' - interval '1 day')::date;
     ELSE
         v_date_from := to_date(p_year::text || '-01-01', 'YYYY-MM-DD');
         v_date_to   := to_date(p_year::text || '-12-31', 'YYYY-MM-DD');
@@ -845,8 +845,8 @@ BEGIN
                )                                                      AS alert_rank,
                COUNT(*) OVER ()                                       AS total_alerts,
                COUNT(*) OVER (PARTITION BY ra.severity)               AS severity_count,
-               ROUND((COUNT(*) OVER (PARTITION BY ra.severity)::numeric / NULLIF(COUNT(*) OVER ()::numeric, 0)) * 100, 1)
-                                                                      AS severity_dist_pct
+               ROUND(COUNT(*) OVER (PARTITION BY ra.severity)::numeric * 100.0
+                     / NULLIF(COUNT(*) OVER (), 0), 1)                AS severity_dist_pct
           FROM divingapp.report_alerts ra
          WHERE ra.status = 'NEW'
            AND ra.detected_at >= (current_timestamp - interval '10 minutes')

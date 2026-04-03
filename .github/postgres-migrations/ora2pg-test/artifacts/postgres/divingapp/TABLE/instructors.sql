@@ -1,4 +1,4 @@
--- PostgreSQL DDL for {oracle_object["owner"]}.{oracle_object["name"]} (TABLE)
+-- PostgreSQL DDL for divingapp.instructors (TABLE)
 -- Generated from Oracle → PostgreSQL migration
 -- Mapping type: one_to_one
 -- Oracle source: DIVINGAPP/TABLE/INSTRUCTORS.sql
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS divingapp.instructors (
     profile TEXT,
     photo_url VARCHAR(500),
     status VARCHAR(20) DEFAULT 'ACTIVE' NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT pk_instructors PRIMARY KEY (instructor_id)
 );

@@ -1,4 +1,4 @@
--- PostgreSQL DDL for {oracle_object["owner"]}.{oracle_object["name"]} (TABLE)
+-- PostgreSQL DDL for divingapp.admin_users (TABLE)
 -- Generated from Oracle → PostgreSQL migration
 -- Mapping type: one_to_one
 -- Oracle source: DIVINGAPP/TABLE/ADMIN_USERS.sql

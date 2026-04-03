@@ -22,7 +22,7 @@ DECLARE
     v_qty_count BIGINT := 0;
 BEGIN
     SELECT t.base_price
-      INTO v_base_price
+      INTO STRICT v_base_price
       FROM divingapp.tour_schedules ts
       JOIN divingapp.tours t ON ts.tour_id = t.tour_id
      WHERE ts.schedule_id = p_schedule_id;
@@ -46,11 +46,16 @@ BEGIN
                 v_opt_qty := 1;
             END IF;
 
-            SELECT unit_price
-              INTO v_unit_price
-              FROM divingapp.options_master
-             WHERE option_id = v_opt_id
-               AND status = 'ACTIVE';
+            BEGIN
+                SELECT unit_price
+                  INTO STRICT v_unit_price
+                  FROM divingapp.options_master
+                 WHERE option_id = v_opt_id
+                   AND status = 'ACTIVE';
+            EXCEPTION
+                WHEN no_data_found THEN
+                    RAISE EXCEPTION USING ERRCODE = 'P0001', MESSAGE = '無効なオプションIDです: ' || v_opt_id;
+            END;
 
             v_total := v_total + (v_unit_price * v_opt_qty);
         END LOOP;
@@ -101,11 +106,16 @@ BEGIN
         RAISE EXCEPTION USING ERRCODE = 'P0001', MESSAGE = '参加人数は1名以上を指定してください。';
     END IF;
 
-    SELECT ts.status, ts.remaining_seats, ts.version, ts.tour_id
-      INTO v_schedule_status, v_remaining_seats, v_version, v_tour_id
-      FROM divingapp.tour_schedules ts
-     WHERE ts.schedule_id = p_schedule_id
-     FOR UPDATE NOWAIT;
+    BEGIN
+        SELECT ts.status, ts.remaining_seats, ts.version, ts.tour_id
+          INTO STRICT v_schedule_status, v_remaining_seats, v_version, v_tour_id
+          FROM divingapp.tour_schedules ts
+         WHERE ts.schedule_id = p_schedule_id
+         FOR UPDATE NOWAIT;
+    EXCEPTION
+        WHEN no_data_found THEN
+            RAISE EXCEPTION USING ERRCODE = 'P0001', MESSAGE = '指定されたスケジュールが見つかりません。SCHEDULE_ID=' || p_schedule_id;
+    END;
 
     IF v_schedule_status <> 'OPEN' THEN
         RAISE EXCEPTION USING ERRCODE = 'P0001', MESSAGE = 'このスケジュールは予約受付停止中です。ステータス=' || v_schedule_status;
@@ -212,13 +222,18 @@ DECLARE
     v_days_until BIGINT;
     v_refund_rate NUMERIC;
 BEGIN
-    SELECT r.customer_id, r.status, r.total_price,
-           r.num_participants, r.schedule_id, ts.tour_date
-      INTO v_res_customer_id, v_res_status, v_total_price,
-           v_num_participants, v_schedule_id, v_tour_date
-      FROM divingapp.reservations r
-      JOIN divingapp.tour_schedules ts ON r.schedule_id = ts.schedule_id
-     WHERE r.reservation_id = p_reservation_id;
+    BEGIN
+        SELECT r.customer_id, r.status, r.total_price,
+               r.num_participants, r.schedule_id, ts.tour_date
+          INTO STRICT v_res_customer_id, v_res_status, v_total_price,
+               v_num_participants, v_schedule_id, v_tour_date
+          FROM divingapp.reservations r
+          JOIN divingapp.tour_schedules ts ON r.schedule_id = ts.schedule_id
+         WHERE r.reservation_id = p_reservation_id;
+    EXCEPTION
+        WHEN no_data_found THEN
+            RAISE EXCEPTION USING ERRCODE = 'P0001', MESSAGE = '指定された予約が見つかりません。予約ID=' || p_reservation_id;
+    END;
 
     IF v_res_customer_id <> p_customer_id THEN
         RAISE EXCEPTION USING ERRCODE = 'P0001', MESSAGE = 'この予約はご自身の予約ではありません。';
@@ -335,6 +350,9 @@ BEGIN
           JOIN divingapp.options_master om ON ro.option_id = om.option_id
          WHERE ro.reservation_id = p_reservation_id
          ORDER BY om.option_category, om.option_name;
+EXCEPTION
+    WHEN others THEN
+        RAISE EXCEPTION USING ERRCODE = 'P0001', MESSAGE = '予約詳細取得中にエラーが発生しました: ' || SQLERRM;
 END;
 $$;
 
@@ -367,6 +385,9 @@ BEGIN
          WHERE r.customer_id = p_customer_id
            AND (p_status IS NULL OR r.status = p_status)
          ORDER BY r.created_at DESC;
+EXCEPTION
+    WHEN others THEN
+        RAISE EXCEPTION USING ERRCODE = 'P0001', MESSAGE = '顧客予約一覧取得中にエラーが発生しました: ' || SQLERRM;
 END;
 $$;
 
@@ -436,5 +457,8 @@ BEGIN
           ) s
          WHERE s.rn > v_offset
            AND s.rn <= v_offset + p_page_size;
+EXCEPTION
+    WHEN others THEN
+        RAISE EXCEPTION USING ERRCODE = 'P0001', MESSAGE = '予約一覧取得中にエラーが発生しました: ' || SQLERRM;
 END;
 $$;

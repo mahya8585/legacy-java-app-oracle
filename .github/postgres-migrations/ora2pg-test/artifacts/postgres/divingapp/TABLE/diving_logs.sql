@@ -1,4 +1,4 @@
--- PostgreSQL DDL for {oracle_object["owner"]}.{oracle_object["name"]} (TABLE)
+-- PostgreSQL DDL for divingapp.diving_logs (TABLE)
 -- Generated from Oracle → PostgreSQL migration
 -- Mapping type: one_to_one
 -- Oracle source: DIVINGAPP/TABLE/DIVING_LOGS.sql
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS divingapp.diving_logs (
 	customer_id BIGINT NOT NULL,
 	site_id BIGINT,
 	reservation_id BIGINT,
-	dive_date TIMESTAMP NOT NULL,
+	dive_date DATE NOT NULL,
 	max_depth NUMERIC(5,1),
 	dive_time BIGINT,
 	water_temp NUMERIC(4,1),

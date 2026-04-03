@@ -1,4 +1,4 @@
--- PostgreSQL DDL for {oracle_object["owner"]}.{oracle_object["name"]} (TABLE)
+-- PostgreSQL DDL for divingapp.dive_sites (TABLE)
 -- Generated from Oracle → PostgreSQL migration
 -- Mapping type: one_to_one
 -- Oracle source: DIVINGAPP/TABLE/DIVE_SITES.sql
@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS divingapp.dive_sites (
     marine_life VARCHAR(1000),
     access_info VARCHAR(500),
     status VARCHAR(20) DEFAULT 'ACTIVE' NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT ck_ds_difficulty CHECK (difficulty IN ('BEGINNER', 'INTERMEDIATE', 'ADVANCED', 'EXPERT')),
     CONSTRAINT pk_dive_sites PRIMARY KEY (site_id)
 );

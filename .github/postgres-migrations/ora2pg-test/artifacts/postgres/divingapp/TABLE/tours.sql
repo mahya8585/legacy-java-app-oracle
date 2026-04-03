@@ -1,4 +1,4 @@
--- PostgreSQL DDL for {oracle_object["owner"]}.{oracle_object["name"]} (TABLE)
+-- PostgreSQL DDL for divingapp.tours (TABLE)
 -- Generated from Oracle → PostgreSQL migration
 -- Mapping type: one_to_one
 -- Oracle source: DIVINGAPP/TABLE/TOURS.sql
@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS divingapp.tours (
     min_dive_count BIGINT DEFAULT 0,
     featured_flag CHAR(1) DEFAULT 'N' NOT NULL,
     status VARCHAR(20) DEFAULT 'ACTIVE' NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT ck_tours_difficulty CHECK (difficulty IN ('BEGINNER', 'INTERMEDIATE', 'ADVANCED', 'EXPERT')),
     CONSTRAINT ck_tours_status CHECK (status IN ('ACTIVE', 'INACTIVE', 'DELETED')),
     CONSTRAINT ck_tours_featured CHECK (featured_flag IN ('Y', 'N')),

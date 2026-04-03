@@ -1,4 +1,4 @@
--- PostgreSQL DDL for {oracle_object["owner"]}.{oracle_object["name"]} (TABLE)
+-- PostgreSQL DDL for divingapp.options_master (TABLE)
 -- Generated from Oracle → PostgreSQL migration
 -- Mapping type: one_to_one
 -- Oracle source: DIVINGAPP/TABLE/OPTIONS_MASTER.sql
@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS divingapp.options_master (
     unit_price BIGINT NOT NULL,
     description VARCHAR(500),
     status VARCHAR(20) DEFAULT 'ACTIVE' NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT ck_om_category CHECK (option_category IN ('RENTAL', 'TRANSPORT', 'PHOTO', 'INSURANCE', 'OTHER')),
     CONSTRAINT pk_options_master PRIMARY KEY (option_id)
 );

@@ -31,7 +31,7 @@ BEGIN
     -- 顧客検索
     BEGIN
         SELECT c.customer_id, c.password_hash, c.status
-          INTO o_customer_id, v_stored_hash, v_status
+          INTO STRICT o_customer_id, v_stored_hash, v_status
           FROM divingapp.customers c
          WHERE c.email = p_email;
     EXCEPTION
@@ -39,6 +39,7 @@ BEGIN
             o_customer_id := NULL;
             o_result_code := -1;
             o_result_msg  := 'メールアドレスまたはパスワードが正しくありません。';
+            RETURN NEXT;
             RETURN;
     END;
 
@@ -47,6 +48,7 @@ BEGIN
         o_customer_id := NULL;
         o_result_code := -2;
         o_result_msg  := 'アカウントが無効です。管理者にお問い合わせください。';
+        RETURN NEXT;
         RETURN;
     END IF;
 
@@ -62,6 +64,7 @@ BEGIN
         o_result_msg  := 'メールアドレスまたはパスワードが正しくありません。';
     END IF;
 
+    RETURN NEXT;
     RETURN;
 
 EXCEPTION
@@ -140,6 +143,7 @@ BEGIN
     o_result_code := 0;
     o_result_msg  := '顧客登録が完了しました。顧客ID=' || o_customer_id;
 
+    RETURN NEXT;
     RETURN;
 
 EXCEPTION
@@ -202,6 +206,7 @@ BEGIN
     o_result_code := 0;
     o_result_msg  := 'プロフィールを更新しました。';
 
+    RETURN NEXT;
     RETURN;
 
 EXCEPTION

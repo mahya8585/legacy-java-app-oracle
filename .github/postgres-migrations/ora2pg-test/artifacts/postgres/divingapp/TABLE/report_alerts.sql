@@ -1,4 +1,4 @@
--- PostgreSQL DDL for {oracle_object["owner"]}.{oracle_object["name"]} (TABLE)
+-- PostgreSQL DDL for divingapp.report_alerts (TABLE)
 -- Generated from Oracle → PostgreSQL migration
 -- Mapping type: one_to_one
 -- Oracle source: DIVINGAPP/TABLE/REPORT_ALERTS.sql
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS divingapp.report_alerts (
     threshold_value NUMERIC(15,2),
     deviation NUMERIC(10,4),
     message VARCHAR(500),
-    detected_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    detected_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,
     status VARCHAR(20) DEFAULT 'NEW' NOT NULL,
     CONSTRAINT ck_ra_severity CHECK (severity IN ('HIGH', 'MEDIUM', 'LOW')),
     CONSTRAINT ck_ra_status CHECK (status IN ('NEW', 'ACKNOWLEDGED', 'RESOLVED')),

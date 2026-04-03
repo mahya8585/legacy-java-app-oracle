@@ -1,4 +1,4 @@
--- PostgreSQL DDL for {oracle_object["owner"]}.{oracle_object["name"]} (TABLE)
+-- PostgreSQL DDL for divingapp.news (TABLE)
 -- Generated from Oracle → PostgreSQL migration
 -- Mapping type: one_to_one
 -- Oracle source: DIVINGAPP/TABLE/NEWS.sql
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS divingapp.news (
     title VARCHAR(300) NOT NULL,
     content TEXT NOT NULL,
     category VARCHAR(50),
-    publish_date TIMESTAMP NOT NULL,
+    publish_date DATE NOT NULL,
     status VARCHAR(20) DEFAULT 'PUBLISHED' NOT NULL,
     created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,
