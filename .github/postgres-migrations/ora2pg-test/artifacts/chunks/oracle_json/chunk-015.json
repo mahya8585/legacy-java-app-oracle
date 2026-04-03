@@ -1,0 +1,19 @@
+{
+  "chunk_number": 15,
+  "number_of_objects": 1,
+  "tokens": 150,
+  "object_types": [
+    "SEQUENCE"
+  ],
+  "objects": [
+    {
+      "object_type": "SEQUENCE",
+      "owner": "DIVINGAPP",
+      "name": "SEQ_OPTIONS_MASTER",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_OPTIONS_MASTER.sql",
+      "content": "\n   CREATE SEQUENCE  \"DIVINGAPP\".\"SEQ_OPTIONS_MASTER\"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 10 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_OPTIONS_MASTER",
+      "depends_on": []
+    }
+  ]
+}

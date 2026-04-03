@@ -1,0 +1,51 @@
+{
+  "chunk_id": "chunk-008",
+  "expected_objects": {
+    "ORACLE.PACKAGE.PKG_REPORT": {
+      "object_id": "ORACLE.PACKAGE.PKG_REPORT",
+      "name": "PKG_REPORT",
+      "type": "PACKAGE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.PACKAGE.PKG_REPORT": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.PACKAGE.PKG_REPORT",
+        "name": "PKG_REPORT",
+        "type": "PACKAGE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "pkg_report",
+        "type": "PACKAGE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle PACKAGE decomposed into 4 PostgreSQL PROCEDURE definitions in a single chunk object due to JSON limitation., Oracle SYS_REFCURSOR mapped to PostgreSQL refcursor INOUT parameters with OPEN FOR queries., Oracle NVL converted to COALESCE; CONNECT BY converted to WITH RECURSIVE; LISTAGG converted to string_agg; ADD_MONTHS converted to interval arithmetic., Oracle MERGE converted to INSERT ... ON CONFLICT, assuming report_cache has a unique constraint on (report_key, section, metric_name) and identity/defaults for ids., Oracle RAISE_APPLICATION_ERROR converted to PL/pgSQL RAISE EXCEPTION with ERRCODE P0001."
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:23:56.926849",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:23:45.216802",
+  "last_updated": "2026-04-03T15:23:45.216802",
+  "total_expected": 1,
+  "total_converted": 1,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

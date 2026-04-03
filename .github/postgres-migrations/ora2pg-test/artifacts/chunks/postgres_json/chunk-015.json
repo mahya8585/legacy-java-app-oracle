@@ -1,0 +1,25 @@
+{
+  "chunk_number": 15,
+  "number_of_objects": 1,
+  "object_types": [
+    "SEQUENCE"
+  ],
+  "objects": [
+    {
+      "object_type": "SEQUENCE",
+      "schema_name": "divingapp",
+      "name": "seq_options_master",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_OPTIONS_MASTER.sql",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_OPTIONS_MASTER",
+      "owner": "DIVINGAPP",
+      "content": "CREATE SEQUENCE IF NOT EXISTS divingapp.seq_options_master\n    INCREMENT BY 1\n    START WITH 10\n    MINVALUE 1\n    NO CYCLE;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint range; MAXVALUE omitted.",
+        "Oracle NOCACHE/NOORDER/NOKEEP/NOSCALE/GLOBAL have no direct PostgreSQL sequence DDL equivalents (ignored)."
+      ],
+      "depends_on": []
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-015.json"
+}

@@ -1,0 +1,33 @@
+{
+  "chunk_number": 11,
+  "number_of_objects": 1,
+  "object_types": [
+    "INDEX"
+  ],
+  "objects": [
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_ro_reservation",
+      "source": "DIVINGAPP/INDEX/IDX_RO_RESERVATION.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_RO_RESERVATION",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_ro_reservation ON divingapp.reservation_options (reservation_id);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle PCTFREE/INITRANS/MAXTRANS/COMPUTE STATISTICS/TABLESPACE clauses not applicable in PostgreSQL; omitted.",
+        "Removed schema qualification from index name (PostgreSQL creates index in same schema as target table)."
+      ],
+      "depends_on": [
+        {
+          "name": "reservation_options",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-006",
+          "node_id": "DIVINGAPP.TABLE.RESERVATION_OPTIONS"
+        }
+      ]
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-011.json"
+}

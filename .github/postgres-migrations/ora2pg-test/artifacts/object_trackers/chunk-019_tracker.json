@@ -1,0 +1,51 @@
+{
+  "chunk_id": "chunk-019",
+  "expected_objects": {
+    "ORACLE.SEQUENCE.SEQ_INSTRUCTORS": {
+      "object_id": "ORACLE.SEQUENCE.SEQ_INSTRUCTORS",
+      "name": "SEQ_INSTRUCTORS",
+      "type": "SEQUENCE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.SEQUENCE.SEQ_INSTRUCTORS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.SEQUENCE.SEQ_INSTRUCTORS",
+        "name": "SEQ_INSTRUCTORS",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "seq_instructors",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint; omitted MAXVALUE, Oracle NOCACHE/NOORDER/NOKEEP/NOSCALE/GLOBAL options omitted (no direct PostgreSQL equivalent)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:17:21.110003",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:17:07.023957",
+  "last_updated": "2026-04-03T15:17:07.023957",
+  "total_expected": 1,
+  "total_converted": 1,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

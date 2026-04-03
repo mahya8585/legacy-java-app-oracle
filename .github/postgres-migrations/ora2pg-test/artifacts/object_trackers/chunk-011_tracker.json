@@ -1,0 +1,51 @@
+{
+  "chunk_id": "chunk-011",
+  "expected_objects": {
+    "ORACLE.INDEX.IDX_RO_RESERVATION": {
+      "object_id": "ORACLE.INDEX.IDX_RO_RESERVATION",
+      "name": "IDX_RO_RESERVATION",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.INDEX.IDX_RO_RESERVATION": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_RO_RESERVATION",
+        "name": "IDX_RO_RESERVATION",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_ro_reservation",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle PCTFREE/INITRANS/MAXTRANS/COMPUTE STATISTICS/TABLESPACE clauses not applicable in PostgreSQL; omitted., Removed schema qualification from index name (PostgreSQL creates index in same schema as target table)."
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:25:10.510539",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:24:59.068549",
+  "last_updated": "2026-04-03T15:24:59.068549",
+  "total_expected": 1,
+  "total_converted": 1,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

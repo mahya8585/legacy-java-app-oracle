@@ -1,0 +1,226 @@
+{
+  "chunk_id": "chunk-006",
+  "expected_objects": {
+    "ORACLE.TABLE.DIVING_LOGS": {
+      "object_id": "ORACLE.TABLE.DIVING_LOGS",
+      "name": "DIVING_LOGS",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.TABLE.RESERVATION_OPTIONS": {
+      "object_id": "ORACLE.TABLE.RESERVATION_OPTIONS",
+      "name": "RESERVATION_OPTIONS",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_RESERVATIONS_STATUS": {
+      "object_id": "ORACLE.INDEX.IDX_RESERVATIONS_STATUS",
+      "name": "IDX_RESERVATIONS_STATUS",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_RESERVATIONS_SCHEDULE": {
+      "object_id": "ORACLE.INDEX.IDX_RESERVATIONS_SCHEDULE",
+      "name": "IDX_RESERVATIONS_SCHEDULE",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_TS_STATUS": {
+      "object_id": "ORACLE.INDEX.IDX_TS_STATUS",
+      "name": "IDX_TS_STATUS",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.PACKAGE.PKG_INSTRUCTOR": {
+      "object_id": "ORACLE.PACKAGE.PKG_INSTRUCTOR",
+      "name": "PKG_INSTRUCTOR",
+      "type": "PACKAGE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.TABLE.DIVING_LOGS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.DIVING_LOGS",
+        "name": "DIVING_LOGS",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "diving_logs",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "DATE column DIVE_DATE converted to TIMESTAMP, CLOB column NOTES converted to TEXT, NUMBER columns converted to BIGINT unless precision/scale specified"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:20:39.287448",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.TABLE.RESERVATION_OPTIONS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.RESERVATION_OPTIONS",
+        "name": "RESERVATION_OPTIONS",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "reservation_options",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "NUMBER columns converted to BIGINT unless precision/scale specified"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:20:39.287448",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_RESERVATIONS_STATUS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_RESERVATIONS_STATUS",
+        "name": "IDX_RESERVATIONS_STATUS",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_reservations_status",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Removed schema qualification from index name (PostgreSQL restriction)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:20:39.287448",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_RESERVATIONS_SCHEDULE": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_RESERVATIONS_SCHEDULE",
+        "name": "IDX_RESERVATIONS_SCHEDULE",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_reservations_schedule",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Removed schema qualification from index name (PostgreSQL restriction)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:20:39.287448",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_TS_STATUS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_TS_STATUS",
+        "name": "IDX_TS_STATUS",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_ts_status",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Removed schema qualification from index name (PostgreSQL restriction)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:20:39.287448",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.PACKAGE.PKG_INSTRUCTOR": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.PACKAGE.PKG_INSTRUCTOR",
+        "name": "PKG_INSTRUCTOR",
+        "type": "PACKAGE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "get_instructors",
+        "type": "FUNCTION",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle PACKAGE procedure GET_INSTRUCTORS converted to PostgreSQL function returning refcursor"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:20:18.915732",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:20:18.899515",
+  "last_updated": "2026-04-03T15:20:18.915732",
+  "total_expected": 6,
+  "total_converted": 6,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

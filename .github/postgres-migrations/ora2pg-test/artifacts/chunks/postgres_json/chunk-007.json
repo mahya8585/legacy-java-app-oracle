@@ -1,0 +1,89 @@
+{
+  "chunk_number": 7,
+  "number_of_objects": 1,
+  "object_types": [
+    "PACKAGE"
+  ],
+  "objects": [
+    {
+      "object_type": "PACKAGE",
+      "schema_name": "divingapp",
+      "name": "pkg_tour",
+      "source": "DIVINGAPP/PACKAGE/PKG_TOUR.sql",
+      "node_id": "DIVINGAPP.PACKAGE.PKG_TOUR",
+      "owner": "DIVINGAPP",
+      "content": "CREATE OR REPLACE PROCEDURE divingapp.search_tours(\n    IN p_area VARCHAR,\n    IN p_difficulty VARCHAR,\n    IN p_date_from TIMESTAMP,\n    IN p_date_to TIMESTAMP,\n    IN p_price_min NUMERIC,\n    IN p_price_max NUMERIC,\n    IN p_duration_days NUMERIC,\n    IN p_keyword VARCHAR,\n    IN p_page NUMERIC,\n    IN p_page_size NUMERIC,\n    INOUT o_tours refcursor,\n    OUT o_total_count NUMERIC\n)\nLANGUAGE plpgsql\nAS $$\nDECLARE\n    v_offset NUMERIC;\n    v_page NUMERIC;\n    v_page_size NUMERIC;\nBEGIN\n    v_page := COALESCE(p_page, 1);\n    v_page_size := COALESCE(p_page_size, 10);\n    v_offset := (v_page - 1) * v_page_size;\n\n    -- 総件数取得\n    SELECT COUNT(DISTINCT t.tour_id)\n      INTO o_total_count\n      FROM divingapp.tours t\n      LEFT JOIN divingapp.tour_schedules ts ON t.tour_id = ts.tour_id\n     WHERE t.status = 'ACTIVE'\n       AND (p_area IS NULL OR t.area LIKE '%' || p_area || '%')\n       AND (p_difficulty IS NULL OR t.difficulty = p_difficulty)\n       AND (p_duration_days IS NULL OR t.duration_days = p_duration_days)\n       AND (p_date_from IS NULL OR ts.tour_date >= p_date_from)\n       AND (p_date_to IS NULL OR ts.tour_date <= p_date_to)\n       AND (p_price_min IS NULL OR t.base_price >= p_price_min)\n       AND (p_price_max IS NULL OR t.base_price <= p_price_max)\n       AND (\n            p_keyword IS NULL\n            OR UPPER(t.tour_name) LIKE '%' || UPPER(p_keyword) || '%'\n            OR POSITION(UPPER(p_keyword) IN UPPER(COALESCE(t.description::text, ''))) > 0\n       );\n\n    -- ページネーション付きツアー一覧\n    IF o_tours IS NULL THEN\n        o_tours := 'search_tours_' || pg_backend_pid() || '_' || txid_current();\n    END IF;\n\n    OPEN o_tours FOR\n        SELECT *\n          FROM (\n            SELECT DISTINCT\n                   t.tour_id,\n                   t.tour_name,\n                   t.description,\n                   t.area,\n                   t.difficulty,\n                   t.max_participants,\n                   t.base_price,\n                   t.duration_days,\n                   t.min_dive_count,\n                   t.featured_flag,\n                   t.status,\n                   t.created_at,\n                   ROW_NUMBER() OVER (ORDER BY t.created_at DESC) AS rn\n              FROM divingapp.tours t\n              LEFT JOIN divingapp.tour_schedules ts ON t.tour_id = ts.tour_id\n             WHERE t.status = 'ACTIVE'\n               AND (p_area IS NULL OR t.area LIKE '%' || p_area || '%')\n               AND (p_difficulty IS NULL OR t.difficulty = p_difficulty)\n               AND (p_duration_days IS NULL OR t.duration_days = p_duration_days)\n               AND (p_date_from IS NULL OR ts.tour_date >= p_date_from)\n               AND (p_date_to IS NULL OR ts.tour_date <= p_date_to)\n               AND (p_price_min IS NULL OR t.base_price >= p_price_min)\n               AND (p_price_max IS NULL OR t.base_price <= p_price_max)\n               AND (\n                    p_keyword IS NULL\n                    OR UPPER(t.tour_name) LIKE '%' || UPPER(p_keyword) || '%'\n                    OR POSITION(UPPER(p_keyword) IN UPPER(COALESCE(t.description::text, ''))) > 0\n               )\n          ) s\n         WHERE s.rn > v_offset\n           AND s.rn <= v_offset + v_page_size;\n\nEXCEPTION\n    WHEN OTHERS THEN\n        RAISE EXCEPTION 'ツアー検索中にエラーが発生しました: %', SQLERRM USING ERRCODE = 'P0001';\nEND;\n$$;\n\nCREATE OR REPLACE PROCEDURE divingapp.get_tour_detail(\n    IN p_tour_id NUMERIC,\n    INOUT o_tour refcursor,\n    INOUT o_sites refcursor,\n    INOUT o_instructors refcursor,\n    INOUT o_schedules refcursor\n)\nLANGUAGE plpgsql\nAS $$\nDECLARE\n    v_count NUMERIC;\nBEGIN\n    -- ツアー存在チェック\n    SELECT COUNT(*)\n      INTO v_count\n      FROM divingapp.tours\n     WHERE tour_id = p_tour_id\n       AND status <> 'DELETED';\n\n    IF v_count = 0 THEN\n        RAISE EXCEPTION '指定されたツアーが見つかりません。TOUR_ID=%', p_tour_id USING ERRCODE = 'P0001';\n    END IF;\n\n    -- ツアー基本情報\n    IF o_tour IS NULL THEN\n        o_tour := 'get_tour_detail_tour_' || pg_backend_pid() || '_' || txid_current();\n    END IF;\n    OPEN o_tour FOR\n        SELECT t.tour_id,\n               t.tour_name,\n               t.description,\n               t.area,\n               t.difficulty,\n               t.max_participants,\n               t.base_price,\n               t.duration_days,\n               t.min_dive_count,\n               t.featured_flag,\n               t.status,\n               t.created_at,\n               t.updated_at\n          FROM divingapp.tours t\n         WHERE t.tour_id = p_tour_id;\n\n    -- 関連ダイブサイト\n    IF o_sites IS NULL THEN\n        o_sites := 'get_tour_detail_sites_' || pg_backend_pid() || '_' || txid_current();\n    END IF;\n    OPEN o_sites FOR\n        SELECT ds.site_id,\n               ds.site_name,\n               ds.area,\n               ds.max_depth,\n               ds.difficulty,\n               ds.marine_life,\n               tds.dive_order\n          FROM divingapp.tour_dive_sites tds\n          JOIN divingapp.dive_sites ds ON tds.site_id = ds.site_id\n         WHERE tds.tour_id = p_tour_id\n           AND ds.status = 'ACTIVE'\n         ORDER BY tds.dive_order;\n\n    -- 担当インストラクター\n    IF o_instructors IS NULL THEN\n        o_instructors := 'get_tour_detail_instructors_' || pg_backend_pid() || '_' || txid_current();\n    END IF;\n    OPEN o_instructors FOR\n        SELECT i.instructor_id,\n               i.last_name,\n               i.first_name,\n               i.certification,\n               i.experience_years,\n               i.specialty,\n               i.photo_url,\n               ti.role\n          FROM divingapp.tour_instructors ti\n          JOIN divingapp.instructors i ON ti.instructor_id = i.instructor_id\n         WHERE ti.tour_id = p_tour_id\n           AND i.status = 'ACTIVE'\n         ORDER BY ti.role, i.last_name;\n\n    -- 今後のスケジュール（未来日のみ、日付順）\n    IF o_schedules IS NULL THEN\n        o_schedules := 'get_tour_detail_schedules_' || pg_backend_pid() || '_' || txid_current();\n    END IF;\n    OPEN o_schedules FOR\n        SELECT ts.schedule_id,\n               ts.tour_date,\n               ts.start_time,\n               ts.remaining_seats,\n               ts.status\n          FROM divingapp.tour_schedules ts\n         WHERE ts.tour_id = p_tour_id\n           AND ts.tour_date >= date_trunc('day', CURRENT_TIMESTAMP)\n           AND ts.status IN ('OPEN', 'FULL')\n         ORDER BY ts.tour_date ASC;\n\nEXCEPTION\n    WHEN OTHERS THEN\n        RAISE EXCEPTION 'ツアー詳細取得中にエラーが発生しました: %', SQLERRM USING ERRCODE = 'P0001';\nEND;\n$$;\n\nCREATE OR REPLACE PROCEDURE divingapp.get_featured_tours(\n    IN p_limit NUMERIC,\n    INOUT o_tours refcursor\n)\nLANGUAGE plpgsql\nAS $$\nDECLARE\n    v_limit NUMERIC;\nBEGIN\n    v_limit := COALESCE(p_limit, 6);\n\n    IF o_tours IS NULL THEN\n        o_tours := 'get_featured_tours_' || pg_backend_pid() || '_' || txid_current();\n    END IF;\n\n    OPEN o_tours FOR\n        SELECT t.tour_id,\n               t.tour_name,\n               t.area,\n               t.difficulty,\n               t.base_price,\n               t.duration_days,\n               t.min_dive_count,\n               t.created_at\n          FROM divingapp.tours t\n         WHERE t.featured_flag = 'Y'\n           AND t.status = 'ACTIVE'\n         ORDER BY t.created_at DESC\n         LIMIT v_limit::int;\n\nEXCEPTION\n    WHEN OTHERS THEN\n        RAISE EXCEPTION 'おすすめツアー取得中にエラーが発生しました: %', SQLERRM USING ERRCODE = 'P0001';\nEND;\n$$;\n\nCREATE OR REPLACE PROCEDURE divingapp.save_tour(\n    INOUT p_tour_id NUMERIC,\n    IN p_tour_name VARCHAR,\n    IN p_description TEXT,\n    IN p_area VARCHAR,\n    IN p_difficulty VARCHAR,\n    IN p_max_participants NUMERIC,\n    IN p_base_price NUMERIC,\n    IN p_duration_days NUMERIC,\n    IN p_min_dive_count NUMERIC,\n    IN p_featured_flag CHAR,\n    OUT o_result_code NUMERIC,\n    OUT o_result_msg VARCHAR\n)\nLANGUAGE plpgsql\nAS $$\nDECLARE\n    v_count NUMERIC;\nBEGIN\n    -- 必須項目バリデーション\n    IF p_tour_name IS NULL OR length(btrim(p_tour_name)) = 0 THEN\n        RAISE EXCEPTION 'ツアー名は必須です。' USING ERRCODE = 'P0001';\n    END IF;\n    IF p_area IS NULL OR length(btrim(p_area)) = 0 THEN\n        RAISE EXCEPTION 'エリアは必須です。' USING ERRCODE = 'P0001';\n    END IF;\n    IF p_difficulty IS NULL THEN\n        RAISE EXCEPTION '難易度は必須です。' USING ERRCODE = 'P0001';\n    END IF;\n    IF p_difficulty NOT IN ('BEGINNER', 'INTERMEDIATE', 'ADVANCED', 'EXPERT') THEN\n        RAISE EXCEPTION '難易度の値が不正です: %', p_difficulty USING ERRCODE = 'P0001';\n    END IF;\n    IF p_max_participants IS NULL OR p_max_participants <= 0 THEN\n        RAISE EXCEPTION '最大参加人数は1以上を指定してください。' USING ERRCODE = 'P0001';\n    END IF;\n    IF p_base_price IS NULL OR p_base_price < 0 THEN\n        RAISE EXCEPTION '基本料金は0以上を指定してください。' USING ERRCODE = 'P0001';\n    END IF;\n    IF p_duration_days IS NULL OR p_duration_days <= 0 THEN\n        RAISE EXCEPTION '日数は1以上を指定してください。' USING ERRCODE = 'P0001';\n    END IF;\n\n    IF p_tour_id IS NULL THEN\n        -- 新規登録\n        SELECT nextval('divingapp.seq_tours') INTO p_tour_id;\n\n        INSERT INTO divingapp.tours (\n            tour_id, tour_name, description, area, difficulty,\n            max_participants, base_price, duration_days,\n            min_dive_count, featured_flag, status,\n            created_at, updated_at\n        ) VALUES (\n            p_tour_id, p_tour_name, p_description, p_area, p_difficulty,\n            p_max_participants, p_base_price, p_duration_days,\n            COALESCE(p_min_dive_count, 0), COALESCE(p_featured_flag, 'N'), 'ACTIVE',\n            CURRENT_TIMESTAMP, CURRENT_TIMESTAMP\n        );\n\n        o_result_code := 0;\n        o_result_msg  := 'ツアーを登録しました。TOUR_ID=' || p_tour_id;\n    ELSE\n        -- 更新：存在チェック\n        SELECT COUNT(*)\n          INTO v_count\n          FROM divingapp.tours\n         WHERE tour_id = p_tour_id\n           AND status <> 'DELETED';\n\n        IF v_count = 0 THEN\n            RAISE EXCEPTION '更新対象のツアーが見つかりません。TOUR_ID=%', p_tour_id USING ERRCODE = 'P0001';\n        END IF;\n\n        UPDATE divingapp.tours\n           SET tour_name        = p_tour_name,\n               description      = p_description,\n               area             = p_area,\n               difficulty       = p_difficulty,\n               max_participants = p_max_participants,\n               base_price       = p_base_price,\n               duration_days    = p_duration_days,\n               min_dive_count   = COALESCE(p_min_dive_count, 0),\n               featured_flag    = COALESCE(p_featured_flag, 'N'),\n               updated_at       = CURRENT_TIMESTAMP\n         WHERE tour_id = p_tour_id;\n\n        o_result_code := 0;\n        o_result_msg  := 'ツアーを更新しました。TOUR_ID=' || p_tour_id;\n    END IF;\n\nEXCEPTION\n    WHEN OTHERS THEN\n        RAISE EXCEPTION 'ツアー保存中にエラーが発生しました: %', SQLERRM USING ERRCODE = 'P0001';\nEND;\n$$;\n\nCREATE OR REPLACE PROCEDURE divingapp.delete_tour(\n    IN p_tour_id NUMERIC,\n    OUT o_result_code NUMERIC,\n    OUT o_result_msg VARCHAR\n)\nLANGUAGE plpgsql\nAS $$\nDECLARE\n    v_count NUMERIC;\n    v_future_res NUMERIC;\nBEGIN\n    -- ツアー存在チェック\n    SELECT COUNT(*)\n      INTO v_count\n      FROM divingapp.tours\n     WHERE tour_id = p_tour_id\n       AND status <> 'DELETED';\n\n    IF v_count = 0 THEN\n        RAISE EXCEPTION '削除対象のツアーが見つかりません。TOUR_ID=%', p_tour_id USING ERRCODE = 'P0001';\n    END IF;\n\n    -- 未来の確定済み予約があるかチェック\n    SELECT COUNT(*)\n      INTO v_future_res\n      FROM divingapp.reservations r\n      JOIN divingapp.tour_schedules ts ON r.schedule_id = ts.schedule_id\n     WHERE ts.tour_id = p_tour_id\n       AND ts.tour_date >= date_trunc('day', CURRENT_TIMESTAMP)\n       AND r.status = 'CONFIRMED';\n\n    IF v_future_res > 0 THEN\n        RAISE EXCEPTION '確定済みの予約が%件存在するため削除できません。先に予約をキャンセルしてください。', v_future_res USING ERRCODE = 'P0001';\n    END IF;\n\n    -- 論理削除\n    UPDATE divingapp.tours\n       SET status     = 'DELETED',\n           updated_at = CURRENT_TIMESTAMP\n     WHERE tour_id = p_tour_id;\n\n    o_result_code := 0;\n    o_result_msg  := 'ツアーを削除しました。TOUR_ID=' || p_tour_id;\n\nEXCEPTION\n    WHEN OTHERS THEN\n        RAISE EXCEPTION 'ツアー削除中にエラーが発生しました: %', SQLERRM USING ERRCODE = 'P0001';\nEND;\n$$;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle PACKAGE decomposed into standalone PostgreSQL PROCEDUREs: search_tours, get_tour_detail, get_featured_tours, save_tour, delete_tour.",
+        "SYS_REFCURSOR OUT parameters mapped to refcursor INOUT parameters; cursor names generated for deterministic OPEN behavior.",
+        "Oracle DBMS_LOB.INSTR used for keyword search converted to POSITION() over text; DESCRIPTION CLOB mapped to TEXT.",
+        "Oracle SYSTIMESTAMP/SYSDATE/TRUNC(SYSDATE) mapped to CURRENT_TIMESTAMP/date_trunc('day', CURRENT_TIMESTAMP).",
+        "Oracle SEQ_TOURS.NEXTVAL mapped to nextval('divingapp.seq_tours'); removed DUAL usage.",
+        "Oracle NVL mapped to COALESCE.",
+        "Oracle COMMIT/ROLLBACK removed; PostgreSQL procedures run within caller transaction.",
+        "Fixed PostgreSQL rule: parameters following a defaulted parameter must also have defaults; added defaults to refcursor INOUT/OUT parameters.",
+        "Fixed PostgreSQL default-parameter constraints: (1) no defaults allowed for OUT/INOUT, and (2) any parameter after a defaulted one must also be defaulted. Resolved by removing defaults from INPUT params and handling NULLs inside the body."
+      ],
+      "depends_on": [
+        {
+          "name": "tour_instructors",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_INSTRUCTORS"
+        },
+        {
+          "name": "dive_sites",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.DIVE_SITES"
+        },
+        {
+          "name": "tour_dive_sites",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_DIVE_SITES"
+        },
+        {
+          "name": "reservations",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-005",
+          "node_id": "DIVINGAPP.TABLE.RESERVATIONS"
+        },
+        {
+          "name": "tour_schedules",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_SCHEDULES"
+        },
+        {
+          "name": "seq_tours",
+          "object_type": "SEQUENCE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.SEQUENCE.SEQ_TOURS"
+        },
+        {
+          "name": "instructors",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.INSTRUCTORS"
+        },
+        {
+          "name": "tours",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-007.json"
+}

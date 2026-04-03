@@ -1,0 +1,156 @@
+{
+  "chunk_id": "chunk-005",
+  "expected_objects": {
+    "ORACLE.TABLE.RESERVATIONS": {
+      "object_id": "ORACLE.TABLE.RESERVATIONS",
+      "name": "RESERVATIONS",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_TS_TOUR_DATE": {
+      "object_id": "ORACLE.INDEX.IDX_TS_TOUR_DATE",
+      "name": "IDX_TS_TOUR_DATE",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_TS_TOUR_ID": {
+      "object_id": "ORACLE.INDEX.IDX_TS_TOUR_ID",
+      "name": "IDX_TS_TOUR_ID",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.PACKAGE.PKG_DIVE_SITE": {
+      "object_id": "ORACLE.PACKAGE.PKG_DIVE_SITE",
+      "name": "PKG_DIVE_SITE",
+      "type": "PACKAGE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.TABLE.RESERVATIONS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.RESERVATIONS",
+        "name": "RESERVATIONS",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "reservations",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "NUMBER converted to BIGINT for integer columns, TIMESTAMP(6) DEFAULT SYSTIMESTAMP converted to TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP, Oracle ENABLE/USING INDEX/TABLESPACE/STORAGE/segment attributes omitted (not applicable in PostgreSQL)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:56.540764",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_TS_TOUR_DATE": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_TS_TOUR_DATE",
+        "name": "IDX_TS_TOUR_DATE",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_ts_tour_date",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Removed Oracle storage/tablespace attributes (not applicable in PostgreSQL), Removed schema-qualification from index name per PostgreSQL rules"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:56.540764",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_TS_TOUR_ID": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_TS_TOUR_ID",
+        "name": "IDX_TS_TOUR_ID",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_ts_tour_id",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Removed Oracle storage/tablespace attributes (not applicable in PostgreSQL), Removed schema-qualification from index name per PostgreSQL rules"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:56.540764",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.PACKAGE.PKG_DIVE_SITE": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.PACKAGE.PKG_DIVE_SITE",
+        "name": "PKG_DIVE_SITE",
+        "type": "PACKAGE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "get_dive_sites",
+        "type": "FUNCTION",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle package procedure GET_DIVE_SITES converted to set-returning function, SYS_REFCURSOR OUT converted to RETURNS TABLE result set, Oracle RAISE_APPLICATION_ERROR removed; callers should handle SQL errors/messages at application layer"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:37.312123",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:19:37.312123",
+  "last_updated": "2026-04-03T15:19:37.312123",
+  "total_expected": 4,
+  "total_converted": 4,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

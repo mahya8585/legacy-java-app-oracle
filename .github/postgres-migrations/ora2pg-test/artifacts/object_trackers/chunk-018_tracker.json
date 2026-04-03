@@ -1,0 +1,51 @@
+{
+  "chunk_id": "chunk-018",
+  "expected_objects": {
+    "ORACLE.SEQUENCE.SEQ_ADMIN_USERS": {
+      "object_id": "ORACLE.SEQUENCE.SEQ_ADMIN_USERS",
+      "name": "SEQ_ADMIN_USERS",
+      "type": "SEQUENCE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.SEQUENCE.SEQ_ADMIN_USERS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.SEQUENCE.SEQ_ADMIN_USERS",
+        "name": "SEQ_ADMIN_USERS",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "seq_admin_users",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint range; omitted MAXVALUE, Oracle NOCACHE/NOORDER/NOKEEP/NOSCALE/GLOBAL have no direct PostgreSQL equivalent; not applied"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:16:58.461218",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:16:47.429365",
+  "last_updated": "2026-04-03T15:16:47.429365",
+  "total_expected": 1,
+  "total_converted": 1,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

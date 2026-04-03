@@ -1,0 +1,51 @@
+{
+  "chunk_id": "chunk-003",
+  "expected_objects": {
+    "ORACLE.PACKAGE.PKG_CUSTOMER": {
+      "object_id": "ORACLE.PACKAGE.PKG_CUSTOMER",
+      "name": "PKG_CUSTOMER",
+      "type": "PACKAGE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.PACKAGE.PKG_CUSTOMER": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.PACKAGE.PKG_CUSTOMER",
+        "name": "PKG_CUSTOMER",
+        "type": "PACKAGE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "pkg_customer",
+        "type": "PACKAGE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle PACKAGE decomposed into multiple PostgreSQL functions within the same chunk object for JSON slot compatibility, Oracle DBMS_CRYPTO.HASH + UTL_I18N.STRING_TO_RAW replaced with pgcrypto digest(convert_to(text,'UTF8'),'sha256') (requires extension pgcrypto), Oracle SYS_REFCURSOR OUT parameters converted to set-returning functions (RETURNS TABLE), Oracle SEQ_CUSTOMERS.NEXTVAL replaced with nextval('divingapp.seq_customers'), Oracle COMMIT/ROLLBACK removed (PostgreSQL functions cannot transaction-control); rely on caller transaction semantics"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:18:35.263179",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:18:25.245845",
+  "last_updated": "2026-04-03T15:18:25.245845",
+  "total_expected": 1,
+  "total_converted": 1,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

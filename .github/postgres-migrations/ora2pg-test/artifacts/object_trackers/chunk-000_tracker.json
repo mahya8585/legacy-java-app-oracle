@@ -1,0 +1,51 @@
+{
+  "chunk_id": "chunk-000",
+  "expected_objects": {
+    "ORACLE.SCHEMA.DIVINGAPP": {
+      "object_id": "ORACLE.SCHEMA.DIVINGAPP",
+      "name": "DIVINGAPP",
+      "type": "SCHEMA",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.SCHEMA.DIVINGAPP": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.SCHEMA.DIVINGAPP",
+        "name": "DIVINGAPP",
+        "type": "SCHEMA",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "divingapp",
+        "type": "SCHEMA",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "UPPERCASE Oracle schema name converted to lowercase PostgreSQL schema name"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:13:14.635027",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:13:06.052733",
+  "last_updated": "2026-04-03T15:13:06.052733",
+  "total_expected": 1,
+  "total_converted": 1,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

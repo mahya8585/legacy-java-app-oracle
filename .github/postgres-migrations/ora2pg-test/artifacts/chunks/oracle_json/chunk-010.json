@@ -1,0 +1,59 @@
+{
+  "chunk_number": 10,
+  "number_of_objects": 2,
+  "tokens": 2206,
+  "object_types": [
+    "PACKAGE",
+    "INDEX"
+  ],
+  "objects": [
+    {
+      "object_type": "PACKAGE",
+      "owner": "DIVINGAPP",
+      "name": "PKG_DIVING_LOG",
+      "source": "DIVINGAPP/PACKAGE/PKG_DIVING_LOG.sql",
+      "content": "\n  CREATE OR REPLACE EDITIONABLE PACKAGE \"DIVINGAPP\".\"PKG_DIVING_LOG\" AS\n    -- 顧客別ダイビングログ一覧\n    PROCEDURE GET_CUSTOMER_LOGS(\n        p_customer_id   IN  NUMBER,\n        p_page          IN  NUMBER DEFAULT 1,\n        p_page_size     IN  NUMBER DEFAULT 20,\n        o_logs          OUT SYS_REFCURSOR,\n        o_total_count   OUT NUMBER\n    );\n\n    -- ダイビングログ登録・更新\n    PROCEDURE SAVE_DIVING_LOG(\n        p_log_id        IN OUT NUMBER,\n        p_customer_id   IN  NUMBER,\n        p_site_id       IN  NUMBER,\n        p_reservation_id IN NUMBER DEFAULT NULL,\n        p_dive_date     IN  DATE,\n        p_max_depth     IN  NUMBER,\n        p_dive_time     IN  NUMBER,\n        p_water_temp    IN  NUMBER,\n        p_visibility    IN  NUMBER,\n        p_weather       IN  VARCHAR2,\n        p_buddy         IN  VARCHAR2,\n        p_notes         IN  CLOB,\n        o_result_code   OUT NUMBER,\n        o_result_msg    OUT VARCHAR2\n    );\nEND PKG_DIVING_LOG;\nCREATE OR REPLACE EDITIONABLE PACKAGE BODY \"DIVINGAPP\".\"PKG_DIVING_LOG\" AS\n\n    -- =========================================================\n    -- 顧客別ダイビングログ一覧（ページネーション付き）\n    -- ダイブサイト名を結合し、ダイブ日の降順で返す\n    -- =========================================================\n    PROCEDURE GET_CUSTOMER_LOGS(\n        p_customer_id   IN  NUMBER,\n        p_page          IN  NUMBER DEFAULT 1,\n        p_page_size     IN  NUMBER DEFAULT 20,\n        o_logs          OUT SYS_REFCURSOR,\n        o_total_count   OUT NUMBER\n    ) IS\n        v_page      NUMBER := NVL(p_page, 1);\n        v_page_size NUMBER := NVL(p_page_size, 20);\n        v_offset    NUMBER;\n    BEGIN\n        -- 入力バリデーション\n        IF p_customer_id IS NULL THEN\n            RAISE_APPLICATION_ERROR(-20400, '顧客IDは必須です');\n        END IF;\n\n        IF v_page < 1 THEN\n            v_page := 1;\n        END IF;\n        IF v_page_size < 1 OR v_page_size > 100 THEN\n            v_page_size := 20;\n        END IF;\n\n        v_offset := (v_page - 1) * v_page_size;\n\n        -- 総件数取得\n        SELECT COUNT(*)\n          INTO o_total_count\n          FROM DIVING_LOGS\n         WHERE CUSTOMER_ID = p_customer_id;\n\n        -- ページネーション付きのログ取得\n        OPEN o_logs FOR\n            SELECT dl.LOG_ID,\n                   dl.CUSTOMER_ID,\n                   dl.SITE_ID,\n                   ds.SITE_NAME,\n                   ds.AREA AS SITE_AREA,\n                   dl.RESERVATION_ID,\n                   dl.DIVE_DATE,\n                   dl.MAX_DEPTH,\n                   dl.DIVE_TIME,\n                   dl.WATER_TEMP,\n                   dl.VISIBILITY,\n                   dl.WEATHER,\n                   dl.BUDDY,\n                   dl.NOTES,\n                   dl.CREATED_AT,\n                   dl.UPDATED_AT\n              FROM DIVING_LOGS dl\n              LEFT JOIN DIVE_SITES ds\n                ON ds.SITE_ID = dl.SITE_ID\n             WHERE dl.CUSTOMER_ID = p_customer_id\n             ORDER BY dl.DIVE_DATE DESC, dl.LOG_ID DESC\n            OFFSET v_offset ROWS FETCH NEXT v_page_size ROWS ONLY;\n    END GET_CUSTOMER_LOGS;\n\n    -- =========================================================\n    -- ダイビングログ登録・更新\n    -- p_log_id が NULL の場合は新規登録（SEQ_DIVING_LOGS.NEXTVAL）\n    -- NULL でない場合は更新（customer_id の一致を検証）\n    -- =========================================================\n    PROCEDURE SAVE_DIVING_LOG(\n        p_log_id        IN OUT NUMBER,\n        p_customer_id   IN  NUMBER,\n        p_site_id       IN  NUMBER,\n        p_reservation_id IN NUMBER DEFAULT NULL,\n        p_dive_date     IN  DATE,\n        p_max_depth     IN  NUMBER,\n        p_dive_time     IN  NUMBER,\n        p_water_temp    IN  NUMBER,\n        p_visibility    IN  NUMBER,\n        p_weather       IN  VARCHAR2,\n        p_buddy         IN  VARCHAR2,\n        p_notes         IN  CLOB,\n        o_result_code   OUT NUMBER,\n        o_result_msg    OUT VARCHAR2\n    ) IS\n        v_existing_customer_id NUMBER;\n    BEGIN\n        -- 必須項目チェック\n        IF p_customer_id IS NULL THEN\n            o_result_code := -20401;\n            o_result_msg  := '顧客IDは必須です';\n            RETURN;\n        END IF;\n\n        IF p_dive_date IS NULL THEN\n            o_result_code := -20402;\n            o_result_msg  := 'ダイブ日は必須です';\n            RETURN;\n        END IF;\n\n        IF p_log_id IS NULL THEN\n            -- ============================\n            -- 新規登録\n            -- ============================\n            SELECT SEQ_DIVING_LOGS.NEXTVAL INTO p_log_id FROM DUAL;\n\n            INSERT INTO DIVING_LOGS (\n                LOG_ID,\n                CUSTOMER_ID,\n                SITE_ID,\n                RESERVATION_ID,\n                DIVE_DATE,\n                MAX_DEPTH,\n                DIVE_TIME,\n                WATER_TEMP,\n                VISIBILITY,\n                WEATHER,\n                BUDDY,\n                NOTES,\n                CREATED_AT,\n                UPDATED_AT\n            ) VALUES (\n                p_log_id,\n                p_customer_id,\n                p_site_id,\n                p_reservation_id,\n                p_dive_date,\n                p_max_depth,\n                p_dive_time,\n                p_water_temp,\n                p_visibility,\n                p_weather,\n                p_buddy,\n                p_notes,\n                SYSTIMESTAMP,\n                SYSTIMESTAMP\n            );\n\n            o_result_code := 0;\n            o_result_msg  := 'ダイビングログを登録しました';\n        ELSE\n            -- ============================\n            -- 更新（所有者チェック付き）\n            -- ============================\n            BEGIN\n                SELECT CUSTOMER_ID\n                  INTO v_existing_customer_id\n                  FROM DIVING_LOGS\n                 WHERE LOG_ID = p_log_id;\n            EXCEPTION\n                WHEN NO_DATA_FOUND THEN\n                    o_result_code := -20403;\n                    o_result_msg  := '指定されたダイビングログが見つかりません (LOG_ID=' || p_log_id || ')';\n                    RETURN;\n            END;\n\n            IF v_existing_customer_id != p_customer_id THEN\n                o_result_code := -20404;\n                o_result_msg  := '他の顧客のダイビングログは更新できません';\n                RETURN;\n            END IF;\n\n            UPDATE DIVING_LOGS\n               SET SITE_ID        = p_site_id,\n                   RESERVATION_ID = p_reservation_id,\n                   DIVE_DATE      = p_dive_date,\n                   MAX_DEPTH      = p_max_depth,\n                   DIVE_TIME      = p_dive_time,\n                   WATER_TEMP     = p_water_temp,\n                   VISIBILITY     = p_visibility,\n                   WEATHER        = p_weather,\n                   BUDDY          = p_buddy,\n                   NOTES          = p_notes,\n                   UPDATED_AT     = SYSTIMESTAMP\n             WHERE LOG_ID = p_log_id;\n\n            o_result_code := 0;\n            o_result_msg  := 'ダイビングログを更新しました';\n        END IF;\n\n    EXCEPTION\n        WHEN OTHERS THEN\n            o_result_code := -20499;\n            o_result_msg  := 'ダイビングログ保存中にエラーが発生しました: ' || SQLERRM;\n    END SAVE_DIVING_LOG;\n\nEND PKG_DIVING_LOG;",
+      "node_id": "DIVINGAPP.PACKAGE.PKG_DIVING_LOG",
+      "depends_on": [
+        {
+          "name": "SEQ_DIVING_LOGS",
+          "object_type": "SEQUENCE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.SEQUENCE.SEQ_DIVING_LOGS"
+        },
+        {
+          "name": "DIVING_LOGS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-006",
+          "node_id": "DIVINGAPP.TABLE.DIVING_LOGS"
+        },
+        {
+          "name": "DIVE_SITES",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.DIVE_SITES"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_DL_DIVE_DATE",
+      "source": "DIVINGAPP/INDEX/IDX_DL_DIVE_DATE.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_DL_DIVE_DATE\" ON \"DIVINGAPP\".\"DIVING_LOGS\" (\"DIVE_DATE\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_DL_DIVE_DATE",
+      "depends_on": [
+        {
+          "name": "DIVING_LOGS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-006",
+          "node_id": "DIVINGAPP.TABLE.DIVING_LOGS"
+        }
+      ]
+    }
+  ]
+}

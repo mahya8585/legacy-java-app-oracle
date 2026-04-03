@@ -1,0 +1,58 @@
+{
+  "chunk_number": 9,
+  "number_of_objects": 2,
+  "object_types": [
+    "INDEX"
+  ],
+  "objects": [
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_dl_customer",
+      "source": "DIVINGAPP/INDEX/IDX_DL_CUSTOMER.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_DL_CUSTOMER",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_dl_customer ON divingapp.diving_logs (customer_id);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle index storage/tablespace attributes (PCTFREE, INITRANS, MAXTRANS, COMPUTE STATISTICS, TABLESPACE) omitted/not applicable in PostgreSQL",
+        "Oracle UPPERCASE names converted to lowercase PostgreSQL names",
+        "PostgreSQL index name is unqualified (schema removed) per PostgreSQL syntax rules"
+      ],
+      "depends_on": [
+        {
+          "name": "diving_logs",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-006",
+          "node_id": "DIVINGAPP.TABLE.DIVING_LOGS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_reservations_customer",
+      "source": "DIVINGAPP/INDEX/IDX_RESERVATIONS_CUSTOMER.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_RESERVATIONS_CUSTOMER",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_reservations_customer ON divingapp.reservations (customer_id);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle index storage/tablespace attributes (PCTFREE, INITRANS, MAXTRANS, COMPUTE STATISTICS, TABLESPACE) omitted/not applicable in PostgreSQL",
+        "Oracle UPPERCASE names converted to lowercase PostgreSQL names",
+        "PostgreSQL index name is unqualified (schema removed) per PostgreSQL syntax rules"
+      ],
+      "depends_on": [
+        {
+          "name": "reservations",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-005",
+          "node_id": "DIVINGAPP.TABLE.RESERVATIONS"
+        }
+      ]
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-009.json"
+}

@@ -1,0 +1,101 @@
+{
+  "chunk_number": 5,
+  "number_of_objects": 4,
+  "tokens": 1973,
+  "object_types": [
+    "INDEX",
+    "PACKAGE",
+    "TABLE"
+  ],
+  "objects": [
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_TS_TOUR_DATE",
+      "source": "DIVINGAPP/INDEX/IDX_TS_TOUR_DATE.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_TS_TOUR_DATE\" ON \"DIVINGAPP\".\"TOUR_SCHEDULES\" (\"TOUR_DATE\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_TS_TOUR_DATE",
+      "depends_on": [
+        {
+          "name": "TOUR_SCHEDULES",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_SCHEDULES"
+        }
+      ]
+    },
+    {
+      "object_type": "PACKAGE",
+      "owner": "DIVINGAPP",
+      "name": "PKG_DIVE_SITE",
+      "source": "DIVINGAPP/PACKAGE/PKG_DIVE_SITE.sql",
+      "content": "\n  CREATE OR REPLACE EDITIONABLE PACKAGE \"DIVINGAPP\".\"PKG_DIVE_SITE\" AS\n    -- ダイブサイト一覧（エリア条件付き）\n    PROCEDURE GET_DIVE_SITES(\n        p_area          IN  VARCHAR2 DEFAULT NULL,\n        p_difficulty    IN  VARCHAR2 DEFAULT NULL,\n        o_sites         OUT SYS_REFCURSOR\n    );\n\n    -- ダイブサイト詳細+関連ツアー\n    PROCEDURE GET_DIVE_SITE_DETAIL(\n        p_site_id       IN  NUMBER,\n        o_site          OUT SYS_REFCURSOR,\n        o_related_tours OUT SYS_REFCURSOR\n    );\nEND PKG_DIVE_SITE;\nCREATE OR REPLACE EDITIONABLE PACKAGE BODY \"DIVINGAPP\".\"PKG_DIVE_SITE\" AS\n\n    -- =========================================================================\n    -- ダイブサイト一覧（エリア・難易度フィルター付き）\n    -- =========================================================================\n    PROCEDURE GET_DIVE_SITES(\n        p_area          IN  VARCHAR2 DEFAULT NULL,\n        p_difficulty    IN  VARCHAR2 DEFAULT NULL,\n        o_sites         OUT SYS_REFCURSOR\n    ) IS\n    BEGIN\n        OPEN o_sites FOR\n            SELECT SITE_ID,\n                   SITE_NAME,\n                   AREA,\n                   DESCRIPTION,\n                   MAX_DEPTH,\n                   WATER_TEMPERATURE_MIN,\n                   WATER_TEMPERATURE_MAX,\n                   DIFFICULTY,\n                   MARINE_LIFE,\n                   ACCESS_INFO,\n                   CREATED_AT,\n                   UPDATED_AT\n              FROM DIVE_SITES\n             WHERE STATUS = 'ACTIVE'\n               AND (p_area IS NULL OR AREA = p_area)\n               AND (p_difficulty IS NULL OR DIFFICULTY = p_difficulty)\n             ORDER BY AREA, SITE_NAME;\n\n    EXCEPTION\n        WHEN OTHERS THEN\n            RAISE_APPLICATION_ERROR(-20300, 'ダイブサイト一覧取得中にエラーが発生しました: ' || SQLERRM);\n    END GET_DIVE_SITES;\n\n    -- =========================================================================\n    -- ダイブサイト詳細 + 関連アクティブツアー\n    -- =========================================================================\n    PROCEDURE GET_DIVE_SITE_DETAIL(\n        p_site_id       IN  NUMBER,\n        o_site          OUT SYS_REFCURSOR,\n        o_related_tours OUT SYS_REFCURSOR\n    ) IS\n        v_count NUMBER;\n    BEGIN\n        -- サイト存在チェック\n        SELECT COUNT(*) INTO v_count\n          FROM DIVE_SITES\n         WHERE SITE_ID = p_site_id\n           AND STATUS = 'ACTIVE';\n\n        IF v_count = 0 THEN\n            RAISE_APPLICATION_ERROR(-20310, '指定されたダイブサイトが見つかりません。SITE_ID=' || p_site_id);\n        END IF;\n\n        -- サイト詳細\n        OPEN o_site FOR\n            SELECT SITE_ID,\n                   SITE_NAME,\n                   AREA,\n                   DESCRIPTION,\n                   MAX_DEPTH,\n                   WATER_TEMPERATURE_MIN,\n                   WATER_TEMPERATURE_MAX,\n                   DIFFICULTY,\n                   MARINE_LIFE,\n                   ACCESS_INFO,\n                   CREATED_AT,\n                   UPDATED_AT\n              FROM DIVE_SITES\n             WHERE SITE_ID = p_site_id;\n\n        -- 関連アクティブツアー（TOUR_DIVE_SITES経由）\n        OPEN o_related_tours FOR\n            SELECT t.TOUR_ID,\n                   t.TOUR_NAME,\n                   t.AREA,\n                   t.DIFFICULTY,\n                   t.BASE_PRICE,\n                   t.DURATION_DAYS,\n                   t.MIN_DIVE_COUNT,\n                   t.FEATURED_FLAG,\n                   tds.DIVE_ORDER\n              FROM TOUR_DIVE_SITES tds\n              JOIN TOURS t ON tds.TOUR_ID = t.TOUR_ID\n             WHERE tds.SITE_ID = p_site_id\n               AND t.STATUS = 'ACTIVE'\n             ORDER BY t.TOUR_NAME;\n\n    EXCEPTION\n        WHEN OTHERS THEN\n            IF SQLCODE BETWEEN -20399 AND -20300 THEN\n                RAISE;\n            END IF;\n            RAISE_APPLICATION_ERROR(-20301, 'ダイブサイト詳細取得中にエラーが発生しました: ' || SQLERRM);\n    END GET_DIVE_SITE_DETAIL;\n\nEND PKG_DIVE_SITE;",
+      "node_id": "DIVINGAPP.PACKAGE.PKG_DIVE_SITE",
+      "depends_on": [
+        {
+          "name": "TOUR_DIVE_SITES",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_DIVE_SITES"
+        },
+        {
+          "name": "TOURS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        },
+        {
+          "name": "DIVE_SITES",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.DIVE_SITES"
+        }
+      ]
+    },
+    {
+      "object_type": "TABLE",
+      "owner": "DIVINGAPP",
+      "name": "RESERVATIONS",
+      "source": "DIVINGAPP/TABLE/RESERVATIONS.sql",
+      "content": "\n  CREATE TABLE \"DIVINGAPP\".\"RESERVATIONS\" \n   (\t\"RESERVATION_ID\" NUMBER NOT NULL ENABLE, \n\t\"CUSTOMER_ID\" NUMBER NOT NULL ENABLE, \n\t\"SCHEDULE_ID\" NUMBER NOT NULL ENABLE, \n\t\"NUM_PARTICIPANTS\" NUMBER NOT NULL ENABLE, \n\t\"TOTAL_PRICE\" NUMBER(10,0) NOT NULL ENABLE, \n\t\"STATUS\" VARCHAR2(20) DEFAULT 'CONFIRMED' NOT NULL ENABLE, \n\t\"CANCEL_REASON\" VARCHAR2(500), \n\t\"REFUND_AMOUNT\" NUMBER(10,0) DEFAULT 0, \n\t\"NOTES\" VARCHAR2(1000), \n\t\"CREATED_AT\" TIMESTAMP (6) DEFAULT SYSTIMESTAMP NOT NULL ENABLE, \n\t\"UPDATED_AT\" TIMESTAMP (6) DEFAULT SYSTIMESTAMP NOT NULL ENABLE, \n\t CONSTRAINT \"CK_RES_STATUS\" CHECK (STATUS IN ('CONFIRMED', 'CANCELLED', 'COMPLETED', 'NO_SHOW')) ENABLE, \n\t CONSTRAINT \"PK_RESERVATIONS\" PRIMARY KEY (\"RESERVATION_ID\")\n  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 \n  TABLESPACE \"USERS\"  ENABLE, \n\t CONSTRAINT \"FK_RES_CUSTOMER\" FOREIGN KEY (\"CUSTOMER_ID\")\n\t  REFERENCES \"DIVINGAPP\".\"CUSTOMERS\" (\"CUSTOMER_ID\") ENABLE, \n\t CONSTRAINT \"FK_RES_SCHEDULE\" FOREIGN KEY (\"SCHEDULE_ID\")\n\t  REFERENCES \"DIVINGAPP\".\"TOUR_SCHEDULES\" (\"SCHEDULE_ID\") ENABLE\n   ) SEGMENT CREATION DEFERRED \n  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 \n NOCOMPRESS LOGGING\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.TABLE.RESERVATIONS",
+      "depends_on": [
+        {
+          "name": "CUSTOMERS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.CUSTOMERS"
+        },
+        {
+          "name": "TOUR_SCHEDULES",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_SCHEDULES"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_TS_TOUR_ID",
+      "source": "DIVINGAPP/INDEX/IDX_TS_TOUR_ID.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_TS_TOUR_ID\" ON \"DIVINGAPP\".\"TOUR_SCHEDULES\" (\"TOUR_ID\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_TS_TOUR_ID",
+      "depends_on": [
+        {
+          "name": "TOUR_SCHEDULES",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_SCHEDULES"
+        }
+      ]
+    }
+  ]
+}

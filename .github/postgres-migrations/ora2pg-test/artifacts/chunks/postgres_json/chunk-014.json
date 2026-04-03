@@ -1,0 +1,27 @@
+{
+  "chunk_number": 14,
+  "number_of_objects": 1,
+  "object_types": [
+    "TABLE"
+  ],
+  "objects": [
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "admin_users",
+      "source": "DIVINGAPP/TABLE/ADMIN_USERS.sql",
+      "node_id": "DIVINGAPP.TABLE.ADMIN_USERS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.admin_users (\n    admin_id BIGINT NOT NULL,\n    username VARCHAR(100) NOT NULL,\n    password_hash BYTEA NOT NULL,\n    display_name VARCHAR(100) NOT NULL,\n    role VARCHAR(50) NOT NULL DEFAULT 'ADMIN',\n    status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',\n    last_login_at TIMESTAMP(6),\n    created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    CONSTRAINT pk_admin_users PRIMARY KEY (admin_id),\n    CONSTRAINT uk_admin_users_username UNIQUE (username)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "NUMBER mapped to BIGINT (integer identifier)",
+        "RAW(64) mapped to BYTEA",
+        "SYSTIMESTAMP mapped to CURRENT_TIMESTAMP",
+        "Dropped Oracle storage/tablespace/index physical attributes; handled by PostgreSQL"
+      ],
+      "depends_on": []
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-014.json"
+}

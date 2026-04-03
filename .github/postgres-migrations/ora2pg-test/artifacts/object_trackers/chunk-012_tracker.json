@@ -1,0 +1,51 @@
+{
+  "chunk_id": "chunk-012",
+  "expected_objects": {
+    "ORACLE.PACKAGE.PKG_RESERVATION": {
+      "object_id": "ORACLE.PACKAGE.PKG_RESERVATION",
+      "name": "PKG_RESERVATION",
+      "type": "PACKAGE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.PACKAGE.PKG_RESERVATION": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.PACKAGE.PKG_RESERVATION",
+        "name": "PKG_RESERVATION",
+        "type": "PACKAGE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "pkg_reservation",
+        "type": "PACKAGE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle PACKAGE converted into standalone PostgreSQL routines., SYS_REFCURSOR outputs mapped to REFCURSOR INOUT parameters and OPEN ... FOR queries., Oracle sequences NEXTVAL/DUAL converted to nextval('schema.sequence')., Oracle SYSTIMESTAMP/SYSDATE converted to CURRENT_TIMESTAMP/current_date., Oracle REGEXP_COUNT/REGEXP_SUBSTR list parsing converted to regexp_split_to_array."
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:26:01.743170",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:25:49.547105",
+  "last_updated": "2026-04-03T15:25:49.547105",
+  "total_expected": 1,
+  "total_converted": 1,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

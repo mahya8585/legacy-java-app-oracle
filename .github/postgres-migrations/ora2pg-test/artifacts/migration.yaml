@@ -1,0 +1,1548 @@
+migration_notes: []
+migration_hints: []
+review_tasks:
+  rt_divingapp_table_dive_sites_20260403_151348:
+    id: rt_divingapp_table_dive_sites_20260403_151348
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.DIVE_SITES'
+    description: 'Review table DIVINGAPP.DIVE_SITES for proper feature translation.
+      Complexity indicators: large object columns, table compression, many columns
+      (~21). Verify Oracle-specific constraints, indexing, and features are correctly
+      handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.DIVE_SITES
+    conversion_notes: []
+  rt_divingapp_table_options_master_20260403_151348:
+    id: rt_divingapp_table_options_master_20260403_151348
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.OPTIONS_MASTER'
+    description: 'Review table DIVINGAPP.OPTIONS_MASTER for proper feature translation.
+      Complexity indicators: table compression. Verify Oracle-specific constraints,
+      indexing, and features are correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.OPTIONS_MASTER
+    conversion_notes: []
+  rt_divingapp_table_instructors_20260403_151348:
+    id: rt_divingapp_table_instructors_20260403_151348
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.INSTRUCTORS'
+    description: 'Review table DIVINGAPP.INSTRUCTORS for proper feature translation.
+      Complexity indicators: large object columns, table compression. Verify Oracle-specific
+      constraints, indexing, and features are correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.INSTRUCTORS
+    conversion_notes: []
+  rt_divingapp_table_report_cache_20260403_151348:
+    id: rt_divingapp_table_report_cache_20260403_151348
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.REPORT_CACHE'
+    description: 'Review table DIVINGAPP.REPORT_CACHE for proper feature translation.
+      Complexity indicators: table compression. Verify Oracle-specific constraints,
+      indexing, and features are correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.REPORT_CACHE
+    conversion_notes: []
+  rt_divingapp_table_news_20260403_151450:
+    id: rt_divingapp_table_news_20260403_151450
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.NEWS'
+    description: 'Review table DIVINGAPP.NEWS for proper feature translation. Complexity
+      indicators: large object columns, table compression. Verify Oracle-specific
+      constraints, indexing, and features are correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.NEWS
+    conversion_notes: []
+  rt_divingapp_package_pkg_news_20260403_151450:
+    id: rt_divingapp_package_pkg_news_20260403_151450
+    type: complex_object_conversion
+    priority: medium
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: PACKAGE
+    title: 'Complex business logic validation: Package DIVINGAPP.PKG_NEWS'
+    description: 'CRITICAL: Review package DIVINGAPP.PKG_NEWS for business logic preservation.
+      Complexity indicators: large size (116 lines), cursors, exception handling.
+      Oracle PL/SQL to PostgreSQL PL/pgSQL conversion requires validation of control
+      flow, exception handling, data processing logic, and functional equivalence.'
+    oracle_object_ids:
+    - DIVINGAPP.PACKAGE.PKG_NEWS
+    conversion_notes: []
+  rt_divingapp_table_admin_users_20260403_151532:
+    id: rt_divingapp_table_admin_users_20260403_151532
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.ADMIN_USERS'
+    description: 'Review table DIVINGAPP.ADMIN_USERS for proper feature translation.
+      Complexity indicators: table compression. Verify Oracle-specific constraints,
+      indexing, and features are correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.ADMIN_USERS
+    conversion_notes: []
+  rt_divingapp_table_customers_20260403_151753:
+    id: rt_divingapp_table_customers_20260403_151753
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.CUSTOMERS'
+    description: 'Review table DIVINGAPP.CUSTOMERS for proper feature translation.
+      Complexity indicators: table compression. Verify Oracle-specific constraints,
+      indexing, and features are correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.CUSTOMERS
+    conversion_notes: []
+  rt_divingapp_table_report_alerts_20260403_151753:
+    id: rt_divingapp_table_report_alerts_20260403_151753
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.REPORT_ALERTS'
+    description: 'Review table DIVINGAPP.REPORT_ALERTS for proper feature translation.
+      Complexity indicators: table compression. Verify Oracle-specific constraints,
+      indexing, and features are correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.REPORT_ALERTS
+    conversion_notes: []
+  rt_divingapp_table_tours_20260403_151753:
+    id: rt_divingapp_table_tours_20260403_151753
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.TOURS'
+    description: 'Review table DIVINGAPP.TOURS for proper feature translation. Complexity
+      indicators: large object columns, table compression, multiple constraints, many
+      columns (~24). Verify Oracle-specific constraints, indexing, and features are
+      correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.TOURS
+    conversion_notes: []
+  rt_divingapp_package_pkg_customer_20260403_151833:
+    id: rt_divingapp_package_pkg_customer_20260403_151833
+    type: complex_object_conversion
+    priority: medium
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: PACKAGE
+    title: 'Complex business logic validation: Package DIVINGAPP.PKG_CUSTOMER'
+    description: 'CRITICAL: Review package DIVINGAPP.PKG_CUSTOMER for business logic
+      preservation. Complexity indicators: large size (303 lines), cursors, exception
+      handling, DBMS packages, UTL packages, complex control flow (17 structures),
+      multiple SQL queries. Oracle PL/SQL to PostgreSQL PL/pgSQL conversion requires
+      validation of control flow, exception handling, data processing logic, and functional
+      equivalence.'
+    oracle_object_ids:
+    - DIVINGAPP.PACKAGE.PKG_CUSTOMER
+    conversion_notes: []
+  rt_divingapp_table_tour_instructors_20260403_151907:
+    id: rt_divingapp_table_tour_instructors_20260403_151907
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.TOUR_INSTRUCTORS'
+    description: 'Review table DIVINGAPP.TOUR_INSTRUCTORS for proper feature translation.
+      Complexity indicators: table compression. Verify Oracle-specific constraints,
+      indexing, and features are correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.TOUR_INSTRUCTORS
+    conversion_notes: []
+  rt_divingapp_table_tour_dive_sites_20260403_151907:
+    id: rt_divingapp_table_tour_dive_sites_20260403_151907
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.TOUR_DIVE_SITES'
+    description: 'Review table DIVINGAPP.TOUR_DIVE_SITES for proper feature translation.
+      Complexity indicators: table compression. Verify Oracle-specific constraints,
+      indexing, and features are correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.TOUR_DIVE_SITES
+    conversion_notes: []
+  rt_divingapp_table_tour_schedules_20260403_151907:
+    id: rt_divingapp_table_tour_schedules_20260403_151907
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.TOUR_SCHEDULES'
+    description: 'Review table DIVINGAPP.TOUR_SCHEDULES for proper feature translation.
+      Complexity indicators: table compression. Verify Oracle-specific constraints,
+      indexing, and features are correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.TOUR_SCHEDULES
+    conversion_notes: []
+  rt_divingapp_table_reservations_20260403_151951:
+    id: rt_divingapp_table_reservations_20260403_151951
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.RESERVATIONS'
+    description: 'Review table DIVINGAPP.RESERVATIONS for proper feature translation.
+      Complexity indicators: table compression, multiple constraints. Verify Oracle-specific
+      constraints, indexing, and features are correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.RESERVATIONS
+    conversion_notes: []
+  rt_divingapp_package_pkg_dive_site_20260403_151951:
+    id: rt_divingapp_package_pkg_dive_site_20260403_151951
+    type: complex_object_conversion
+    priority: medium
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: PACKAGE
+    title: 'Complex business logic validation: Package DIVINGAPP.PKG_DIVE_SITE'
+    description: 'CRITICAL: Review package DIVINGAPP.PKG_DIVE_SITE for business logic
+      preservation. Complexity indicators: medium size (93 lines), cursors, exception
+      handling, complex SQL operations. Oracle PL/SQL to PostgreSQL PL/pgSQL conversion
+      requires validation of control flow, exception handling, data processing logic,
+      and functional equivalence.'
+    oracle_object_ids:
+    - DIVINGAPP.PACKAGE.PKG_DIVE_SITE
+    conversion_notes: []
+  rt_divingapp_table_diving_logs_20260403_152033:
+    id: rt_divingapp_table_diving_logs_20260403_152033
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.DIVING_LOGS'
+    description: 'Review table DIVINGAPP.DIVING_LOGS for proper feature translation.
+      Complexity indicators: complex naming pattern (log), large object columns, table
+      compression, multiple constraints, many columns (~21). Verify Oracle-specific
+      constraints, indexing, and features are correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.DIVING_LOGS
+    conversion_notes: []
+  rt_divingapp_table_reservation_options_20260403_152033:
+    id: rt_divingapp_table_reservation_options_20260403_152033
+    type: performance_concern
+    priority: low
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: TABLE
+    title: 'Complex table review: DIVINGAPP.RESERVATION_OPTIONS'
+    description: 'Review table DIVINGAPP.RESERVATION_OPTIONS for proper feature translation.
+      Complexity indicators: table compression. Verify Oracle-specific constraints,
+      indexing, and features are correctly handled.'
+    oracle_object_ids:
+    - DIVINGAPP.TABLE.RESERVATION_OPTIONS
+    conversion_notes: []
+  rt_divingapp_package_pkg_instructor_20260403_152033:
+    id: rt_divingapp_package_pkg_instructor_20260403_152033
+    type: complex_object_conversion
+    priority: medium
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: PACKAGE
+    title: 'Complex business logic validation: Package DIVINGAPP.PKG_INSTRUCTOR'
+    description: 'CRITICAL: Review package DIVINGAPP.PKG_INSTRUCTOR for business logic
+      preservation. Complexity indicators: medium size (76 lines), cursors, complex
+      SQL operations. Oracle PL/SQL to PostgreSQL PL/pgSQL conversion requires validation
+      of control flow, exception handling, data processing logic, and functional equivalence.'
+    oracle_object_ids:
+    - DIVINGAPP.PACKAGE.PKG_INSTRUCTOR
+    conversion_notes: []
+  rt_divingapp_package_pkg_tour_20260403_152228:
+    id: rt_divingapp_package_pkg_tour_20260403_152228
+    type: complex_object_conversion
+    priority: medium
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: PACKAGE
+    title: 'Complex business logic validation: Package DIVINGAPP.PKG_TOUR'
+    description: 'CRITICAL: Review package DIVINGAPP.PKG_TOUR for business logic preservation.
+      Complexity indicators: large size (341 lines), cursors, exception handling,
+      DBMS packages, complex control flow (15 structures), multiple SQL queries, complex
+      SQL operations. Oracle PL/SQL to PostgreSQL PL/pgSQL conversion requires validation
+      of control flow, exception handling, data processing logic, and functional equivalence.'
+    oracle_object_ids:
+    - DIVINGAPP.PACKAGE.PKG_TOUR
+    conversion_notes: []
+  rt_divingapp_package_pkg_report_20260403_152355:
+    id: rt_divingapp_package_pkg_report_20260403_152355
+    type: complex_object_conversion
+    priority: medium
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: PACKAGE
+    title: 'Complex business logic validation: Package DIVINGAPP.PKG_REPORT'
+    description: 'CRITICAL: Review package DIVINGAPP.PKG_REPORT for business logic
+      preservation. Complexity indicators: large size (806 lines), cursors, exception
+      handling, complex control flow (33 structures), multiple SQL queries, complex
+      SQL operations. Oracle PL/SQL to PostgreSQL PL/pgSQL conversion requires validation
+      of control flow, exception handling, data processing logic, and functional equivalence.'
+    oracle_object_ids:
+    - DIVINGAPP.PACKAGE.PKG_REPORT
+    conversion_notes: []
+  rt_divingapp_package_pkg_diving_log_20260403_152446:
+    id: rt_divingapp_package_pkg_diving_log_20260403_152446
+    type: complex_object_conversion
+    priority: medium
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: PACKAGE
+    title: 'Complex business logic validation: Package DIVINGAPP.PKG_DIVING_LOG'
+    description: 'CRITICAL: Review package DIVINGAPP.PKG_DIVING_LOG for business logic
+      preservation. Complexity indicators: large size (177 lines), cursors, exception
+      handling, moderate control flow (7 structures), complex SQL operations. Oracle
+      PL/SQL to PostgreSQL PL/pgSQL conversion requires validation of control flow,
+      exception handling, data processing logic, and functional equivalence.'
+    oracle_object_ids:
+    - DIVINGAPP.PACKAGE.PKG_DIVING_LOG
+    conversion_notes: []
+  rt_divingapp_package_pkg_reservation_20260403_152600:
+    id: rt_divingapp_package_pkg_reservation_20260403_152600
+    type: complex_object_conversion
+    priority: medium
+    status: pending
+    schema_name: DIVINGAPP
+    object_type: PACKAGE
+    title: 'Complex business logic validation: Package DIVINGAPP.PKG_RESERVATION'
+    description: 'CRITICAL: Review package DIVINGAPP.PKG_RESERVATION for business
+      logic preservation. Complexity indicators: large size (426 lines), cursors,
+      exception handling, complex control flow (31 structures), multiple SQL queries,
+      complex SQL operations. Oracle PL/SQL to PostgreSQL PL/pgSQL conversion requires
+      validation of control flow, exception handling, data processing logic, and functional
+      equivalence.'
+    oracle_object_ids:
+    - DIVINGAPP.PACKAGE.PKG_RESERVATION
+    conversion_notes: []
+migration_tracking:
+  object_results: {}
+  data_type_mappings: []
+  function_conversions: []
+  manual_interventions: []
+  deployment_steps: []
+  required_extensions: []
+  performance_notes: []
+  known_limitations: []
+chunks:
+  chunk-000:
+    estimated_tokens: 150
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-000.sql
+    pg_file: artifacts/chunks/postgres/chunk-000.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-000.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-000.json
+    objects_count: 1
+    dependent_chunk_ids: []
+    status: completed
+    status_updated_at: '2026-04-03T15:13:14.639863'
+    externally_modified_objects: []
+    metadata:
+      types:
+        SCHEMA:
+        - owner: DIVINGAPP
+          name: DIVINGAPP
+          node_id: DIVINGAPP.SCHEMA.DIVINGAPP
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-000.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-000.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-000.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-000.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-000.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-000.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-000.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:12:59.035878'
+      method: agent
+      result: success
+      duration_seconds: 14
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:13:14.638842'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-001:
+    estimated_tokens: 2075
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-001.sql
+    pg_file: artifacts/chunks/postgres/chunk-001.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-001.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-001.json
+    objects_count: 9
+    dependent_chunk_ids:
+    - chunk-000
+    status: completed
+    status_updated_at: '2026-04-03T15:13:55.943884'
+    externally_modified_objects: []
+    metadata:
+      types:
+        TABLE:
+        - owner: DIVINGAPP
+          name: DIVE_SITES
+          node_id: DIVINGAPP.TABLE.DIVE_SITES
+        - owner: DIVINGAPP
+          name: OPTIONS_MASTER
+          node_id: DIVINGAPP.TABLE.OPTIONS_MASTER
+        - owner: DIVINGAPP
+          name: INSTRUCTORS
+          node_id: DIVINGAPP.TABLE.INSTRUCTORS
+        - owner: DIVINGAPP
+          name: REPORT_CACHE
+          node_id: DIVINGAPP.TABLE.REPORT_CACHE
+        SEQUENCE:
+        - owner: DIVINGAPP
+          name: SEQ_DIVING_LOGS
+          node_id: DIVINGAPP.SEQUENCE.SEQ_DIVING_LOGS
+        - owner: DIVINGAPP
+          name: SEQ_RESERVATIONS
+          node_id: DIVINGAPP.SEQUENCE.SEQ_RESERVATIONS
+        - owner: DIVINGAPP
+          name: SEQ_TOURS
+          node_id: DIVINGAPP.SEQUENCE.SEQ_TOURS
+        - owner: DIVINGAPP
+          name: SEQ_REPORT_ALERTS
+          node_id: DIVINGAPP.SEQUENCE.SEQ_REPORT_ALERTS
+        - owner: DIVINGAPP
+          name: SEQ_CUSTOMERS
+          node_id: DIVINGAPP.SEQUENCE.SEQ_CUSTOMERS
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-001.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-001.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-001.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-001.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-001.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-001.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-001.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:13:14.970906'
+      method: agent
+      result: success
+      duration_seconds: 33
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:13:55.943476'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-002:
+    estimated_tokens: 1999
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-002.sql
+    pg_file: artifacts/chunks/postgres/chunk-002.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-002.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-002.json
+    objects_count: 8
+    dependent_chunk_ids:
+    - chunk-000
+    - chunk-001
+    status: completed
+    status_updated_at: '2026-04-03T15:17:59.295433'
+    externally_modified_objects: []
+    metadata:
+      types:
+        INDEX:
+        - owner: DIVINGAPP
+          name: IDX_DS_AREA
+          node_id: DIVINGAPP.INDEX.IDX_DS_AREA
+        - owner: DIVINGAPP
+          name: IDX_RC_KEY_SECTION
+          node_id: DIVINGAPP.INDEX.IDX_RC_KEY_SECTION
+        - owner: DIVINGAPP
+          name: IDX_RC_GENERATED
+          node_id: DIVINGAPP.INDEX.IDX_RC_GENERATED
+        SEQUENCE:
+        - owner: DIVINGAPP
+          name: SEQ_RESERVATION_OPTIONS
+          node_id: DIVINGAPP.SEQUENCE.SEQ_RESERVATION_OPTIONS
+        - owner: DIVINGAPP
+          name: SEQ_REPORT_CACHE
+          node_id: DIVINGAPP.SEQUENCE.SEQ_REPORT_CACHE
+        TABLE:
+        - owner: DIVINGAPP
+          name: CUSTOMERS
+          node_id: DIVINGAPP.TABLE.CUSTOMERS
+        - owner: DIVINGAPP
+          name: REPORT_ALERTS
+          node_id: DIVINGAPP.TABLE.REPORT_ALERTS
+        - owner: DIVINGAPP
+          name: TOURS
+          node_id: DIVINGAPP.TABLE.TOURS
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-002.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-002.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-002.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-002.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-002.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-002.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-002.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:17:21.348578'
+      method: agent
+      result: success
+      duration_seconds: 31
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:17:59.295128'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-003:
+    estimated_tokens: 3648
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-003.sql
+    pg_file: artifacts/chunks/postgres/chunk-003.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-003.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-003.json
+    objects_count: 1
+    dependent_chunk_ids:
+    - chunk-000
+    - chunk-001
+    - chunk-002
+    status: completed
+    status_updated_at: '2026-04-03T15:18:35.265179'
+    externally_modified_objects: []
+    metadata:
+      types:
+        PACKAGE:
+        - owner: DIVINGAPP
+          name: PKG_CUSTOMER
+          node_id: DIVINGAPP.PACKAGE.PKG_CUSTOMER
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-003.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-003.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-003.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-003.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-003.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-003.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-003.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:17:59.479356'
+      method: agent
+      result: success
+      duration_seconds: 34
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:18:35.265179'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-004:
+    estimated_tokens: 2313
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-004.sql
+    pg_file: artifacts/chunks/postgres/chunk-004.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-004.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-004.json
+    objects_count: 10
+    dependent_chunk_ids:
+    - chunk-000
+    - chunk-001
+    - chunk-002
+    status: completed
+    status_updated_at: '2026-04-03T15:19:15.342969'
+    externally_modified_objects: []
+    metadata:
+      types:
+        INDEX:
+        - owner: DIVINGAPP
+          name: IDX_TOURS_FEATURED
+          node_id: DIVINGAPP.INDEX.IDX_TOURS_FEATURED
+        - owner: DIVINGAPP
+          name: IDX_RA_SEVERITY
+          node_id: DIVINGAPP.INDEX.IDX_RA_SEVERITY
+        - owner: DIVINGAPP
+          name: IDX_CUSTOMERS_STATUS
+          node_id: DIVINGAPP.INDEX.IDX_CUSTOMERS_STATUS
+        - owner: DIVINGAPP
+          name: IDX_TOURS_STATUS
+          node_id: DIVINGAPP.INDEX.IDX_TOURS_STATUS
+        - owner: DIVINGAPP
+          name: IDX_TOURS_DIFFICULTY
+          node_id: DIVINGAPP.INDEX.IDX_TOURS_DIFFICULTY
+        - owner: DIVINGAPP
+          name: IDX_RA_DETECTED
+          node_id: DIVINGAPP.INDEX.IDX_RA_DETECTED
+        - owner: DIVINGAPP
+          name: IDX_TOURS_AREA
+          node_id: DIVINGAPP.INDEX.IDX_TOURS_AREA
+        TABLE:
+        - owner: DIVINGAPP
+          name: TOUR_INSTRUCTORS
+          node_id: DIVINGAPP.TABLE.TOUR_INSTRUCTORS
+        - owner: DIVINGAPP
+          name: TOUR_DIVE_SITES
+          node_id: DIVINGAPP.TABLE.TOUR_DIVE_SITES
+        - owner: DIVINGAPP
+          name: TOUR_SCHEDULES
+          node_id: DIVINGAPP.TABLE.TOUR_SCHEDULES
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-004.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-004.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-004.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-004.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-004.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-004.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-004.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:18:35.530709'
+      method: agent
+      result: success
+      duration_seconds: 31
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:19:15.341964'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-005:
+    estimated_tokens: 1973
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-005.sql
+    pg_file: artifacts/chunks/postgres/chunk-005.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-005.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-005.json
+    objects_count: 4
+    dependent_chunk_ids:
+    - chunk-000
+    - chunk-001
+    - chunk-002
+    - chunk-004
+    status: completed
+    status_updated_at: '2026-04-03T15:19:56.543776'
+    externally_modified_objects: []
+    metadata:
+      types:
+        INDEX:
+        - owner: DIVINGAPP
+          name: IDX_TS_TOUR_DATE
+          node_id: DIVINGAPP.INDEX.IDX_TS_TOUR_DATE
+        - owner: DIVINGAPP
+          name: IDX_TS_TOUR_ID
+          node_id: DIVINGAPP.INDEX.IDX_TS_TOUR_ID
+        PACKAGE:
+        - owner: DIVINGAPP
+          name: PKG_DIVE_SITE
+          node_id: DIVINGAPP.PACKAGE.PKG_DIVE_SITE
+        TABLE:
+        - owner: DIVINGAPP
+          name: RESERVATIONS
+          node_id: DIVINGAPP.TABLE.RESERVATIONS
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-005.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-005.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-005.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-005.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-005.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-005.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-005.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:19:15.538981'
+      method: agent
+      result: success
+      duration_seconds: 36
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:19:56.543776'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-006:
+    estimated_tokens: 2246
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-006.sql
+    pg_file: artifacts/chunks/postgres/chunk-006.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-006.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-006.json
+    objects_count: 6
+    dependent_chunk_ids:
+    - chunk-000
+    - chunk-001
+    - chunk-002
+    - chunk-004
+    - chunk-005
+    status: completed
+    status_updated_at: '2026-04-03T15:20:39.287448'
+    externally_modified_objects: []
+    metadata:
+      types:
+        TABLE:
+        - owner: DIVINGAPP
+          name: DIVING_LOGS
+          node_id: DIVINGAPP.TABLE.DIVING_LOGS
+        - owner: DIVINGAPP
+          name: RESERVATION_OPTIONS
+          node_id: DIVINGAPP.TABLE.RESERVATION_OPTIONS
+        INDEX:
+        - owner: DIVINGAPP
+          name: IDX_RESERVATIONS_STATUS
+          node_id: DIVINGAPP.INDEX.IDX_RESERVATIONS_STATUS
+        - owner: DIVINGAPP
+          name: IDX_RESERVATIONS_SCHEDULE
+          node_id: DIVINGAPP.INDEX.IDX_RESERVATIONS_SCHEDULE
+        - owner: DIVINGAPP
+          name: IDX_TS_STATUS
+          node_id: DIVINGAPP.INDEX.IDX_TS_STATUS
+        PACKAGE:
+        - owner: DIVINGAPP
+          name: PKG_INSTRUCTOR
+          node_id: DIVINGAPP.PACKAGE.PKG_INSTRUCTOR
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-006.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-006.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-006.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-006.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-006.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-006.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-006.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:19:56.801272'
+      method: agent
+      result: success
+      duration_seconds: 36
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:20:39.287448'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-007:
+    estimated_tokens: 4398
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-007.sql
+    pg_file: artifacts/chunks/postgres/chunk-007.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-007.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-007.json
+    objects_count: 1
+    dependent_chunk_ids:
+    - chunk-000
+    - chunk-001
+    - chunk-002
+    - chunk-004
+    - chunk-005
+    status: completed
+    status_updated_at: '2026-04-03T15:22:30.143253'
+    externally_modified_objects: []
+    metadata:
+      types:
+        PACKAGE:
+        - owner: DIVINGAPP
+          name: PKG_TOUR
+          node_id: DIVINGAPP.PACKAGE.PKG_TOUR
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-007.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-007.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-007.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-007.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-007.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-007.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-007.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:20:39.560036'
+      method: agent
+      result: success
+      duration_seconds: 109
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:22:30.143253'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-008:
+    estimated_tokens: 13124
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-008.sql
+    pg_file: artifacts/chunks/postgres/chunk-008.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-008.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-008.json
+    objects_count: 1
+    dependent_chunk_ids:
+    - chunk-000
+    - chunk-001
+    - chunk-002
+    - chunk-004
+    - chunk-005
+    status: completed
+    status_updated_at: '2026-04-03T15:23:56.938890'
+    externally_modified_objects: []
+    metadata:
+      types:
+        PACKAGE:
+        - owner: DIVINGAPP
+          name: PKG_REPORT
+          node_id: DIVINGAPP.PACKAGE.PKG_REPORT
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-008.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-008.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-008.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-008.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-008.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-008.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-008.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:22:30.421737'
+      method: agent
+      result: success
+      duration_seconds: 85
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:23:56.938890'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-009:
+    estimated_tokens: 290
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-009.sql
+    pg_file: artifacts/chunks/postgres/chunk-009.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-009.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-009.json
+    objects_count: 2
+    dependent_chunk_ids:
+    - chunk-000
+    - chunk-005
+    - chunk-006
+    status: completed
+    status_updated_at: '2026-04-03T15:24:21.976551'
+    externally_modified_objects: []
+    metadata:
+      types:
+        INDEX:
+        - owner: DIVINGAPP
+          name: IDX_DL_CUSTOMER
+          node_id: DIVINGAPP.INDEX.IDX_DL_CUSTOMER
+        - owner: DIVINGAPP
+          name: IDX_RESERVATIONS_CUSTOMER
+          node_id: DIVINGAPP.INDEX.IDX_RESERVATIONS_CUSTOMER
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-009.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-009.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-009.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-009.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-009.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-009.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-009.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:23:57.190084'
+      method: agent
+      result: success
+      duration_seconds: 23
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:24:21.976551'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-010:
+    estimated_tokens: 2206
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-010.sql
+    pg_file: artifacts/chunks/postgres/chunk-010.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-010.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-010.json
+    objects_count: 2
+    dependent_chunk_ids:
+    - chunk-000
+    - chunk-001
+    - chunk-006
+    status: completed
+    status_updated_at: '2026-04-03T15:24:48.226867'
+    externally_modified_objects: []
+    metadata:
+      types:
+        PACKAGE:
+        - owner: DIVINGAPP
+          name: PKG_DIVING_LOG
+          node_id: DIVINGAPP.PACKAGE.PKG_DIVING_LOG
+        INDEX:
+        - owner: DIVINGAPP
+          name: IDX_DL_DIVE_DATE
+          node_id: DIVINGAPP.INDEX.IDX_DL_DIVE_DATE
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-010.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-010.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-010.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-010.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-010.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-010.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-010.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:24:22.490775'
+      method: agent
+      result: success
+      duration_seconds: 23
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:24:48.226359'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-011:
+    estimated_tokens: 175
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-011.sql
+    pg_file: artifacts/chunks/postgres/chunk-011.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-011.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-011.json
+    objects_count: 1
+    dependent_chunk_ids:
+    - chunk-000
+    - chunk-006
+    status: completed
+    status_updated_at: '2026-04-03T15:25:10.516822'
+    externally_modified_objects: []
+    metadata:
+      types:
+        INDEX:
+        - owner: DIVINGAPP
+          name: IDX_RO_RESERVATION
+          node_id: DIVINGAPP.INDEX.IDX_RO_RESERVATION
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-011.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-011.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-011.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-011.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-011.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-011.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-011.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:24:48.493160'
+      method: agent
+      result: success
+      duration_seconds: 21
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:25:10.516822'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-012:
+    estimated_tokens: 5719
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-012.sql
+    pg_file: artifacts/chunks/postgres/chunk-012.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-012.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-012.json
+    objects_count: 1
+    dependent_chunk_ids:
+    - chunk-000
+    - chunk-001
+    - chunk-002
+    - chunk-004
+    - chunk-005
+    - chunk-006
+    status: completed
+    status_updated_at: '2026-04-03T15:26:01.748934'
+    externally_modified_objects: []
+    metadata:
+      types:
+        PACKAGE:
+        - owner: DIVINGAPP
+          name: PKG_RESERVATION
+          node_id: DIVINGAPP.PACKAGE.PKG_RESERVATION
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-012.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-012.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-012.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-012.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-012.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-012.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-012.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:25:10.826716'
+      method: agent
+      result: success
+      duration_seconds: 49
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:26:01.748934'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-013:
+    estimated_tokens: 2137
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-013.sql
+    pg_file: artifacts/chunks/postgres/chunk-013.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-013.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-013.json
+    objects_count: 4
+    dependent_chunk_ids:
+    - chunk-000
+    status: completed
+    status_updated_at: '2026-04-03T15:14:54.026690'
+    externally_modified_objects: []
+    metadata:
+      types:
+        TABLE:
+        - owner: DIVINGAPP
+          name: NEWS
+          node_id: DIVINGAPP.TABLE.NEWS
+        SEQUENCE:
+        - owner: DIVINGAPP
+          name: SEQ_NEWS
+          node_id: DIVINGAPP.SEQUENCE.SEQ_NEWS
+        INDEX:
+        - owner: DIVINGAPP
+          name: IDX_NEWS_PUBLISH
+          node_id: DIVINGAPP.INDEX.IDX_NEWS_PUBLISH
+        PACKAGE:
+        - owner: DIVINGAPP
+          name: PKG_NEWS
+          node_id: DIVINGAPP.PACKAGE.PKG_NEWS
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-013.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-013.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-013.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-013.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-013.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-013.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-013.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:13:56.178879'
+      method: agent
+      result: success
+      duration_seconds: 53
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:14:54.026690'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-014:
+    estimated_tokens: 499
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-014.sql
+    pg_file: artifacts/chunks/postgres/chunk-014.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-014.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-014.json
+    objects_count: 1
+    dependent_chunk_ids:
+    - chunk-000
+    status: completed
+    status_updated_at: '2026-04-03T15:15:33.499513'
+    externally_modified_objects: []
+    metadata:
+      types:
+        TABLE:
+        - owner: DIVINGAPP
+          name: ADMIN_USERS
+          node_id: DIVINGAPP.TABLE.ADMIN_USERS
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-014.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-014.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-014.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-014.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-014.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-014.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-014.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:14:54.162292'
+      method: agent
+      result: success
+      duration_seconds: 38
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:15:33.499513'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-015:
+    estimated_tokens: 150
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-015.sql
+    pg_file: artifacts/chunks/postgres/chunk-015.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-015.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-015.json
+    objects_count: 1
+    dependent_chunk_ids:
+    - chunk-000
+    status: completed
+    status_updated_at: '2026-04-03T15:15:59.406286'
+    externally_modified_objects: []
+    metadata:
+      types:
+        SEQUENCE:
+        - owner: DIVINGAPP
+          name: SEQ_OPTIONS_MASTER
+          node_id: DIVINGAPP.SEQUENCE.SEQ_OPTIONS_MASTER
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-015.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-015.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-015.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-015.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-015.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-015.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-015.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:15:33.662144'
+      method: agent
+      result: success
+      duration_seconds: 24
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:15:59.406286'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-016:
+    estimated_tokens: 149
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-016.sql
+    pg_file: artifacts/chunks/postgres/chunk-016.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-016.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-016.json
+    objects_count: 1
+    dependent_chunk_ids:
+    - chunk-000
+    status: completed
+    status_updated_at: '2026-04-03T15:16:18.734712'
+    externally_modified_objects: []
+    metadata:
+      types:
+        SEQUENCE:
+        - owner: DIVINGAPP
+          name: SEQ_DIVE_SITES
+          node_id: DIVINGAPP.SEQUENCE.SEQ_DIVE_SITES
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-016.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-016.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-016.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-016.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-016.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-016.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-016.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:15:59.554512'
+      method: agent
+      result: success
+      duration_seconds: 18
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:16:18.734712'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-017:
+    estimated_tokens: 150
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-017.sql
+    pg_file: artifacts/chunks/postgres/chunk-017.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-017.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-017.json
+    objects_count: 1
+    dependent_chunk_ids:
+    - chunk-000
+    status: completed
+    status_updated_at: '2026-04-03T15:16:38.094402'
+    externally_modified_objects: []
+    metadata:
+      types:
+        SEQUENCE:
+        - owner: DIVINGAPP
+          name: SEQ_TOUR_SCHEDULES
+          node_id: DIVINGAPP.SEQUENCE.SEQ_TOUR_SCHEDULES
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-017.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-017.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-017.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-017.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-017.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-017.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-017.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:16:18.926042'
+      method: agent
+      result: success
+      duration_seconds: 18
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:16:38.094402'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-018:
+    estimated_tokens: 149
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-018.sql
+    pg_file: artifacts/chunks/postgres/chunk-018.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-018.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-018.json
+    objects_count: 1
+    dependent_chunk_ids:
+    - chunk-000
+    status: completed
+    status_updated_at: '2026-04-03T15:16:58.461218'
+    externally_modified_objects: []
+    metadata:
+      types:
+        SEQUENCE:
+        - owner: DIVINGAPP
+          name: SEQ_ADMIN_USERS
+          node_id: DIVINGAPP.SEQUENCE.SEQ_ADMIN_USERS
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-018.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-018.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-018.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-018.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-018.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-018.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-018.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:16:38.272379'
+      method: agent
+      result: success
+      duration_seconds: 19
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:16:58.461218'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+  chunk-019:
+    estimated_tokens: 149
+    has_cyclic_dependencies: false
+    oracle_file: artifacts/chunks/oracle/chunk-019.sql
+    pg_file: artifacts/chunks/postgres/chunk-019.sql
+    oracle_file_json: artifacts/chunks/oracle_json/chunk-019.json
+    pg_file_json: artifacts/chunks/postgres_json/chunk-019.json
+    objects_count: 1
+    dependent_chunk_ids:
+    - chunk-000
+    status: completed
+    status_updated_at: '2026-04-03T15:17:21.114136'
+    externally_modified_objects: []
+    metadata:
+      types:
+        SEQUENCE:
+        - owner: DIVINGAPP
+          name: SEQ_INSTRUCTORS
+          node_id: DIVINGAPP.SEQUENCE.SEQ_INSTRUCTORS
+      oracle_chunk_display_file: artifacts/chunks/oracle/chunk-019.sql
+      postgres_chunk_display_file: artifacts/chunks/postgres/chunk-019.sql
+      oracle_chunk_json_display_file: artifacts/chunks/oracle_json/chunk-019.json
+      postgres_chunk_json_display_file: artifacts/chunks/postgres_json/chunk-019.json
+      oracle_read_tool: read_oracle_chunk_json
+      oracle_read_target: artifacts/chunks/oracle_json/chunk-019.json
+      oracle_read_description: Oracle JSON chunk
+      postgres_read_tool: read_postgres_chunk_json
+      postgres_read_description: PostgreSQL JSON chunk
+      postgres_write_tool: write_postgres_chunk_json
+      postgres_write_target: artifacts/chunks/postgres_json/chunk-019.json
+      postgres_write_description: PostgreSQL JSON chunk
+      compile_target_file: artifacts/chunks/postgres/chunk-019.sql
+    conversion_history:
+    - timestamp: '2026-04-03T15:16:58.679718'
+      method: agent
+      result: success
+      duration_seconds: 21
+      tool: autogen+azure-openai
+      model: gpt-5.2
+      schema_compile_result: success
+      compile_attempts: 1
+    - timestamp: '2026-04-03T15:17:21.114136'
+      method: unified_migration_object_level
+      result: success
+      duration_seconds: 0
+      schema_compile_result: success
+    best_effort_conversion: false
+    coding_notes: []
+    migration_notes: []
+    resolution_notes: []
+migration:
+  created_at: '2026-04-03T15:12:05.957529'
+  updated_at: '2026-04-03T15:26:09.912472'
+  migration_id: 10f0e366-1d07-466a-a814-7ed832fccaba
+  extraction_id:
+  - 52e4bb31-574c-4c21-aa4b-ac5ca29dfa5c
+  conversion_id:
+  - 4d4d6c54-9340-4963-b7e8-ebf24906c8e1
+  total_chunks: 20
+  completed_chunks: 20
+  failed_chunks: 0
+  total_objects: 57
+  conversion_rate: 0.0
+  current_chunks: []
+  preserve_case: false
+  conversion_version: v3
+  service_version: 2.0.0
+  extracted_objects: []
+connection_config:
+  oracle:
+    host: divingapp-oracledb-v2er7d4iobbcu.japaneast.azurecontainer.io
+    port: 1521
+    service_name: XEPDB1
+    username: DIVINGAPP
+    credential_id: oracle_migration_ora2pg_test_password
+    schemas:
+    - DIVINGAPP
+  postgresql:
+    connection_id: 327B795F-2787-49DB-93C2-C8E9233A84ED
+    database: divingapp
+  language_model_type: azure_openai
+  azure_openai:
+    endpoint: https://ai-aoaijapaneastmaaya423771186430.cognitiveservices.azure.com/openai/responses?api-version=2025-04-01-preview
+    deployment_name: gpt-5.2
+    model_name: gpt-5.2
+    credential_id: openai_migration_ora2pg_test_key
+    auth_type: entra_id
+    account_id: eeb7a88b-b79b-4f3b-997b-88db102288c6.72f988bf-86f1-41af-91ab-2d7cd011db47
+    tenant_id: 16b3c013-d300-468d-ac64-7eda0820b6d3
+    use_responses_api: true
+app_migration_guidance:
+  coding_notes: {}

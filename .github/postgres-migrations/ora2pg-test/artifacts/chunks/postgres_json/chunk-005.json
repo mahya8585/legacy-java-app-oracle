@@ -1,0 +1,166 @@
+{
+  "chunk_number": 5,
+  "number_of_objects": 6,
+  "object_types": [
+    "TABLE",
+    "FUNCTION",
+    "INDEX"
+  ],
+  "objects": [
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "reservations",
+      "source": "DIVINGAPP/TABLE/RESERVATIONS.sql",
+      "node_id": "DIVINGAPP.TABLE.RESERVATIONS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.reservations (\n    reservation_id BIGINT NOT NULL,\n    customer_id BIGINT NOT NULL,\n    schedule_id BIGINT NOT NULL,\n    num_participants BIGINT NOT NULL,\n    total_price BIGINT NOT NULL,\n    status VARCHAR(20) NOT NULL DEFAULT 'CONFIRMED',\n    cancel_reason VARCHAR(500),\n    refund_amount BIGINT DEFAULT 0,\n    notes VARCHAR(1000),\n    created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    CONSTRAINT ck_res_status CHECK (status IN ('CONFIRMED', 'CANCELLED', 'COMPLETED', 'NO_SHOW')),\n    CONSTRAINT pk_reservations PRIMARY KEY (reservation_id),\n    CONSTRAINT fk_res_customer FOREIGN KEY (customer_id)\n        REFERENCES divingapp.customers (customer_id),\n    CONSTRAINT fk_res_schedule FOREIGN KEY (schedule_id)\n        REFERENCES divingapp.tour_schedules (schedule_id)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "NUMBER converted to BIGINT for integer columns",
+        "TIMESTAMP(6) DEFAULT SYSTIMESTAMP converted to TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP",
+        "Oracle ENABLE/USING INDEX/TABLESPACE/STORAGE/segment attributes omitted (not applicable in PostgreSQL)"
+      ],
+      "depends_on": [
+        {
+          "name": "customers",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.CUSTOMERS"
+        },
+        {
+          "name": "tour_schedules",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_SCHEDULES"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_ts_tour_date",
+      "source": "DIVINGAPP/INDEX/IDX_TS_TOUR_DATE.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_TS_TOUR_DATE",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_ts_tour_date ON divingapp.tour_schedules (tour_date);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Removed Oracle storage/tablespace attributes (not applicable in PostgreSQL)",
+        "Removed schema-qualification from index name per PostgreSQL rules"
+      ],
+      "depends_on": [
+        {
+          "name": "tour_schedules",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_SCHEDULES"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_ts_tour_id",
+      "source": "DIVINGAPP/INDEX/IDX_TS_TOUR_ID.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_TS_TOUR_ID",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_ts_tour_id ON divingapp.tour_schedules (tour_id);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Removed Oracle storage/tablespace attributes (not applicable in PostgreSQL)",
+        "Removed schema-qualification from index name per PostgreSQL rules"
+      ],
+      "depends_on": [
+        {
+          "name": "tour_schedules",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_SCHEDULES"
+        }
+      ]
+    },
+    {
+      "object_type": "FUNCTION",
+      "schema_name": "divingapp",
+      "name": "get_dive_sites",
+      "source": "DIVINGAPP/PACKAGE/PKG_DIVE_SITE.sql",
+      "node_id": "DIVINGAPP.PACKAGE.PKG_DIVE_SITE",
+      "owner": "DIVINGAPP",
+      "content": "CREATE OR REPLACE FUNCTION divingapp.get_dive_sites(\n    p_area VARCHAR DEFAULT NULL,\n    p_difficulty VARCHAR DEFAULT NULL\n)\nRETURNS TABLE (\n    site_id BIGINT,\n    site_name VARCHAR,\n    area VARCHAR,\n    description VARCHAR,\n    max_depth BIGINT,\n    water_temperature_min BIGINT,\n    water_temperature_max BIGINT,\n    difficulty VARCHAR,\n    marine_life VARCHAR,\n    access_info VARCHAR,\n    created_at TIMESTAMP,\n    updated_at TIMESTAMP\n)\nLANGUAGE plpgsql\nAS $$\nBEGIN\n    RETURN QUERY\n    SELECT ds.site_id,\n           ds.site_name,\n           ds.area,\n           ds.description,\n           ds.max_depth,\n           ds.water_temperature_min,\n           ds.water_temperature_max,\n           ds.difficulty,\n           ds.marine_life,\n           ds.access_info,\n           ds.created_at,\n           ds.updated_at\n      FROM divingapp.dive_sites ds\n     WHERE ds.status = 'ACTIVE'\n       AND (p_area IS NULL OR ds.area = p_area)\n       AND (p_difficulty IS NULL OR ds.difficulty = p_difficulty)\n     ORDER BY ds.area, ds.site_name;\nEND;\n$$;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle package procedure GET_DIVE_SITES converted to set-returning function",
+        "SYS_REFCURSOR OUT converted to RETURNS TABLE result set",
+        "Oracle RAISE_APPLICATION_ERROR removed; callers should handle SQL errors/messages at application layer"
+      ],
+      "depends_on": [
+        {
+          "name": "dive_sites",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.DIVE_SITES"
+        }
+      ]
+    },
+    {
+      "object_type": "FUNCTION",
+      "schema_name": "divingapp",
+      "name": "get_dive_site_detail_site",
+      "source": "DIVINGAPP/PACKAGE/PKG_DIVE_SITE.sql",
+      "node_id": "DIVINGAPP.PACKAGE.PKG_DIVE_SITE",
+      "owner": "DIVINGAPP",
+      "content": "CREATE OR REPLACE FUNCTION divingapp.get_dive_site_detail_site(\n    p_site_id BIGINT\n)\nRETURNS TABLE (\n    site_id BIGINT,\n    site_name VARCHAR,\n    area VARCHAR,\n    description VARCHAR,\n    max_depth BIGINT,\n    water_temperature_min BIGINT,\n    water_temperature_max BIGINT,\n    difficulty VARCHAR,\n    marine_life VARCHAR,\n    access_info VARCHAR,\n    created_at TIMESTAMP,\n    updated_at TIMESTAMP\n)\nLANGUAGE plpgsql\nAS $$\nDECLARE\n    v_count BIGINT;\nBEGIN\n    SELECT COUNT(*) INTO v_count\n      FROM divingapp.dive_sites ds\n     WHERE ds.site_id = p_site_id\n       AND ds.status = 'ACTIVE';\n\n    IF v_count = 0 THEN\n        RAISE EXCEPTION '指定されたダイブサイトが見つかりません。SITE_ID=%', p_site_id\n            USING ERRCODE = 'P0001';\n    END IF;\n\n    RETURN QUERY\n    SELECT ds.site_id,\n           ds.site_name,\n           ds.area,\n           ds.description,\n           ds.max_depth,\n           ds.water_temperature_min,\n           ds.water_temperature_max,\n           ds.difficulty,\n           ds.marine_life,\n           ds.access_info,\n           ds.created_at,\n           ds.updated_at\n      FROM divingapp.dive_sites ds\n     WHERE ds.site_id = p_site_id;\nEND;\n$$;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle package procedure GET_DIVE_SITE_DETAIL (o_site cursor) converted to set-returning function",
+        "Oracle RAISE_APPLICATION_ERROR mapped to RAISE EXCEPTION with ERRCODE P0001"
+      ],
+      "depends_on": [
+        {
+          "name": "dive_sites",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.DIVE_SITES"
+        }
+      ]
+    },
+    {
+      "object_type": "FUNCTION",
+      "schema_name": "divingapp",
+      "name": "get_dive_site_detail_related_tours",
+      "source": "DIVINGAPP/PACKAGE/PKG_DIVE_SITE.sql",
+      "node_id": "DIVINGAPP.PACKAGE.PKG_DIVE_SITE",
+      "owner": "DIVINGAPP",
+      "content": "CREATE OR REPLACE FUNCTION divingapp.get_dive_site_detail_related_tours(\n    p_site_id BIGINT\n)\nRETURNS TABLE (\n    tour_id BIGINT,\n    tour_name VARCHAR,\n    area VARCHAR,\n    difficulty VARCHAR,\n    base_price BIGINT,\n    duration_days BIGINT,\n    min_dive_count BIGINT,\n    featured_flag VARCHAR,\n    dive_order BIGINT\n)\nLANGUAGE plpgsql\nAS $$\nBEGIN\n    RETURN QUERY\n    SELECT t.tour_id,\n           t.tour_name,\n           t.area,\n           t.difficulty,\n           t.base_price,\n           t.duration_days,\n           t.min_dive_count,\n           t.featured_flag,\n           tds.dive_order\n      FROM divingapp.tour_dive_sites tds\n      JOIN divingapp.tours t\n        ON tds.tour_id = t.tour_id\n     WHERE tds.site_id = p_site_id\n       AND t.status = 'ACTIVE'\n     ORDER BY t.tour_name;\nEND;\n$$;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle package procedure GET_DIVE_SITE_DETAIL (o_related_tours cursor) converted to set-returning function",
+        "SYS_REFCURSOR OUT converted to RETURNS TABLE result set"
+      ],
+      "depends_on": [
+        {
+          "name": "tour_dive_sites",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_DIVE_SITES"
+        },
+        {
+          "name": "tours",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-005.json"
+}

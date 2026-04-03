@@ -1,0 +1,19 @@
+{
+  "chunk_number": 16,
+  "number_of_objects": 1,
+  "tokens": 149,
+  "object_types": [
+    "SEQUENCE"
+  ],
+  "objects": [
+    {
+      "object_type": "SEQUENCE",
+      "owner": "DIVINGAPP",
+      "name": "SEQ_DIVE_SITES",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_DIVE_SITES.sql",
+      "content": "\n   CREATE SEQUENCE  \"DIVINGAPP\".\"SEQ_DIVE_SITES\"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 31 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_DIVE_SITES",
+      "depends_on": []
+    }
+  ]
+}

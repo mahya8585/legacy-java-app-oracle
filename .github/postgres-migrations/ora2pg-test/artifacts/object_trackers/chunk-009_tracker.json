@@ -1,0 +1,86 @@
+{
+  "chunk_id": "chunk-009",
+  "expected_objects": {
+    "ORACLE.INDEX.IDX_DL_CUSTOMER": {
+      "object_id": "ORACLE.INDEX.IDX_DL_CUSTOMER",
+      "name": "IDX_DL_CUSTOMER",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_RESERVATIONS_CUSTOMER": {
+      "object_id": "ORACLE.INDEX.IDX_RESERVATIONS_CUSTOMER",
+      "name": "IDX_RESERVATIONS_CUSTOMER",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.INDEX.IDX_DL_CUSTOMER": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_DL_CUSTOMER",
+        "name": "IDX_DL_CUSTOMER",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_dl_customer",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle index storage/tablespace attributes (PCTFREE, INITRANS, MAXTRANS, COMPUTE STATISTICS, TABLESPACE) omitted/not applicable in PostgreSQL, Oracle UPPERCASE names converted to lowercase PostgreSQL names, PostgreSQL index name is unqualified (schema removed) per PostgreSQL syntax rules"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:24:21.976551",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_RESERVATIONS_CUSTOMER": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_RESERVATIONS_CUSTOMER",
+        "name": "IDX_RESERVATIONS_CUSTOMER",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_reservations_customer",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle index storage/tablespace attributes (PCTFREE, INITRANS, MAXTRANS, COMPUTE STATISTICS, TABLESPACE) omitted/not applicable in PostgreSQL, Oracle UPPERCASE names converted to lowercase PostgreSQL names, PostgreSQL index name is unqualified (schema removed) per PostgreSQL syntax rules"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:24:21.976551",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:24:10.315048",
+  "last_updated": "2026-04-03T15:24:10.367383",
+  "total_expected": 2,
+  "total_converted": 2,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

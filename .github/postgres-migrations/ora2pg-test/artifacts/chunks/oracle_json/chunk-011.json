@@ -1,0 +1,27 @@
+{
+  "chunk_number": 11,
+  "number_of_objects": 1,
+  "tokens": 175,
+  "object_types": [
+    "INDEX"
+  ],
+  "objects": [
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_RO_RESERVATION",
+      "source": "DIVINGAPP/INDEX/IDX_RO_RESERVATION.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_RO_RESERVATION\" ON \"DIVINGAPP\".\"RESERVATION_OPTIONS\" (\"RESERVATION_ID\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_RO_RESERVATION",
+      "depends_on": [
+        {
+          "name": "RESERVATION_OPTIONS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-006",
+          "node_id": "DIVINGAPP.TABLE.RESERVATION_OPTIONS"
+        }
+      ]
+    }
+  ]
+}

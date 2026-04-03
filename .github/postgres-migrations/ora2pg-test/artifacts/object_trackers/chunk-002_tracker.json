@@ -1,0 +1,296 @@
+{
+  "chunk_id": "chunk-002",
+  "expected_objects": {
+    "ORACLE.SEQUENCE.SEQ_REPORT_CACHE": {
+      "object_id": "ORACLE.SEQUENCE.SEQ_REPORT_CACHE",
+      "name": "SEQ_REPORT_CACHE",
+      "type": "SEQUENCE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.SEQUENCE.SEQ_RESERVATION_OPTIONS": {
+      "object_id": "ORACLE.SEQUENCE.SEQ_RESERVATION_OPTIONS",
+      "name": "SEQ_RESERVATION_OPTIONS",
+      "type": "SEQUENCE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.TABLE.CUSTOMERS": {
+      "object_id": "ORACLE.TABLE.CUSTOMERS",
+      "name": "CUSTOMERS",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.TABLE.REPORT_ALERTS": {
+      "object_id": "ORACLE.TABLE.REPORT_ALERTS",
+      "name": "REPORT_ALERTS",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.TABLE.TOURS": {
+      "object_id": "ORACLE.TABLE.TOURS",
+      "name": "TOURS",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_DS_AREA": {
+      "object_id": "ORACLE.INDEX.IDX_DS_AREA",
+      "name": "IDX_DS_AREA",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_RC_GENERATED": {
+      "object_id": "ORACLE.INDEX.IDX_RC_GENERATED",
+      "name": "IDX_RC_GENERATED",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_RC_KEY_SECTION": {
+      "object_id": "ORACLE.INDEX.IDX_RC_KEY_SECTION",
+      "name": "IDX_RC_KEY_SECTION",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.SEQUENCE.SEQ_REPORT_CACHE": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.SEQUENCE.SEQ_REPORT_CACHE",
+        "name": "SEQ_REPORT_CACHE",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "seq_report_cache",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle MAXVALUE 9999999999999999999999999999 exceeds bigint; omitted MAXVALUE in PostgreSQL, Oracle NOCACHE not specified to preserve semantics (PostgreSQL cache defaults apply), Oracle NOORDER ignored (PostgreSQL sequences are not order-guaranteed across sessions)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:17:59.287543",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.SEQUENCE.SEQ_RESERVATION_OPTIONS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.SEQUENCE.SEQ_RESERVATION_OPTIONS",
+        "name": "SEQ_RESERVATION_OPTIONS",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "seq_reservation_options",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle MAXVALUE 9999999999999999999999999999 exceeds bigint; omitted MAXVALUE in PostgreSQL, Oracle NOCACHE not specified to preserve semantics (PostgreSQL cache defaults apply), Oracle NOORDER ignored (PostgreSQL sequences are not order-guaranteed across sessions)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:17:59.287543",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.TABLE.CUSTOMERS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.CUSTOMERS",
+        "name": "CUSTOMERS",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "customers",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "NUMBER converted to BIGINT for integer columns, RAW(64) converted to BYTEA, DATE converted to TIMESTAMP, SYSTIMESTAMP converted to CURRENT_TIMESTAMP"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:17:59.287543",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.TABLE.REPORT_ALERTS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.REPORT_ALERTS",
+        "name": "REPORT_ALERTS",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "report_alerts",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "NUMBER converted to BIGINT for integer columns, NUMBER(p,s) converted to NUMERIC(p,s), SYSTIMESTAMP converted to CURRENT_TIMESTAMP"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:17:59.287543",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.TABLE.TOURS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.TOURS",
+        "name": "TOURS",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "tours",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "NUMBER converted to BIGINT for integer columns, NUMBER(10,0) converted to BIGINT, CLOB converted to TEXT, SYSTIMESTAMP converted to CURRENT_TIMESTAMP, Oracle SecureFile LOB storage clauses dropped (not applicable in PostgreSQL)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:17:59.287543",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_DS_AREA": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_DS_AREA",
+        "name": "IDX_DS_AREA",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_ds_area",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Removed Oracle storage/tablespace attributes (PCTFREE/INITRANS/MAXTRANS/STORAGE/TABLESPACE/COMPUTE STATISTICS)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:17:59.287543",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_RC_GENERATED": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_RC_GENERATED",
+        "name": "IDX_RC_GENERATED",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_rc_generated",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Removed Oracle storage/tablespace attributes (PCTFREE/INITRANS/MAXTRANS/TABLESPACE/COMPUTE STATISTICS)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:17:59.287543",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_RC_KEY_SECTION": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_RC_KEY_SECTION",
+        "name": "IDX_RC_KEY_SECTION",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_rc_key_section",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Removed Oracle storage/tablespace attributes (PCTFREE/INITRANS/MAXTRANS/TABLESPACE/COMPUTE STATISTICS)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:17:59.287543",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:17:40.713703",
+  "last_updated": "2026-04-03T15:17:40.744969",
+  "total_expected": 8,
+  "total_converted": 8,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

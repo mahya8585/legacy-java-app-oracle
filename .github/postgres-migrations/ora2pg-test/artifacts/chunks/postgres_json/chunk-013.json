@@ -1,0 +1,128 @@
+{
+  "chunk_number": 13,
+  "number_of_objects": 5,
+  "object_types": [
+    "SEQUENCE",
+    "TABLE",
+    "FUNCTION",
+    "INDEX"
+  ],
+  "objects": [
+    {
+      "object_type": "SEQUENCE",
+      "schema_name": "divingapp",
+      "name": "seq_news",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_NEWS.sql",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_NEWS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE SEQUENCE IF NOT EXISTS divingapp.seq_news\n    INCREMENT BY 1\n    START WITH 11\n    MINVALUE 1\n    NO CYCLE;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle MAXVALUE omitted (exceeded BIGINT range)",
+        "Oracle NOCACHE/NOORDER/GLOBAL ignored (no direct PostgreSQL equivalents)"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "news",
+      "source": "DIVINGAPP/TABLE/NEWS.sql",
+      "node_id": "DIVINGAPP.TABLE.NEWS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.news (\n    news_id BIGINT NOT NULL,\n    title VARCHAR(300) NOT NULL,\n    content TEXT NOT NULL,\n    category VARCHAR(50),\n    publish_date TIMESTAMP NOT NULL,\n    status VARCHAR(20) DEFAULT 'PUBLISHED' NOT NULL,\n    created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    updated_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    CONSTRAINT ck_news_status CHECK (status IN ('DRAFT', 'PUBLISHED', 'ARCHIVED')),\n    CONSTRAINT pk_news PRIMARY KEY (news_id)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "NUMBER converted to BIGINT",
+        "VARCHAR2 converted to VARCHAR",
+        "CLOB converted to TEXT",
+        "DATE converted to TIMESTAMP",
+        "SYSTIMESTAMP converted to CURRENT_TIMESTAMP"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_news_publish",
+      "source": "DIVINGAPP/INDEX/IDX_NEWS_PUBLISH.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_NEWS_PUBLISH",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_news_publish ON divingapp.news (publish_date, status);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Removed schema qualification from index name (PostgreSQL restriction)"
+      ],
+      "depends_on": [
+        {
+          "name": "news",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-013",
+          "node_id": "DIVINGAPP.TABLE.NEWS"
+        }
+      ]
+    },
+    {
+      "object_type": "FUNCTION",
+      "schema_name": "divingapp",
+      "name": "pkg_news_get_latest_news",
+      "source": "DIVINGAPP/PACKAGE/PKG_NEWS.sql",
+      "node_id": "DIVINGAPP.PACKAGE.PKG_NEWS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE OR REPLACE FUNCTION divingapp.pkg_news_get_latest_news(\n    p_limit BIGINT DEFAULT 5,\n    p_category VARCHAR DEFAULT NULL\n)\nRETURNS SETOF divingapp.news\nLANGUAGE plpgsql\nAS $$\nBEGIN\n    IF COALESCE(p_limit, 5) < 1 THEN\n        p_limit := 5;\n    END IF;\n\n    RETURN QUERY\n    SELECT n.*\n    FROM divingapp.news n\n    WHERE n.status = 'PUBLISHED'\n      AND n.publish_date <= date_trunc('day', CURRENT_TIMESTAMP)\n      AND (p_category IS NULL OR n.category = p_category)\n    ORDER BY n.publish_date DESC, n.news_id DESC\n    LIMIT p_limit;\nEND;\n$$;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle package decomposed: GET_LATEST_NEWS procedure converted to set-returning function",
+        "SYS_REFCURSOR output converted to SETOF divingapp.news",
+        "NVL converted to COALESCE",
+        "TRUNC(SYSDATE) converted to date_trunc('day', CURRENT_TIMESTAMP)"
+      ],
+      "depends_on": [
+        {
+          "name": "news",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-013",
+          "node_id": "DIVINGAPP.TABLE.NEWS"
+        }
+      ]
+    },
+    {
+      "object_type": "FUNCTION",
+      "schema_name": "divingapp",
+      "name": "pkg_news_save_news",
+      "source": "DIVINGAPP/PACKAGE/PKG_NEWS.sql",
+      "node_id": "DIVINGAPP.PACKAGE.PKG_NEWS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE OR REPLACE FUNCTION divingapp.pkg_news_save_news(\n    p_news_id_in BIGINT,\n    p_title VARCHAR,\n    p_content TEXT,\n    p_category VARCHAR,\n    p_publish_date TIMESTAMP,\n    p_status VARCHAR\n)\nRETURNS TABLE (p_news_id BIGINT, o_result_code BIGINT, o_result_msg VARCHAR)\nLANGUAGE plpgsql\nAS $$\nDECLARE\n    v_count BIGINT;\nBEGIN\n    p_news_id := p_news_id_in;\n\n    -- タイトル必須チェック\n    IF p_title IS NULL OR length(btrim(p_title)) = 0 THEN\n        o_result_code := -20601;\n        o_result_msg  := 'タイトルは必須です';\n        RETURN;\n    END IF;\n\n    -- コンテンツ必須チェック\n    IF p_content IS NULL THEN\n        o_result_code := -20602;\n        o_result_msg  := '本文は必須です';\n        RETURN;\n    END IF;\n\n    IF p_news_id IS NULL THEN\n        -- ============================\n        -- 新規登録\n        -- ============================\n        p_news_id := nextval('divingapp.seq_news');\n\n        INSERT INTO divingapp.news (\n            news_id,\n            title,\n            content,\n            category,\n            publish_date,\n            status,\n            created_at,\n            updated_at\n        ) VALUES (\n            p_news_id,\n            btrim(p_title),\n            p_content,\n            p_category,\n            COALESCE(p_publish_date, date_trunc('day', CURRENT_TIMESTAMP)),\n            COALESCE(p_status, 'DRAFT'),\n            CURRENT_TIMESTAMP,\n            CURRENT_TIMESTAMP\n        );\n\n        o_result_code := 0;\n        o_result_msg  := 'ニュースを登録しました';\n        RETURN;\n    ELSE\n        -- ============================\n        -- 更新（存在チェック付き）\n        -- ============================\n        SELECT COUNT(*)\n        INTO v_count\n        FROM divingapp.news n\n        WHERE n.news_id = p_news_id;\n\n        IF v_count = 0 THEN\n            o_result_code := -20603;\n            o_result_msg  := '指定されたニュースが見つかりません (NEWS_ID=' || p_news_id || ')';\n            RETURN;\n        END IF;\n\n        UPDATE divingapp.news n\n        SET title        = btrim(p_title),\n            content      = p_content,\n            category     = p_category,\n            publish_date = COALESCE(p_publish_date, n.publish_date),\n            status       = COALESCE(p_status, n.status),\n            updated_at   = CURRENT_TIMESTAMP\n        WHERE n.news_id = p_news_id;\n\n        o_result_code := 0;\n        o_result_msg  := 'ニュースを更新しました';\n        RETURN;\n    END IF;\n\nEXCEPTION\n    WHEN OTHERS THEN\n        o_result_code := -20699;\n        o_result_msg  := 'ニュース保存中にエラーが発生しました: ' || SQLERRM;\n        RETURN;\nEND;\n$$;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle package decomposed: SAVE_NEWS procedure converted to function returning result code/message",
+        "CLOB parameter converted to TEXT",
+        "SEQ_NEWS.NEXTVAL converted to nextval('divingapp.seq_news')",
+        "SYSTIMESTAMP converted to CURRENT_TIMESTAMP",
+        "NVL converted to COALESCE",
+        "Fixed PostgreSQL limitation: replaced INOUT parameter with input parameter; returned updated p_news_id as first column in RETURNS TABLE",
+        "Resolved duplicate parameter name by renaming input parameter to p_news_id_in and assigning to output p_news_id"
+      ],
+      "depends_on": [
+        {
+          "name": "news",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-013",
+          "node_id": "DIVINGAPP.TABLE.NEWS"
+        },
+        {
+          "name": "seq_news",
+          "object_type": "SEQUENCE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-013",
+          "node_id": "DIVINGAPP.SEQUENCE.SEQ_NEWS"
+        }
+      ]
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-013.json"
+}

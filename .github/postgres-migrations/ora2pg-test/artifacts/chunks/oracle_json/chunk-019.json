@@ -1,0 +1,19 @@
+{
+  "chunk_number": 19,
+  "number_of_objects": 1,
+  "tokens": 149,
+  "object_types": [
+    "SEQUENCE"
+  ],
+  "objects": [
+    {
+      "object_type": "SEQUENCE",
+      "owner": "DIVINGAPP",
+      "name": "SEQ_INSTRUCTORS",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_INSTRUCTORS.sql",
+      "content": "\n   CREATE SEQUENCE  \"DIVINGAPP\".\"SEQ_INSTRUCTORS\"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 11 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_INSTRUCTORS",
+      "depends_on": []
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "migration_id": "ora2pg-test_20260403_152609",
+  "generated_at": "2026-04-03T15:26:09.625768",
+  "source_project": "c:\\local-m\\github\\legacy-java-app-oracle\\.github\\postgres-migrations\\ora2pg-test",
+  "migration_summary": {
+    "total_objects": 57,
+    "total_chunks": 20,
+    "completed_chunks": 20,
+    "failed_chunks": 0,
+    "success_rate_percent": 100.0
+  },
+  "object_type_breakdown": {
+    "FUNCTION": 14,
+    "INDEX": 40,
+    "PACKAGE": 5,
+    "PROCEDURE": 14,
+    "SCHEMA": 2,
+    "SEQUENCE": 13,
+    "TABLE": 15
+  },
+  "deployment_artifacts": {
+    "deploy_sql_generated": true,
+    "reports_generated": true,
+    "application_guidance_generated": true
+  },
+  "quality_metrics": {
+    "objects_requiring_review": 23,
+    "manual_interventions": 0,
+    "conversion_warnings": 0
+  }
+}

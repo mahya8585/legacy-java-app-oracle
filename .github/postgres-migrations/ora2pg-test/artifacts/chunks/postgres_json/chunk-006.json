@@ -1,0 +1,211 @@
+{
+  "chunk_number": 6,
+  "number_of_objects": 7,
+  "object_types": [
+    "TABLE",
+    "FUNCTION",
+    "INDEX"
+  ],
+  "objects": [
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "diving_logs",
+      "source": "DIVINGAPP/TABLE/DIVING_LOGS.sql",
+      "node_id": "DIVINGAPP.TABLE.DIVING_LOGS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.diving_logs (\n\tlog_id BIGINT NOT NULL,\n\tcustomer_id BIGINT NOT NULL,\n\tsite_id BIGINT,\n\treservation_id BIGINT,\n\tdive_date TIMESTAMP NOT NULL,\n\tmax_depth NUMERIC(5,1),\n\tdive_time BIGINT,\n\twater_temp NUMERIC(4,1),\n\tvisibility NUMERIC(4,1),\n\tweather VARCHAR(50),\n\tbuddy VARCHAR(100),\n\tnotes TEXT,\n\tcreated_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,\n\tupdated_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP NOT NULL,\n\tCONSTRAINT pk_diving_logs PRIMARY KEY (log_id),\n\tCONSTRAINT fk_dl_customer FOREIGN KEY (customer_id) REFERENCES divingapp.customers (customer_id),\n\tCONSTRAINT fk_dl_site FOREIGN KEY (site_id) REFERENCES divingapp.dive_sites (site_id),\n\tCONSTRAINT fk_dl_reservation FOREIGN KEY (reservation_id) REFERENCES divingapp.reservations (reservation_id)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "DATE column DIVE_DATE converted to TIMESTAMP",
+        "CLOB column NOTES converted to TEXT",
+        "NUMBER columns converted to BIGINT unless precision/scale specified"
+      ],
+      "depends_on": [
+        {
+          "name": "reservations",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-005",
+          "node_id": "DIVINGAPP.TABLE.RESERVATIONS"
+        },
+        {
+          "name": "customers",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.CUSTOMERS"
+        },
+        {
+          "name": "dive_sites",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.DIVE_SITES"
+        }
+      ]
+    },
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "reservation_options",
+      "source": "DIVINGAPP/TABLE/RESERVATION_OPTIONS.sql",
+      "node_id": "DIVINGAPP.TABLE.RESERVATION_OPTIONS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.reservation_options (\n\tres_option_id BIGINT NOT NULL,\n\treservation_id BIGINT NOT NULL,\n\toption_id BIGINT NOT NULL,\n\tquantity BIGINT DEFAULT 1 NOT NULL,\n\tsubtotal BIGINT NOT NULL,\n\tCONSTRAINT pk_reservation_options PRIMARY KEY (res_option_id),\n\tCONSTRAINT fk_ro_reservation FOREIGN KEY (reservation_id) REFERENCES divingapp.reservations (reservation_id),\n\tCONSTRAINT fk_ro_option FOREIGN KEY (option_id) REFERENCES divingapp.options_master (option_id)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "NUMBER columns converted to BIGINT unless precision/scale specified"
+      ],
+      "depends_on": [
+        {
+          "name": "reservations",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-005",
+          "node_id": "DIVINGAPP.TABLE.RESERVATIONS"
+        },
+        {
+          "name": "options_master",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.OPTIONS_MASTER"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_reservations_status",
+      "source": "DIVINGAPP/INDEX/IDX_RESERVATIONS_STATUS.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_RESERVATIONS_STATUS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_reservations_status ON divingapp.reservations (status);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Removed schema qualification from index name (PostgreSQL restriction)"
+      ],
+      "depends_on": [
+        {
+          "name": "reservations",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-005",
+          "node_id": "DIVINGAPP.TABLE.RESERVATIONS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_reservations_schedule",
+      "source": "DIVINGAPP/INDEX/IDX_RESERVATIONS_SCHEDULE.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_RESERVATIONS_SCHEDULE",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_reservations_schedule ON divingapp.reservations (schedule_id);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Removed schema qualification from index name (PostgreSQL restriction)"
+      ],
+      "depends_on": [
+        {
+          "name": "reservations",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-005",
+          "node_id": "DIVINGAPP.TABLE.RESERVATIONS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_ts_status",
+      "source": "DIVINGAPP/INDEX/IDX_TS_STATUS.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_TS_STATUS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_ts_status ON divingapp.tour_schedules (status);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Removed schema qualification from index name (PostgreSQL restriction)"
+      ],
+      "depends_on": [
+        {
+          "name": "tour_schedules",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_SCHEDULES"
+        }
+      ]
+    },
+    {
+      "object_type": "FUNCTION",
+      "schema_name": "divingapp",
+      "name": "get_instructors",
+      "source": "DIVINGAPP/PACKAGE/PKG_INSTRUCTOR.sql",
+      "node_id": "DIVINGAPP.PACKAGE.PKG_INSTRUCTOR",
+      "owner": "DIVINGAPP",
+      "content": "CREATE OR REPLACE FUNCTION divingapp.get_instructors()\nRETURNS refcursor\nLANGUAGE plpgsql\nAS $$\nDECLARE\n\to_instructors refcursor;\nBEGIN\n\tOPEN o_instructors FOR\n\t\tSELECT instructor_id,\n\t\t\t   last_name,\n\t\t\t   first_name,\n\t\t\t   certification,\n\t\t\t   experience_years,\n\t\t\t   specialty,\n\t\t\t   profile,\n\t\t\t   photo_url,\n\t\t\t   status,\n\t\t\t   created_at,\n\t\t\t   updated_at\n\t\t  FROM divingapp.instructors\n\t\t WHERE status = 'ACTIVE'\n\t\t ORDER BY experience_years DESC;\n\n\tRETURN o_instructors;\nEND;\n$$;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle PACKAGE procedure GET_INSTRUCTORS converted to PostgreSQL function returning refcursor"
+      ],
+      "depends_on": [
+        {
+          "name": "instructors",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.INSTRUCTORS"
+        }
+      ]
+    },
+    {
+      "object_type": "FUNCTION",
+      "schema_name": "divingapp",
+      "name": "get_instructor_detail",
+      "source": "DIVINGAPP/PACKAGE/PKG_INSTRUCTOR.sql",
+      "node_id": "DIVINGAPP.PACKAGE.PKG_INSTRUCTOR",
+      "owner": "DIVINGAPP",
+      "content": "CREATE OR REPLACE FUNCTION divingapp.get_instructor_detail(\n\tp_instructor_id BIGINT,\n\tOUT o_instructor refcursor,\n\tOUT o_tours refcursor\n)\nRETURNS record\nLANGUAGE plpgsql\nAS $$\nBEGIN\n\tOPEN o_instructor FOR\n\t\tSELECT instructor_id,\n\t\t\t   last_name,\n\t\t\t   first_name,\n\t\t\t   certification,\n\t\t\t   experience_years,\n\t\t\t   specialty,\n\t\t\t   profile,\n\t\t\t   photo_url,\n\t\t\t   status,\n\t\t\t   created_at,\n\t\t\t   updated_at\n\t\t  FROM divingapp.instructors\n\t\t WHERE instructor_id = p_instructor_id;\n\n\tOPEN o_tours FOR\n\t\tSELECT DISTINCT\n\t\t\t   t.tour_id,\n\t\t\t   t.tour_name,\n\t\t\t   t.area,\n\t\t\t   t.difficulty,\n\t\t\t   t.max_participants,\n\t\t\t   t.base_price,\n\t\t\t   t.duration_days,\n\t\t\t   ti.role\n\t\t  FROM divingapp.tour_instructors ti\n\t\t  JOIN divingapp.tours t\n\t\t\tON t.tour_id = ti.tour_id\n\t\t WHERE ti.instructor_id = p_instructor_id\n\t\t   AND t.status = 'ACTIVE'\n\t\t   AND EXISTS (\n\t\t\t   SELECT 1\n\t\t\t\t FROM divingapp.tour_schedules ts\n\t\t\t\tWHERE ts.tour_id = t.tour_id\n\t\t\t\t  AND ts.tour_date >= date_trunc('day', CURRENT_TIMESTAMP)\n\t\t\t\t  AND ts.status IN ('OPEN', 'FULL')\n\t\t   )\n\t\t ORDER BY t.tour_name;\nEND;\n$$;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle PACKAGE procedure GET_INSTRUCTOR_DETAIL converted to PostgreSQL function with OUT refcursor parameters",
+        "Oracle TRUNC(SYSDATE) converted to date_trunc('day', CURRENT_TIMESTAMP)"
+      ],
+      "depends_on": [
+        {
+          "name": "tour_instructors",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_INSTRUCTORS"
+        },
+        {
+          "name": "instructors",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.INSTRUCTORS"
+        },
+        {
+          "name": "tours",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        },
+        {
+          "name": "tour_schedules",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_SCHEDULES"
+        }
+      ]
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-006.json"
+}

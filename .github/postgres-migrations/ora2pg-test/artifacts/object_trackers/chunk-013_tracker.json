@@ -1,0 +1,156 @@
+{
+  "chunk_id": "chunk-013",
+  "expected_objects": {
+    "ORACLE.SEQUENCE.SEQ_NEWS": {
+      "object_id": "ORACLE.SEQUENCE.SEQ_NEWS",
+      "name": "SEQ_NEWS",
+      "type": "SEQUENCE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.TABLE.NEWS": {
+      "object_id": "ORACLE.TABLE.NEWS",
+      "name": "NEWS",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_NEWS_PUBLISH": {
+      "object_id": "ORACLE.INDEX.IDX_NEWS_PUBLISH",
+      "name": "IDX_NEWS_PUBLISH",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.PACKAGE.PKG_NEWS": {
+      "object_id": "ORACLE.PACKAGE.PKG_NEWS",
+      "name": "PKG_NEWS",
+      "type": "PACKAGE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.SEQUENCE.SEQ_NEWS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.SEQUENCE.SEQ_NEWS",
+        "name": "SEQ_NEWS",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "seq_news",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle MAXVALUE omitted (exceeded BIGINT range), Oracle NOCACHE/NOORDER/GLOBAL ignored (no direct PostgreSQL equivalents)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:14:54.009962",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.TABLE.NEWS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.NEWS",
+        "name": "NEWS",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "news",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "NUMBER converted to BIGINT, VARCHAR2 converted to VARCHAR, CLOB converted to TEXT, DATE converted to TIMESTAMP, SYSTIMESTAMP converted to CURRENT_TIMESTAMP"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:14:54.009962",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_NEWS_PUBLISH": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_NEWS_PUBLISH",
+        "name": "IDX_NEWS_PUBLISH",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_news_publish",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Removed schema qualification from index name (PostgreSQL restriction)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:14:54.009962",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.PACKAGE.PKG_NEWS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.PACKAGE.PKG_NEWS",
+        "name": "PKG_NEWS",
+        "type": "PACKAGE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "pkg_news_get_latest_news",
+        "type": "FUNCTION",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle package decomposed: GET_LATEST_NEWS procedure converted to set-returning function, SYS_REFCURSOR output converted to SETOF divingapp.news, NVL converted to COALESCE, TRUNC(SYSDATE) converted to date_trunc('day', CURRENT_TIMESTAMP)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:14:15.175445",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:14:15.156188",
+  "last_updated": "2026-04-03T15:14:15.175445",
+  "total_expected": 4,
+  "total_converted": 4,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

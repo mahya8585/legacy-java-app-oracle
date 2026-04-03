@@ -1,0 +1,26 @@
+{
+  "chunk_number": 17,
+  "number_of_objects": 1,
+  "object_types": [
+    "SEQUENCE"
+  ],
+  "objects": [
+    {
+      "object_type": "SEQUENCE",
+      "schema_name": "divingapp",
+      "name": "seq_tour_schedules",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_TOUR_SCHEDULES.sql",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_TOUR_SCHEDULES",
+      "owner": "DIVINGAPP",
+      "content": "CREATE SEQUENCE IF NOT EXISTS divingapp.seq_tour_schedules\n    INCREMENT BY 1\n    START WITH 52\n    MINVALUE 1\n    NO CYCLE;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle MAXVALUE (9999999999999999999999999999) exceeds PostgreSQL BIGINT limit; omitted MAXVALUE",
+        "Oracle NOCACHE omitted (PostgreSQL caches by default; explicit cache not set)",
+        "Oracle NOORDER omitted (PostgreSQL sequences are unordered)"
+      ],
+      "depends_on": []
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-017.json"
+}

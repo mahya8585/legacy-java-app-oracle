@@ -1,0 +1,199 @@
+{
+  "migration_project": {
+    "name": "ora2pg-test",
+    "path": "c:\\local-m\\github\\legacy-java-app-oracle\\.github\\postgres-migrations\\ora2pg-test",
+    "created_at": "2026-04-03T15:12:05.957529",
+    "completed_at": "2026-04-03T15:26:09.130781"
+  },
+  "extraction": {
+    "total_objects": 57,
+    "schemas_migrated": [
+      "DIVINGAPP"
+    ]
+  },
+  "conversion": {
+    "total_chunks": 20,
+    "completed_chunks": 20,
+    "failed_chunks": 0,
+    "conversion_rate": 1.0
+  },
+  "review_tasks": {
+    "total_tasks": 23,
+    "resolved_tasks": 0
+  },
+  "export": {
+    "exported_at": "2026-04-03T15:26:09.130781",
+    "artifacts_generated": true
+  },
+  "object_statistics": {
+    "total_chunks": 20,
+    "completed_chunks": 20,
+    "validated_chunks": 20,
+    "total_objects": 57,
+    "total_converted": 57,
+    "total_skipped": 0,
+    "overall_conversion_rate": 100.0,
+    "chunks": [
+      {
+        "name": "chunk-000",
+        "total_objects": 1,
+        "converted": 1,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-001",
+        "total_objects": 9,
+        "converted": 9,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-002",
+        "total_objects": 8,
+        "converted": 8,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-003",
+        "total_objects": 1,
+        "converted": 1,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-004",
+        "total_objects": 10,
+        "converted": 10,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-005",
+        "total_objects": 4,
+        "converted": 4,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-006",
+        "total_objects": 6,
+        "converted": 6,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-007",
+        "total_objects": 1,
+        "converted": 1,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-008",
+        "total_objects": 1,
+        "converted": 1,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-009",
+        "total_objects": 2,
+        "converted": 2,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-010",
+        "total_objects": 2,
+        "converted": 2,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-011",
+        "total_objects": 1,
+        "converted": 1,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-012",
+        "total_objects": 1,
+        "converted": 1,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-013",
+        "total_objects": 4,
+        "converted": 4,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-014",
+        "total_objects": 1,
+        "converted": 1,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-015",
+        "total_objects": 1,
+        "converted": 1,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-016",
+        "total_objects": 1,
+        "converted": 1,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-017",
+        "total_objects": 1,
+        "converted": 1,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-018",
+        "total_objects": 1,
+        "converted": 1,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      },
+      {
+        "name": "chunk-019",
+        "total_objects": 1,
+        "converted": 1,
+        "skipped": 0,
+        "status": "passed",
+        "completed": true
+      }
+    ]
+  }
+}

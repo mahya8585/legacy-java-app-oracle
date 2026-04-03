@@ -1,0 +1,108 @@
+-- MIGRATION_MAPPING: ORACLE=DIVINGAPP/TABLE/DIVE_SITES.sql
+CREATE TABLE IF NOT EXISTS divingapp.dive_sites (
+    site_id BIGINT NOT NULL,
+    site_name VARCHAR(200) NOT NULL,
+    area VARCHAR(100) NOT NULL,
+    description TEXT,
+    max_depth NUMERIC(5,1),
+    water_temperature_min NUMERIC(4,1),
+    water_temperature_max NUMERIC(4,1),
+    difficulty VARCHAR(20),
+    marine_life VARCHAR(1000),
+    access_info VARCHAR(500),
+    status VARCHAR(20) DEFAULT 'ACTIVE' NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT ck_ds_difficulty CHECK (difficulty IN ('BEGINNER', 'INTERMEDIATE', 'ADVANCED', 'EXPERT')),
+    CONSTRAINT pk_dive_sites PRIMARY KEY (site_id)
+);
+
+-- MIGRATION_MAPPING: ORACLE=DIVINGAPP/SEQUENCE/SEQ_DIVING_LOGS.sql
+CREATE SEQUENCE IF NOT EXISTS divingapp.seq_diving_logs
+    INCREMENT BY 1
+    MINVALUE 1
+    START WITH 1
+    NO CYCLE;
+
+ALTER SEQUENCE divingapp.seq_diving_logs CACHE 1;
+
+-- MIGRATION_MAPPING: ORACLE=DIVINGAPP/SEQUENCE/SEQ_RESERVATIONS.sql
+CREATE SEQUENCE IF NOT EXISTS divingapp.seq_reservations
+    INCREMENT BY 1
+    MINVALUE 1
+    START WITH 1
+    NO CYCLE;
+
+ALTER SEQUENCE divingapp.seq_reservations CACHE 1;
+
+-- MIGRATION_MAPPING: ORACLE=DIVINGAPP/TABLE/OPTIONS_MASTER.sql
+CREATE TABLE IF NOT EXISTS divingapp.options_master (
+    option_id BIGINT NOT NULL,
+    option_name VARCHAR(200) NOT NULL,
+    option_category VARCHAR(50) NOT NULL,
+    unit_price BIGINT NOT NULL,
+    description VARCHAR(500),
+    status VARCHAR(20) DEFAULT 'ACTIVE' NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT ck_om_category CHECK (option_category IN ('RENTAL', 'TRANSPORT', 'PHOTO', 'INSURANCE', 'OTHER')),
+    CONSTRAINT pk_options_master PRIMARY KEY (option_id)
+);
+
+-- MIGRATION_MAPPING: ORACLE=DIVINGAPP/SEQUENCE/SEQ_TOURS.sql
+CREATE SEQUENCE IF NOT EXISTS divingapp.seq_tours
+    INCREMENT BY 1
+    MINVALUE 1
+    START WITH 21
+    NO CYCLE;
+
+ALTER SEQUENCE divingapp.seq_tours CACHE 1;
+
+-- MIGRATION_MAPPING: ORACLE=DIVINGAPP/TABLE/INSTRUCTORS.sql
+CREATE TABLE IF NOT EXISTS divingapp.instructors (
+    instructor_id BIGINT NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    certification VARCHAR(200),
+    experience_years BIGINT,
+    specialty VARCHAR(200),
+    profile TEXT,
+    photo_url VARCHAR(500),
+    status VARCHAR(20) DEFAULT 'ACTIVE' NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT pk_instructors PRIMARY KEY (instructor_id)
+);
+
+-- MIGRATION_MAPPING: ORACLE=DIVINGAPP/SEQUENCE/SEQ_REPORT_ALERTS.sql
+CREATE SEQUENCE IF NOT EXISTS divingapp.seq_report_alerts
+    INCREMENT BY 1
+    MINVALUE 1
+    START WITH 1
+    NO CYCLE;
+
+ALTER SEQUENCE divingapp.seq_report_alerts CACHE 1;
+
+-- MIGRATION_MAPPING: ORACLE=DIVINGAPP/TABLE/REPORT_CACHE.sql
+CREATE TABLE IF NOT EXISTS divingapp.report_cache (
+    cache_id BIGINT NOT NULL,
+    report_key VARCHAR(100) NOT NULL,
+    section VARCHAR(50) NOT NULL,
+    report_date TIMESTAMP,
+    metric_name VARCHAR(100) NOT NULL,
+    metric_value NUMERIC(15,2),
+    dimension1 VARCHAR(200),
+    dimension2 VARCHAR(200),
+    dimension3 VARCHAR(200),
+    generated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT pk_report_cache PRIMARY KEY (cache_id)
+);
+
+-- MIGRATION_MAPPING: ORACLE=DIVINGAPP/SEQUENCE/SEQ_CUSTOMERS.sql
+CREATE SEQUENCE IF NOT EXISTS divingapp.seq_customers
+    INCREMENT BY 1
+    MINVALUE 1
+    START WITH 11
+    NO CYCLE;
+
+ALTER SEQUENCE divingapp.seq_customers CACHE 1;

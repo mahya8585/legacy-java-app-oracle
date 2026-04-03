@@ -1,0 +1,51 @@
+{
+  "chunk_id": "chunk-016",
+  "expected_objects": {
+    "ORACLE.SEQUENCE.SEQ_DIVE_SITES": {
+      "object_id": "ORACLE.SEQUENCE.SEQ_DIVE_SITES",
+      "name": "SEQ_DIVE_SITES",
+      "type": "SEQUENCE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.SEQUENCE.SEQ_DIVE_SITES": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.SEQUENCE.SEQ_DIVE_SITES",
+        "name": "SEQ_DIVE_SITES",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "seq_dive_sites",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL BIGINT range; omitted MAXVALUE in PostgreSQL, Oracle NOCACHE not specified in PostgreSQL (PostgreSQL uses default CACHE 1), Oracle NOORDER has no direct PostgreSQL equivalent, Oracle GLOBAL ignored (Oracle RAC feature)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:16:18.730391",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:16:08.834501",
+  "last_updated": "2026-04-03T15:16:08.834501",
+  "total_expected": 1,
+  "total_converted": 1,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

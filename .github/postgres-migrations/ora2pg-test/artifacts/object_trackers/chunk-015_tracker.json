@@ -1,0 +1,51 @@
+{
+  "chunk_id": "chunk-015",
+  "expected_objects": {
+    "ORACLE.SEQUENCE.SEQ_OPTIONS_MASTER": {
+      "object_id": "ORACLE.SEQUENCE.SEQ_OPTIONS_MASTER",
+      "name": "SEQ_OPTIONS_MASTER",
+      "type": "SEQUENCE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.SEQUENCE.SEQ_OPTIONS_MASTER": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.SEQUENCE.SEQ_OPTIONS_MASTER",
+        "name": "SEQ_OPTIONS_MASTER",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "seq_options_master",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint range; MAXVALUE omitted., Oracle NOCACHE/NOORDER/NOKEEP/NOSCALE/GLOBAL have no direct PostgreSQL sequence DDL equivalents (ignored)."
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:15:59.406286",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:15:41.397278",
+  "last_updated": "2026-04-03T15:15:41.397278",
+  "total_expected": 1,
+  "total_converted": 1,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

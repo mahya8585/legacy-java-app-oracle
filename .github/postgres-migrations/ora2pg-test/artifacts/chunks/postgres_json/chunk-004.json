@@ -1,0 +1,249 @@
+{
+  "chunk_number": 4,
+  "number_of_objects": 10,
+  "object_types": [
+    "TABLE",
+    "INDEX"
+  ],
+  "objects": [
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "tour_instructors",
+      "source": "DIVINGAPP/TABLE/TOUR_INSTRUCTORS.sql",
+      "node_id": "DIVINGAPP.TABLE.TOUR_INSTRUCTORS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.tour_instructors (\n    tour_id BIGINT NOT NULL,\n    instructor_id BIGINT NOT NULL,\n    role VARCHAR(50) DEFAULT 'GUIDE',\n    CONSTRAINT pk_tour_instructors PRIMARY KEY (tour_id, instructor_id),\n    CONSTRAINT fk_ti_tour FOREIGN KEY (tour_id)\n        REFERENCES divingapp.tours (tour_id),\n    CONSTRAINT fk_ti_instructor FOREIGN KEY (instructor_id)\n        REFERENCES divingapp.instructors (instructor_id)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "NUMBER mapped to BIGINT",
+        "VARCHAR2 mapped to VARCHAR"
+      ],
+      "depends_on": [
+        {
+          "name": "instructors",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.INSTRUCTORS"
+        },
+        {
+          "name": "tours",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    },
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "tour_dive_sites",
+      "source": "DIVINGAPP/TABLE/TOUR_DIVE_SITES.sql",
+      "node_id": "DIVINGAPP.TABLE.TOUR_DIVE_SITES",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.tour_dive_sites (\n    tour_id BIGINT NOT NULL,\n    site_id BIGINT NOT NULL,\n    dive_order BIGINT DEFAULT 1,\n    CONSTRAINT pk_tour_dive_sites PRIMARY KEY (tour_id, site_id),\n    CONSTRAINT fk_tds_tour FOREIGN KEY (tour_id)\n        REFERENCES divingapp.tours (tour_id),\n    CONSTRAINT fk_tds_site FOREIGN KEY (site_id)\n        REFERENCES divingapp.dive_sites (site_id)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "NUMBER mapped to BIGINT"
+      ],
+      "depends_on": [
+        {
+          "name": "dive_sites",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.DIVE_SITES"
+        },
+        {
+          "name": "tours",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    },
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "tour_schedules",
+      "source": "DIVINGAPP/TABLE/TOUR_SCHEDULES.sql",
+      "node_id": "DIVINGAPP.TABLE.TOUR_SCHEDULES",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.tour_schedules (\n    schedule_id BIGINT NOT NULL,\n    tour_id BIGINT NOT NULL,\n    tour_date TIMESTAMP NOT NULL,\n    start_time VARCHAR(5),\n    remaining_seats BIGINT NOT NULL,\n    status VARCHAR(20) DEFAULT 'OPEN' NOT NULL,\n    version BIGINT DEFAULT 0 NOT NULL,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    CONSTRAINT ck_ts_status CHECK (status IN ('OPEN', 'FULL', 'CLOSED', 'CANCELLED')),\n    CONSTRAINT pk_tour_schedules PRIMARY KEY (schedule_id),\n    CONSTRAINT fk_ts_tour FOREIGN KEY (tour_id)\n        REFERENCES divingapp.tours (tour_id)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle DATE mapped to TIMESTAMP",
+        "SYSTIMESTAMP mapped to CURRENT_TIMESTAMP",
+        "NUMBER mapped to BIGINT",
+        "VARCHAR2 mapped to VARCHAR"
+      ],
+      "depends_on": [
+        {
+          "name": "tours",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_customers_status",
+      "source": "DIVINGAPP/INDEX/IDX_CUSTOMERS_STATUS.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_CUSTOMERS_STATUS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_customers_status ON divingapp.customers (status);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle storage/tablespace clauses omitted"
+      ],
+      "depends_on": [
+        {
+          "name": "customers",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.CUSTOMERS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_ra_detected",
+      "source": "DIVINGAPP/INDEX/IDX_RA_DETECTED.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_RA_DETECTED",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_ra_detected ON divingapp.report_alerts (detected_at, status);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle tablespace clause omitted"
+      ],
+      "depends_on": [
+        {
+          "name": "report_alerts",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.REPORT_ALERTS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_ra_severity",
+      "source": "DIVINGAPP/INDEX/IDX_RA_SEVERITY.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_RA_SEVERITY",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_ra_severity ON divingapp.report_alerts (severity, status);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle tablespace clause omitted"
+      ],
+      "depends_on": [
+        {
+          "name": "report_alerts",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.REPORT_ALERTS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_tours_area",
+      "source": "DIVINGAPP/INDEX/IDX_TOURS_AREA.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_TOURS_AREA",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_tours_area ON divingapp.tours (area);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle storage/tablespace clauses omitted"
+      ],
+      "depends_on": [
+        {
+          "name": "tours",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_tours_difficulty",
+      "source": "DIVINGAPP/INDEX/IDX_TOURS_DIFFICULTY.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_TOURS_DIFFICULTY",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_tours_difficulty ON divingapp.tours (difficulty);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle storage/tablespace clauses omitted"
+      ],
+      "depends_on": [
+        {
+          "name": "tours",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_tours_featured",
+      "source": "DIVINGAPP/INDEX/IDX_TOURS_FEATURED.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_TOURS_FEATURED",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_tours_featured ON divingapp.tours (featured_flag);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle storage/tablespace clauses omitted"
+      ],
+      "depends_on": [
+        {
+          "name": "tours",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_tours_status",
+      "source": "DIVINGAPP/INDEX/IDX_TOURS_STATUS.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_TOURS_STATUS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_tours_status ON divingapp.tours (status);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle storage/tablespace clauses omitted"
+      ],
+      "depends_on": [
+        {
+          "name": "tours",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-004.json"
+}

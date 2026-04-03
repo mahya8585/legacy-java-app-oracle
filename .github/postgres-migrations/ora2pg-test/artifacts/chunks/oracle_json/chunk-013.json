@@ -1,0 +1,72 @@
+{
+  "chunk_number": 13,
+  "number_of_objects": 4,
+  "tokens": 2137,
+  "object_types": [
+    "TABLE",
+    "SEQUENCE",
+    "INDEX",
+    "PACKAGE"
+  ],
+  "objects": [
+    {
+      "object_type": "TABLE",
+      "owner": "DIVINGAPP",
+      "name": "NEWS",
+      "source": "DIVINGAPP/TABLE/NEWS.sql",
+      "content": "\n  CREATE TABLE \"DIVINGAPP\".\"NEWS\" \n   (\t\"NEWS_ID\" NUMBER NOT NULL ENABLE, \n\t\"TITLE\" VARCHAR2(300) NOT NULL ENABLE, \n\t\"CONTENT\" CLOB NOT NULL ENABLE, \n\t\"CATEGORY\" VARCHAR2(50), \n\t\"PUBLISH_DATE\" DATE NOT NULL ENABLE, \n\t\"STATUS\" VARCHAR2(20) DEFAULT 'PUBLISHED' NOT NULL ENABLE, \n\t\"CREATED_AT\" TIMESTAMP (6) DEFAULT SYSTIMESTAMP NOT NULL ENABLE, \n\t\"UPDATED_AT\" TIMESTAMP (6) DEFAULT SYSTIMESTAMP NOT NULL ENABLE, \n\t CONSTRAINT \"CK_NEWS_STATUS\" CHECK (STATUS IN ('DRAFT', 'PUBLISHED', 'ARCHIVED')) ENABLE, \n\t CONSTRAINT \"PK_NEWS\" PRIMARY KEY (\"NEWS_ID\")\n  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 \n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\"  ENABLE\n   ) SEGMENT CREATION IMMEDIATE \n  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 \n NOCOMPRESS LOGGING\n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" \n LOB (\"CONTENT\") STORE AS SECUREFILE (\n  TABLESPACE \"USERS\" ENABLE STORAGE IN ROW 4000 CHUNK 8192\n  NOCACHE LOGGING  NOCOMPRESS  KEEP_DUPLICATES \n  STORAGE(INITIAL 262144 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)) ",
+      "node_id": "DIVINGAPP.TABLE.NEWS",
+      "depends_on": []
+    },
+    {
+      "object_type": "SEQUENCE",
+      "owner": "DIVINGAPP",
+      "name": "SEQ_NEWS",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_NEWS.sql",
+      "content": "\n   CREATE SEQUENCE  \"DIVINGAPP\".\"SEQ_NEWS\"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 11 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_NEWS",
+      "depends_on": []
+    },
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_NEWS_PUBLISH",
+      "source": "DIVINGAPP/INDEX/IDX_NEWS_PUBLISH.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_NEWS_PUBLISH\" ON \"DIVINGAPP\".\"NEWS\" (\"PUBLISH_DATE\", \"STATUS\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_NEWS_PUBLISH",
+      "depends_on": [
+        {
+          "name": "NEWS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-013",
+          "node_id": "DIVINGAPP.TABLE.NEWS"
+        }
+      ]
+    },
+    {
+      "object_type": "PACKAGE",
+      "owner": "DIVINGAPP",
+      "name": "PKG_NEWS",
+      "source": "DIVINGAPP/PACKAGE/PKG_NEWS.sql",
+      "content": "\n  CREATE OR REPLACE EDITIONABLE PACKAGE \"DIVINGAPP\".\"PKG_NEWS\" AS\n    -- 最新ニュース取得\n    PROCEDURE GET_LATEST_NEWS(\n        p_limit         IN  NUMBER DEFAULT 5,\n        p_category      IN  VARCHAR2 DEFAULT NULL,\n        o_news          OUT SYS_REFCURSOR\n    );\n\n    -- ニュース保存（登録・更新）\n    PROCEDURE SAVE_NEWS(\n        p_news_id       IN OUT NUMBER,\n        p_title         IN  VARCHAR2,\n        p_content       IN  CLOB,\n        p_category      IN  VARCHAR2,\n        p_publish_date  IN  DATE,\n        p_status        IN  VARCHAR2,\n        o_result_code   OUT NUMBER,\n        o_result_msg    OUT VARCHAR2\n    );\nEND PKG_NEWS;\nCREATE OR REPLACE EDITIONABLE PACKAGE BODY \"DIVINGAPP\".\"PKG_NEWS\" AS\n\n    -- =========================================================\n    -- 最新ニュース取得\n    -- PUBLISHED かつ公開日が現在以前のニュースを返す\n    -- オプションでカテゴリフィルタ可能\n    -- =========================================================\n    PROCEDURE GET_LATEST_NEWS(\n        p_limit         IN  NUMBER DEFAULT 5,\n        p_category      IN  VARCHAR2 DEFAULT NULL,\n        o_news          OUT SYS_REFCURSOR\n    ) IS\n        v_limit NUMBER := NVL(p_limit, 5);\n    BEGIN\n        IF v_limit < 1 THEN\n            v_limit := 5;\n        END IF;\n\n        OPEN o_news FOR\n            SELECT NEWS_ID,\n                   TITLE,\n                   CONTENT,\n                   CATEGORY,\n                   PUBLISH_DATE,\n                   STATUS,\n                   CREATED_AT,\n                   UPDATED_AT\n              FROM NEWS\n             WHERE STATUS = 'PUBLISHED'\n               AND PUBLISH_DATE <= TRUNC(SYSDATE)\n               AND (p_category IS NULL OR CATEGORY = p_category)\n             ORDER BY PUBLISH_DATE DESC, NEWS_ID DESC\n             FETCH FIRST v_limit ROWS ONLY;\n    END GET_LATEST_NEWS;\n\n    -- =========================================================\n    -- ニュース保存（登録・更新）\n    -- p_news_id が NULL の場合は新規登録（SEQ_NEWS.NEXTVAL）\n    -- NULL でない場合は更新\n    -- =========================================================\n    PROCEDURE SAVE_NEWS(\n        p_news_id       IN OUT NUMBER,\n        p_title         IN  VARCHAR2,\n        p_content       IN  CLOB,\n        p_category      IN  VARCHAR2,\n        p_publish_date  IN  DATE,\n        p_status        IN  VARCHAR2,\n        o_result_code   OUT NUMBER,\n        o_result_msg    OUT VARCHAR2\n    ) IS\n        v_count NUMBER;\n    BEGIN\n        -- タイトル必須チェック\n        IF p_title IS NULL OR LENGTH(TRIM(p_title)) = 0 THEN\n            o_result_code := -20601;\n            o_result_msg  := 'タイトルは必須です';\n            RETURN;\n        END IF;\n\n        -- コンテンツ必須チェック\n        IF p_content IS NULL THEN\n            o_result_code := -20602;\n            o_result_msg  := '本文は必須です';\n            RETURN;\n        END IF;\n\n        IF p_news_id IS NULL THEN\n            -- ============================\n            -- 新規登録\n            -- ============================\n            SELECT SEQ_NEWS.NEXTVAL INTO p_news_id FROM DUAL;\n\n            INSERT INTO NEWS (\n                NEWS_ID,\n                TITLE,\n                CONTENT,\n                CATEGORY,\n                PUBLISH_DATE,\n                STATUS,\n                CREATED_AT,\n                UPDATED_AT\n            ) VALUES (\n                p_news_id,\n                TRIM(p_title),\n                p_content,\n                p_category,\n                NVL(p_publish_date, TRUNC(SYSDATE)),\n                NVL(p_status, 'DRAFT'),\n                SYSTIMESTAMP,\n                SYSTIMESTAMP\n            );\n\n            o_result_code := 0;\n            o_result_msg  := 'ニュースを登録しました';\n        ELSE\n            -- ============================\n            -- 更新（存在チェック付き）\n            -- ============================\n            SELECT COUNT(*)\n              INTO v_count\n              FROM NEWS\n             WHERE NEWS_ID = p_news_id;\n\n            IF v_count = 0 THEN\n                o_result_code := -20603;\n                o_result_msg  := '指定されたニュースが見つかりません (NEWS_ID=' || p_news_id || ')';\n                RETURN;\n            END IF;\n\n            UPDATE NEWS\n               SET TITLE        = TRIM(p_title),\n                   CONTENT      = p_content,\n                   CATEGORY     = p_category,\n                   PUBLISH_DATE = NVL(p_publish_date, PUBLISH_DATE),\n                   STATUS       = NVL(p_status, STATUS),\n                   UPDATED_AT   = SYSTIMESTAMP\n             WHERE NEWS_ID = p_news_id;\n\n            o_result_code := 0;\n            o_result_msg  := 'ニュースを更新しました';\n        END IF;\n\n    EXCEPTION\n        WHEN OTHERS THEN\n            o_result_code := -20699;\n            o_result_msg  := 'ニュース保存中にエラーが発生しました: ' || SQLERRM;\n    END SAVE_NEWS;\n\nEND PKG_NEWS;",
+      "node_id": "DIVINGAPP.PACKAGE.PKG_NEWS",
+      "depends_on": [
+        {
+          "name": "NEWS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-013",
+          "node_id": "DIVINGAPP.TABLE.NEWS"
+        },
+        {
+          "name": "SEQ_NEWS",
+          "object_type": "SEQUENCE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-013",
+          "node_id": "DIVINGAPP.SEQUENCE.SEQ_NEWS"
+        }
+      ]
+    }
+  ]
+}

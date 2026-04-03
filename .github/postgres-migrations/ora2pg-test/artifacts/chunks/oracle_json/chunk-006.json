@@ -1,0 +1,156 @@
+{
+  "chunk_number": 6,
+  "number_of_objects": 6,
+  "tokens": 2246,
+  "object_types": [
+    "TABLE",
+    "INDEX",
+    "PACKAGE"
+  ],
+  "objects": [
+    {
+      "object_type": "TABLE",
+      "owner": "DIVINGAPP",
+      "name": "DIVING_LOGS",
+      "source": "DIVINGAPP/TABLE/DIVING_LOGS.sql",
+      "content": "\n  CREATE TABLE \"DIVINGAPP\".\"DIVING_LOGS\" \n   (\t\"LOG_ID\" NUMBER NOT NULL ENABLE, \n\t\"CUSTOMER_ID\" NUMBER NOT NULL ENABLE, \n\t\"SITE_ID\" NUMBER, \n\t\"RESERVATION_ID\" NUMBER, \n\t\"DIVE_DATE\" DATE NOT NULL ENABLE, \n\t\"MAX_DEPTH\" NUMBER(5,1), \n\t\"DIVE_TIME\" NUMBER, \n\t\"WATER_TEMP\" NUMBER(4,1), \n\t\"VISIBILITY\" NUMBER(4,1), \n\t\"WEATHER\" VARCHAR2(50), \n\t\"BUDDY\" VARCHAR2(100), \n\t\"NOTES\" CLOB, \n\t\"CREATED_AT\" TIMESTAMP (6) DEFAULT SYSTIMESTAMP NOT NULL ENABLE, \n\t\"UPDATED_AT\" TIMESTAMP (6) DEFAULT SYSTIMESTAMP NOT NULL ENABLE, \n\t CONSTRAINT \"PK_DIVING_LOGS\" PRIMARY KEY (\"LOG_ID\")\n  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 \n  TABLESPACE \"USERS\"  ENABLE, \n\t CONSTRAINT \"FK_DL_CUSTOMER\" FOREIGN KEY (\"CUSTOMER_ID\")\n\t  REFERENCES \"DIVINGAPP\".\"CUSTOMERS\" (\"CUSTOMER_ID\") ENABLE, \n\t CONSTRAINT \"FK_DL_SITE\" FOREIGN KEY (\"SITE_ID\")\n\t  REFERENCES \"DIVINGAPP\".\"DIVE_SITES\" (\"SITE_ID\") ENABLE, \n\t CONSTRAINT \"FK_DL_RESERVATION\" FOREIGN KEY (\"RESERVATION_ID\")\n\t  REFERENCES \"DIVINGAPP\".\"RESERVATIONS\" (\"RESERVATION_ID\") ENABLE\n   ) SEGMENT CREATION DEFERRED \n  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 \n NOCOMPRESS LOGGING\n  TABLESPACE \"USERS\" \n LOB (\"NOTES\") STORE AS SECUREFILE (\n  TABLESPACE \"USERS\" ENABLE STORAGE IN ROW 4000 CHUNK 8192\n  NOCACHE LOGGING  NOCOMPRESS  KEEP_DUPLICATES ) ",
+      "node_id": "DIVINGAPP.TABLE.DIVING_LOGS",
+      "depends_on": [
+        {
+          "name": "RESERVATIONS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-005",
+          "node_id": "DIVINGAPP.TABLE.RESERVATIONS"
+        },
+        {
+          "name": "CUSTOMERS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.CUSTOMERS"
+        },
+        {
+          "name": "DIVE_SITES",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.DIVE_SITES"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_RESERVATIONS_STATUS",
+      "source": "DIVINGAPP/INDEX/IDX_RESERVATIONS_STATUS.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_RESERVATIONS_STATUS\" ON \"DIVINGAPP\".\"RESERVATIONS\" (\"STATUS\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_RESERVATIONS_STATUS",
+      "depends_on": [
+        {
+          "name": "RESERVATIONS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-005",
+          "node_id": "DIVINGAPP.TABLE.RESERVATIONS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_RESERVATIONS_SCHEDULE",
+      "source": "DIVINGAPP/INDEX/IDX_RESERVATIONS_SCHEDULE.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_RESERVATIONS_SCHEDULE\" ON \"DIVINGAPP\".\"RESERVATIONS\" (\"SCHEDULE_ID\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_RESERVATIONS_SCHEDULE",
+      "depends_on": [
+        {
+          "name": "RESERVATIONS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-005",
+          "node_id": "DIVINGAPP.TABLE.RESERVATIONS"
+        }
+      ]
+    },
+    {
+      "object_type": "TABLE",
+      "owner": "DIVINGAPP",
+      "name": "RESERVATION_OPTIONS",
+      "source": "DIVINGAPP/TABLE/RESERVATION_OPTIONS.sql",
+      "content": "\n  CREATE TABLE \"DIVINGAPP\".\"RESERVATION_OPTIONS\" \n   (\t\"RES_OPTION_ID\" NUMBER NOT NULL ENABLE, \n\t\"RESERVATION_ID\" NUMBER NOT NULL ENABLE, \n\t\"OPTION_ID\" NUMBER NOT NULL ENABLE, \n\t\"QUANTITY\" NUMBER DEFAULT 1 NOT NULL ENABLE, \n\t\"SUBTOTAL\" NUMBER(10,0) NOT NULL ENABLE, \n\t CONSTRAINT \"PK_RESERVATION_OPTIONS\" PRIMARY KEY (\"RES_OPTION_ID\")\n  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 \n  TABLESPACE \"USERS\"  ENABLE, \n\t CONSTRAINT \"FK_RO_RESERVATION\" FOREIGN KEY (\"RESERVATION_ID\")\n\t  REFERENCES \"DIVINGAPP\".\"RESERVATIONS\" (\"RESERVATION_ID\") ENABLE, \n\t CONSTRAINT \"FK_RO_OPTION\" FOREIGN KEY (\"OPTION_ID\")\n\t  REFERENCES \"DIVINGAPP\".\"OPTIONS_MASTER\" (\"OPTION_ID\") ENABLE\n   ) SEGMENT CREATION DEFERRED \n  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 \n NOCOMPRESS LOGGING\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.TABLE.RESERVATION_OPTIONS",
+      "depends_on": [
+        {
+          "name": "RESERVATIONS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-005",
+          "node_id": "DIVINGAPP.TABLE.RESERVATIONS"
+        },
+        {
+          "name": "OPTIONS_MASTER",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.OPTIONS_MASTER"
+        }
+      ]
+    },
+    {
+      "object_type": "PACKAGE",
+      "owner": "DIVINGAPP",
+      "name": "PKG_INSTRUCTOR",
+      "source": "DIVINGAPP/PACKAGE/PKG_INSTRUCTOR.sql",
+      "content": "\n  CREATE OR REPLACE EDITIONABLE PACKAGE \"DIVINGAPP\".\"PKG_INSTRUCTOR\" AS\n    -- インストラクター一覧\n    PROCEDURE GET_INSTRUCTORS(\n        o_instructors   OUT SYS_REFCURSOR\n    );\n\n    -- インストラクター詳細+担当ツアー\n    PROCEDURE GET_INSTRUCTOR_DETAIL(\n        p_instructor_id IN  NUMBER,\n        o_instructor    OUT SYS_REFCURSOR,\n        o_tours         OUT SYS_REFCURSOR\n    );\nEND PKG_INSTRUCTOR;\nCREATE OR REPLACE EDITIONABLE PACKAGE BODY \"DIVINGAPP\".\"PKG_INSTRUCTOR\" AS\n\n    -- =========================================================\n    -- インストラクター一覧取得\n    -- ACTIVE なインストラクターを経験年数の降順で返す\n    -- =========================================================\n    PROCEDURE GET_INSTRUCTORS(\n        o_instructors   OUT SYS_REFCURSOR\n    ) IS\n    BEGIN\n        OPEN o_instructors FOR\n            SELECT INSTRUCTOR_ID,\n                   LAST_NAME,\n                   FIRST_NAME,\n                   CERTIFICATION,\n                   EXPERIENCE_YEARS,\n                   SPECIALTY,\n                   PROFILE,\n                   PHOTO_URL,\n                   STATUS,\n                   CREATED_AT,\n                   UPDATED_AT\n              FROM INSTRUCTORS\n             WHERE STATUS = 'ACTIVE'\n             ORDER BY EXPERIENCE_YEARS DESC;\n    END GET_INSTRUCTORS;\n\n    -- =========================================================\n    -- インストラクター詳細 + 担当ツアー取得\n    -- o_instructor : 指定IDのインストラクター1行\n    -- o_tours      : そのインストラクターが担当する\n    --               ACTIVE ツアー（将来日程があるもの）\n    -- =========================================================\n    PROCEDURE GET_INSTRUCTOR_DETAIL(\n        p_instructor_id IN  NUMBER,\n        o_instructor    OUT SYS_REFCURSOR,\n        o_tours         OUT SYS_REFCURSOR\n    ) IS\n    BEGIN\n        -- インストラクター本体\n        OPEN o_instructor FOR\n            SELECT INSTRUCTOR_ID,\n                   LAST_NAME,\n                   FIRST_NAME,\n                   CERTIFICATION,\n                   EXPERIENCE_YEARS,\n                   SPECIALTY,\n                   PROFILE,\n                   PHOTO_URL,\n                   STATUS,\n                   CREATED_AT,\n                   UPDATED_AT\n              FROM INSTRUCTORS\n             WHERE INSTRUCTOR_ID = p_instructor_id;\n\n        -- 担当ツアー（ACTIVE かつ将来のスケジュールが存在するもの）\n        OPEN o_tours FOR\n            SELECT DISTINCT\n                   t.TOUR_ID,\n                   t.TOUR_NAME,\n                   t.AREA,\n                   t.DIFFICULTY,\n                   t.MAX_PARTICIPANTS,\n                   t.BASE_PRICE,\n                   t.DURATION_DAYS,\n                   ti.ROLE\n              FROM TOUR_INSTRUCTORS ti\n              JOIN TOURS t\n                ON t.TOUR_ID = ti.TOUR_ID\n             WHERE ti.INSTRUCTOR_ID = p_instructor_id\n               AND t.STATUS = 'ACTIVE'\n               AND EXISTS (\n                   SELECT 1\n                     FROM TOUR_SCHEDULES ts\n                    WHERE ts.TOUR_ID = t.TOUR_ID\n                      AND ts.TOUR_DATE >= TRUNC(SYSDATE)\n                      AND ts.STATUS IN ('OPEN', 'FULL')\n               )\n             ORDER BY t.TOUR_NAME;\n    END GET_INSTRUCTOR_DETAIL;\n\nEND PKG_INSTRUCTOR;",
+      "node_id": "DIVINGAPP.PACKAGE.PKG_INSTRUCTOR",
+      "depends_on": [
+        {
+          "name": "TOUR_INSTRUCTORS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_INSTRUCTORS"
+        },
+        {
+          "name": "INSTRUCTORS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.INSTRUCTORS"
+        },
+        {
+          "name": "TOURS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        },
+        {
+          "name": "TOUR_SCHEDULES",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_SCHEDULES"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_TS_STATUS",
+      "source": "DIVINGAPP/INDEX/IDX_TS_STATUS.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_TS_STATUS\" ON \"DIVINGAPP\".\"TOUR_SCHEDULES\" (\"STATUS\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_TS_STATUS",
+      "depends_on": [
+        {
+          "name": "TOUR_SCHEDULES",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-004",
+          "node_id": "DIVINGAPP.TABLE.TOUR_SCHEDULES"
+        }
+      ]
+    }
+  ]
+}

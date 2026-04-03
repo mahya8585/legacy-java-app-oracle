@@ -1,0 +1,51 @@
+{
+  "chunk_id": "chunk-007",
+  "expected_objects": {
+    "ORACLE.PACKAGE.PKG_TOUR": {
+      "object_id": "ORACLE.PACKAGE.PKG_TOUR",
+      "name": "PKG_TOUR",
+      "type": "PACKAGE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.PACKAGE.PKG_TOUR": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.PACKAGE.PKG_TOUR",
+        "name": "PKG_TOUR",
+        "type": "PACKAGE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "pkg_tour",
+        "type": "PACKAGE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle PACKAGE decomposed into standalone PostgreSQL PROCEDUREs: search_tours, get_tour_detail, get_featured_tours, save_tour, delete_tour., SYS_REFCURSOR OUT parameters mapped to refcursor INOUT parameters; cursor names generated for deterministic OPEN behavior., Oracle DBMS_LOB.INSTR used for keyword search converted to POSITION() over text; DESCRIPTION CLOB mapped to TEXT., Oracle SYSTIMESTAMP/SYSDATE/TRUNC(SYSDATE) mapped to CURRENT_TIMESTAMP/date_trunc('day', CURRENT_TIMESTAMP)., Oracle SEQ_TOURS.NEXTVAL mapped to nextval('divingapp.seq_tours'); removed DUAL usage., Oracle NVL mapped to COALESCE., Oracle COMMIT/ROLLBACK removed; PostgreSQL procedures run within caller transaction."
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:22:30.143253",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:21:12.989648",
+  "last_updated": "2026-04-03T15:21:12.989648",
+  "total_expected": 1,
+  "total_converted": 1,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

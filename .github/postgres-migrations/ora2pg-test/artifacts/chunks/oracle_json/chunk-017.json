@@ -1,0 +1,19 @@
+{
+  "chunk_number": 17,
+  "number_of_objects": 1,
+  "tokens": 150,
+  "object_types": [
+    "SEQUENCE"
+  ],
+  "objects": [
+    {
+      "object_type": "SEQUENCE",
+      "owner": "DIVINGAPP",
+      "name": "SEQ_TOUR_SCHEDULES",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_TOUR_SCHEDULES.sql",
+      "content": "\n   CREATE SEQUENCE  \"DIVINGAPP\".\"SEQ_TOUR_SCHEDULES\"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 52 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_TOUR_SCHEDULES",
+      "depends_on": []
+    }
+  ]
+}

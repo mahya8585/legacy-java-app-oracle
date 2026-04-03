@@ -1,0 +1,44 @@
+{
+  "chunk_number": 9,
+  "number_of_objects": 2,
+  "tokens": 290,
+  "object_types": [
+    "INDEX"
+  ],
+  "objects": [
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_DL_CUSTOMER",
+      "source": "DIVINGAPP/INDEX/IDX_DL_CUSTOMER.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_DL_CUSTOMER\" ON \"DIVINGAPP\".\"DIVING_LOGS\" (\"CUSTOMER_ID\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_DL_CUSTOMER",
+      "depends_on": [
+        {
+          "name": "DIVING_LOGS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-006",
+          "node_id": "DIVINGAPP.TABLE.DIVING_LOGS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_RESERVATIONS_CUSTOMER",
+      "source": "DIVINGAPP/INDEX/IDX_RESERVATIONS_CUSTOMER.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_RESERVATIONS_CUSTOMER\" ON \"DIVINGAPP\".\"RESERVATIONS\" (\"CUSTOMER_ID\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_RESERVATIONS_CUSTOMER",
+      "depends_on": [
+        {
+          "name": "RESERVATIONS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-005",
+          "node_id": "DIVINGAPP.TABLE.RESERVATIONS"
+        }
+      ]
+    }
+  ]
+}

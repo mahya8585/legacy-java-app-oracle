@@ -1,0 +1,195 @@
+{
+  "chunk_number": 4,
+  "number_of_objects": 10,
+  "tokens": 2313,
+  "object_types": [
+    "INDEX",
+    "TABLE"
+  ],
+  "objects": [
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_TOURS_FEATURED",
+      "source": "DIVINGAPP/INDEX/IDX_TOURS_FEATURED.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_TOURS_FEATURED\" ON \"DIVINGAPP\".\"TOURS\" (\"FEATURED_FLAG\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_TOURS_FEATURED",
+      "depends_on": [
+        {
+          "name": "TOURS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    },
+    {
+      "object_type": "TABLE",
+      "owner": "DIVINGAPP",
+      "name": "TOUR_INSTRUCTORS",
+      "source": "DIVINGAPP/TABLE/TOUR_INSTRUCTORS.sql",
+      "content": "\n  CREATE TABLE \"DIVINGAPP\".\"TOUR_INSTRUCTORS\" \n   (\t\"TOUR_ID\" NUMBER NOT NULL ENABLE, \n\t\"INSTRUCTOR_ID\" NUMBER NOT NULL ENABLE, \n\t\"ROLE\" VARCHAR2(50) DEFAULT 'GUIDE', \n\t CONSTRAINT \"PK_TOUR_INSTRUCTORS\" PRIMARY KEY (\"TOUR_ID\", \"INSTRUCTOR_ID\")\n  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 \n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\"  ENABLE, \n\t CONSTRAINT \"FK_TI_TOUR\" FOREIGN KEY (\"TOUR_ID\")\n\t  REFERENCES \"DIVINGAPP\".\"TOURS\" (\"TOUR_ID\") ENABLE, \n\t CONSTRAINT \"FK_TI_INSTRUCTOR\" FOREIGN KEY (\"INSTRUCTOR_ID\")\n\t  REFERENCES \"DIVINGAPP\".\"INSTRUCTORS\" (\"INSTRUCTOR_ID\") ENABLE\n   ) SEGMENT CREATION IMMEDIATE \n  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 \n NOCOMPRESS LOGGING\n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.TABLE.TOUR_INSTRUCTORS",
+      "depends_on": [
+        {
+          "name": "INSTRUCTORS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.INSTRUCTORS"
+        },
+        {
+          "name": "TOURS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_RA_SEVERITY",
+      "source": "DIVINGAPP/INDEX/IDX_RA_SEVERITY.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_RA_SEVERITY\" ON \"DIVINGAPP\".\"REPORT_ALERTS\" (\"SEVERITY\", \"STATUS\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_RA_SEVERITY",
+      "depends_on": [
+        {
+          "name": "REPORT_ALERTS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.REPORT_ALERTS"
+        }
+      ]
+    },
+    {
+      "object_type": "TABLE",
+      "owner": "DIVINGAPP",
+      "name": "TOUR_DIVE_SITES",
+      "source": "DIVINGAPP/TABLE/TOUR_DIVE_SITES.sql",
+      "content": "\n  CREATE TABLE \"DIVINGAPP\".\"TOUR_DIVE_SITES\" \n   (\t\"TOUR_ID\" NUMBER NOT NULL ENABLE, \n\t\"SITE_ID\" NUMBER NOT NULL ENABLE, \n\t\"DIVE_ORDER\" NUMBER DEFAULT 1, \n\t CONSTRAINT \"PK_TOUR_DIVE_SITES\" PRIMARY KEY (\"TOUR_ID\", \"SITE_ID\")\n  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 \n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\"  ENABLE, \n\t CONSTRAINT \"FK_TDS_TOUR\" FOREIGN KEY (\"TOUR_ID\")\n\t  REFERENCES \"DIVINGAPP\".\"TOURS\" (\"TOUR_ID\") ENABLE, \n\t CONSTRAINT \"FK_TDS_SITE\" FOREIGN KEY (\"SITE_ID\")\n\t  REFERENCES \"DIVINGAPP\".\"DIVE_SITES\" (\"SITE_ID\") ENABLE\n   ) SEGMENT CREATION IMMEDIATE \n  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 \n NOCOMPRESS LOGGING\n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.TABLE.TOUR_DIVE_SITES",
+      "depends_on": [
+        {
+          "name": "DIVE_SITES",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.DIVE_SITES"
+        },
+        {
+          "name": "TOURS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    },
+    {
+      "object_type": "TABLE",
+      "owner": "DIVINGAPP",
+      "name": "TOUR_SCHEDULES",
+      "source": "DIVINGAPP/TABLE/TOUR_SCHEDULES.sql",
+      "content": "\n  CREATE TABLE \"DIVINGAPP\".\"TOUR_SCHEDULES\" \n   (\t\"SCHEDULE_ID\" NUMBER NOT NULL ENABLE, \n\t\"TOUR_ID\" NUMBER NOT NULL ENABLE, \n\t\"TOUR_DATE\" DATE NOT NULL ENABLE, \n\t\"START_TIME\" VARCHAR2(5), \n\t\"REMAINING_SEATS\" NUMBER NOT NULL ENABLE, \n\t\"STATUS\" VARCHAR2(20) DEFAULT 'OPEN' NOT NULL ENABLE, \n\t\"VERSION\" NUMBER DEFAULT 0 NOT NULL ENABLE, \n\t\"CREATED_AT\" TIMESTAMP (6) DEFAULT SYSTIMESTAMP NOT NULL ENABLE, \n\t\"UPDATED_AT\" TIMESTAMP (6) DEFAULT SYSTIMESTAMP NOT NULL ENABLE, \n\t CONSTRAINT \"CK_TS_STATUS\" CHECK (STATUS IN ('OPEN', 'FULL', 'CLOSED', 'CANCELLED')) ENABLE, \n\t CONSTRAINT \"PK_TOUR_SCHEDULES\" PRIMARY KEY (\"SCHEDULE_ID\")\n  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 \n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\"  ENABLE, \n\t CONSTRAINT \"FK_TS_TOUR\" FOREIGN KEY (\"TOUR_ID\")\n\t  REFERENCES \"DIVINGAPP\".\"TOURS\" (\"TOUR_ID\") ENABLE\n   ) SEGMENT CREATION IMMEDIATE \n  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 \n NOCOMPRESS LOGGING\n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.TABLE.TOUR_SCHEDULES",
+      "depends_on": [
+        {
+          "name": "TOURS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_CUSTOMERS_STATUS",
+      "source": "DIVINGAPP/INDEX/IDX_CUSTOMERS_STATUS.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_CUSTOMERS_STATUS\" ON \"DIVINGAPP\".\"CUSTOMERS\" (\"STATUS\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_CUSTOMERS_STATUS",
+      "depends_on": [
+        {
+          "name": "CUSTOMERS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.CUSTOMERS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_TOURS_STATUS",
+      "source": "DIVINGAPP/INDEX/IDX_TOURS_STATUS.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_TOURS_STATUS\" ON \"DIVINGAPP\".\"TOURS\" (\"STATUS\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_TOURS_STATUS",
+      "depends_on": [
+        {
+          "name": "TOURS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_TOURS_DIFFICULTY",
+      "source": "DIVINGAPP/INDEX/IDX_TOURS_DIFFICULTY.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_TOURS_DIFFICULTY\" ON \"DIVINGAPP\".\"TOURS\" (\"DIFFICULTY\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_TOURS_DIFFICULTY",
+      "depends_on": [
+        {
+          "name": "TOURS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_RA_DETECTED",
+      "source": "DIVINGAPP/INDEX/IDX_RA_DETECTED.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_RA_DETECTED\" ON \"DIVINGAPP\".\"REPORT_ALERTS\" (\"DETECTED_AT\", \"STATUS\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_RA_DETECTED",
+      "depends_on": [
+        {
+          "name": "REPORT_ALERTS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.REPORT_ALERTS"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "owner": "DIVINGAPP",
+      "name": "IDX_TOURS_AREA",
+      "source": "DIVINGAPP/INDEX/IDX_TOURS_AREA.sql",
+      "content": "\n  CREATE INDEX \"DIVINGAPP\".\"IDX_TOURS_AREA\" ON \"DIVINGAPP\".\"TOURS\" (\"AREA\") \n  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS \n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ",
+      "node_id": "DIVINGAPP.INDEX.IDX_TOURS_AREA",
+      "depends_on": [
+        {
+          "name": "TOURS",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-002",
+          "node_id": "DIVINGAPP.TABLE.TOURS"
+        }
+      ]
+    }
+  ]
+}

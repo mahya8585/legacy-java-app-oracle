@@ -1,0 +1,71 @@
+{
+  "chunk_number": 10,
+  "number_of_objects": 2,
+  "object_types": [
+    "PACKAGE",
+    "INDEX"
+  ],
+  "objects": [
+    {
+      "object_type": "PACKAGE",
+      "schema_name": "divingapp",
+      "name": "pkg_diving_log",
+      "source": "DIVINGAPP/PACKAGE/PKG_DIVING_LOG.sql",
+      "node_id": "DIVINGAPP.PACKAGE.PKG_DIVING_LOG",
+      "owner": "DIVINGAPP",
+      "content": "CREATE OR REPLACE FUNCTION divingapp.get_customer_logs(\n    p_customer_id BIGINT,\n    p_page BIGINT DEFAULT 1,\n    p_page_size BIGINT DEFAULT 20\n) RETURNS TABLE (\n    log_id BIGINT,\n    customer_id BIGINT,\n    site_id BIGINT,\n    site_name VARCHAR,\n    site_area VARCHAR,\n    reservation_id BIGINT,\n    dive_date TIMESTAMP,\n    max_depth NUMERIC,\n    dive_time NUMERIC,\n    water_temp NUMERIC,\n    visibility NUMERIC,\n    weather VARCHAR,\n    buddy VARCHAR,\n    notes TEXT,\n    created_at TIMESTAMP,\n    updated_at TIMESTAMP,\n    total_count BIGINT\n) AS $$\nDECLARE\n    v_page BIGINT := COALESCE(p_page, 1);\n    v_page_size BIGINT := COALESCE(p_page_size, 20);\n    v_offset BIGINT;\n    v_total_count BIGINT;\nBEGIN\n    -- 入力バリデーション\n    IF p_customer_id IS NULL THEN\n        RAISE EXCEPTION '顧客IDは必須です' USING ERRCODE = 'P2040';\n    END IF;\n\n    IF v_page < 1 THEN\n        v_page := 1;\n    END IF;\n    IF v_page_size < 1 OR v_page_size > 100 THEN\n        v_page_size := 20;\n    END IF;\n\n    v_offset := (v_page - 1) * v_page_size;\n\n    -- 総件数取得\n    SELECT COUNT(*)\n      INTO v_total_count\n      FROM divingapp.diving_logs dl\n     WHERE dl.customer_id = p_customer_id;\n\n    RETURN QUERY\n    SELECT dl.log_id,\n           dl.customer_id,\n           dl.site_id,\n           ds.site_name,\n           ds.area AS site_area,\n           dl.reservation_id,\n           dl.dive_date,\n           dl.max_depth,\n           dl.dive_time,\n           dl.water_temp,\n           dl.visibility,\n           dl.weather,\n           dl.buddy,\n           dl.notes,\n           dl.created_at,\n           dl.updated_at,\n           v_total_count AS total_count\n      FROM divingapp.diving_logs dl\n      LEFT JOIN divingapp.dive_sites ds\n        ON ds.site_id = dl.site_id\n     WHERE dl.customer_id = p_customer_id\n     ORDER BY dl.dive_date DESC, dl.log_id DESC\n     OFFSET v_offset LIMIT v_page_size;\nEND;\n$$ LANGUAGE plpgsql;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle package procedure GET_CUSTOMER_LOGS (REF CURSOR + total count OUT param) converted to set-returning function returning rows plus total_count column",
+        "Oracle RAISE_APPLICATION_ERROR converted to RAISE EXCEPTION"
+      ],
+      "depends_on": [
+        {
+          "name": "seq_diving_logs",
+          "object_type": "SEQUENCE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.SEQUENCE.SEQ_DIVING_LOGS"
+        },
+        {
+          "name": "diving_logs",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-006",
+          "node_id": "DIVINGAPP.TABLE.DIVING_LOGS"
+        },
+        {
+          "name": "dive_sites",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.DIVE_SITES"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_dl_dive_date",
+      "source": "DIVINGAPP/INDEX/IDX_DL_DIVE_DATE.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_DL_DIVE_DATE",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_dl_dive_date ON divingapp.diving_logs (dive_date);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle storage clauses (PCTFREE/INITRANS/MAXTRANS/TABLESPACE/COMPUTE STATISTICS) omitted as not applicable in PostgreSQL",
+        "Removed schema qualification from index name per PostgreSQL syntax rules"
+      ],
+      "depends_on": [
+        {
+          "name": "diving_logs",
+          "object_type": "TABLE",
+          "owner": "DIVINGAPP",
+          "chunk_id": "chunk-006",
+          "node_id": "DIVINGAPP.TABLE.DIVING_LOGS"
+        }
+      ]
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-010.json"
+}

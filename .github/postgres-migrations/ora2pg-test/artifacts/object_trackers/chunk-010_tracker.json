@@ -1,0 +1,86 @@
+{
+  "chunk_id": "chunk-010",
+  "expected_objects": {
+    "ORACLE.PACKAGE.PKG_DIVING_LOG": {
+      "object_id": "ORACLE.PACKAGE.PKG_DIVING_LOG",
+      "name": "PKG_DIVING_LOG",
+      "type": "PACKAGE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_DL_DIVE_DATE": {
+      "object_id": "ORACLE.INDEX.IDX_DL_DIVE_DATE",
+      "name": "IDX_DL_DIVE_DATE",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.PACKAGE.PKG_DIVING_LOG": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.PACKAGE.PKG_DIVING_LOG",
+        "name": "PKG_DIVING_LOG",
+        "type": "PACKAGE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "pkg_diving_log",
+        "type": "PACKAGE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle package procedure GET_CUSTOMER_LOGS (REF CURSOR + total count OUT param) converted to set-returning function returning rows plus total_count column, Oracle RAISE_APPLICATION_ERROR converted to RAISE EXCEPTION"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:24:48.222365",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_DL_DIVE_DATE": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_DL_DIVE_DATE",
+        "name": "IDX_DL_DIVE_DATE",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_dl_dive_date",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle storage clauses (PCTFREE/INITRANS/MAXTRANS/TABLESPACE/COMPUTE STATISTICS) omitted as not applicable in PostgreSQL, Removed schema qualification from index name per PostgreSQL syntax rules"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:24:48.222365",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:24:32.500479",
+  "last_updated": "2026-04-03T15:24:35.896712",
+  "total_expected": 2,
+  "total_converted": 2,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

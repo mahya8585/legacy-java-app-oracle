@@ -1,0 +1,27 @@
+{
+  "chunk_number": 16,
+  "number_of_objects": 1,
+  "object_types": [
+    "SEQUENCE"
+  ],
+  "objects": [
+    {
+      "object_type": "SEQUENCE",
+      "schema_name": "divingapp",
+      "name": "seq_dive_sites",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_DIVE_SITES.sql",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_DIVE_SITES",
+      "owner": "DIVINGAPP",
+      "content": "CREATE SEQUENCE IF NOT EXISTS divingapp.seq_dive_sites\n    INCREMENT BY 1\n    MINVALUE 1\n    START WITH 31\n    NO CYCLE;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL BIGINT range; omitted MAXVALUE in PostgreSQL",
+        "Oracle NOCACHE not specified in PostgreSQL (PostgreSQL uses default CACHE 1)",
+        "Oracle NOORDER has no direct PostgreSQL equivalent",
+        "Oracle GLOBAL ignored (Oracle RAC feature)"
+      ],
+      "depends_on": []
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-016.json"
+}

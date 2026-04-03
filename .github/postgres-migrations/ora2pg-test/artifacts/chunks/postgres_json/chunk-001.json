@@ -1,0 +1,163 @@
+{
+  "chunk_number": 1,
+  "number_of_objects": 9,
+  "object_types": [
+    "SEQUENCE",
+    "TABLE"
+  ],
+  "objects": [
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "dive_sites",
+      "source": "DIVINGAPP/TABLE/DIVE_SITES.sql",
+      "node_id": "DIVINGAPP.TABLE.DIVE_SITES",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.dive_sites (\n    site_id BIGINT NOT NULL,\n    site_name VARCHAR(200) NOT NULL,\n    area VARCHAR(100) NOT NULL,\n    description TEXT,\n    max_depth NUMERIC(5,1),\n    water_temperature_min NUMERIC(4,1),\n    water_temperature_max NUMERIC(4,1),\n    difficulty VARCHAR(20),\n    marine_life VARCHAR(1000),\n    access_info VARCHAR(500),\n    status VARCHAR(20) DEFAULT 'ACTIVE' NOT NULL,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    CONSTRAINT ck_ds_difficulty CHECK (difficulty IN ('BEGINNER', 'INTERMEDIATE', 'ADVANCED', 'EXPERT')),\n    CONSTRAINT pk_dive_sites PRIMARY KEY (site_id)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle NUMBER mapped to BIGINT for site_id",
+        "Oracle VARCHAR2 mapped to VARCHAR",
+        "Oracle CLOB mapped to TEXT",
+        "Oracle SYSTIMESTAMP mapped to CURRENT_TIMESTAMP",
+        "Oracle storage/tablespace/lob clauses omitted (not applicable in PostgreSQL)"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "SEQUENCE",
+      "schema_name": "divingapp",
+      "name": "seq_diving_logs",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_DIVING_LOGS.sql",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_DIVING_LOGS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE SEQUENCE IF NOT EXISTS divingapp.seq_diving_logs\n    INCREMENT BY 1\n    MINVALUE 1\n    START WITH 1\n    NO CYCLE;\n\nALTER SEQUENCE divingapp.seq_diving_logs CACHE 1;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint; MAXVALUE omitted",
+        "Oracle NOCACHE converted to CACHE 1",
+        "Oracle NOORDER ignored (PostgreSQL sequences are unordered by default)"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "SEQUENCE",
+      "schema_name": "divingapp",
+      "name": "seq_reservations",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_RESERVATIONS.sql",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_RESERVATIONS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE SEQUENCE IF NOT EXISTS divingapp.seq_reservations\n    INCREMENT BY 1\n    MINVALUE 1\n    START WITH 1\n    NO CYCLE;\n\nALTER SEQUENCE divingapp.seq_reservations CACHE 1;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint; MAXVALUE omitted",
+        "Oracle NOCACHE converted to CACHE 1",
+        "Oracle NOORDER ignored (PostgreSQL sequences are unordered by default)"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "options_master",
+      "source": "DIVINGAPP/TABLE/OPTIONS_MASTER.sql",
+      "node_id": "DIVINGAPP.TABLE.OPTIONS_MASTER",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.options_master (\n    option_id BIGINT NOT NULL,\n    option_name VARCHAR(200) NOT NULL,\n    option_category VARCHAR(50) NOT NULL,\n    unit_price BIGINT NOT NULL,\n    description VARCHAR(500),\n    status VARCHAR(20) DEFAULT 'ACTIVE' NOT NULL,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    CONSTRAINT ck_om_category CHECK (option_category IN ('RENTAL', 'TRANSPORT', 'PHOTO', 'INSURANCE', 'OTHER')),\n    CONSTRAINT pk_options_master PRIMARY KEY (option_id)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle NUMBER mapped to BIGINT for integer columns (option_id, unit_price)",
+        "Oracle VARCHAR2 mapped to VARCHAR",
+        "Oracle SYSTIMESTAMP mapped to CURRENT_TIMESTAMP",
+        "Oracle storage/tablespace clauses omitted (not applicable in PostgreSQL)"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "SEQUENCE",
+      "schema_name": "divingapp",
+      "name": "seq_tours",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_TOURS.sql",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_TOURS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE SEQUENCE IF NOT EXISTS divingapp.seq_tours\n    INCREMENT BY 1\n    MINVALUE 1\n    START WITH 21\n    NO CYCLE;\n\nALTER SEQUENCE divingapp.seq_tours CACHE 1;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint; MAXVALUE omitted",
+        "Oracle NOCACHE converted to CACHE 1",
+        "Oracle NOORDER ignored (PostgreSQL sequences are unordered by default)"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "instructors",
+      "source": "DIVINGAPP/TABLE/INSTRUCTORS.sql",
+      "node_id": "DIVINGAPP.TABLE.INSTRUCTORS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.instructors (\n    instructor_id BIGINT NOT NULL,\n    last_name VARCHAR(100) NOT NULL,\n    first_name VARCHAR(100) NOT NULL,\n    certification VARCHAR(200),\n    experience_years BIGINT,\n    specialty VARCHAR(200),\n    profile TEXT,\n    photo_url VARCHAR(500),\n    status VARCHAR(20) DEFAULT 'ACTIVE' NOT NULL,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    CONSTRAINT pk_instructors PRIMARY KEY (instructor_id)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle NUMBER mapped to BIGINT for integer columns (instructor_id, experience_years)",
+        "Oracle VARCHAR2 mapped to VARCHAR",
+        "Oracle CLOB mapped to TEXT",
+        "Oracle SYSTIMESTAMP mapped to CURRENT_TIMESTAMP",
+        "Oracle storage/tablespace/lob clauses omitted (not applicable in PostgreSQL)"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "SEQUENCE",
+      "schema_name": "divingapp",
+      "name": "seq_report_alerts",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_REPORT_ALERTS.sql",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_REPORT_ALERTS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE SEQUENCE IF NOT EXISTS divingapp.seq_report_alerts\n    INCREMENT BY 1\n    MINVALUE 1\n    START WITH 1\n    NO CYCLE;\n\nALTER SEQUENCE divingapp.seq_report_alerts CACHE 1;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint; MAXVALUE omitted",
+        "Oracle NOCACHE converted to CACHE 1",
+        "Oracle NOORDER ignored (PostgreSQL sequences are unordered by default)"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "report_cache",
+      "source": "DIVINGAPP/TABLE/REPORT_CACHE.sql",
+      "node_id": "DIVINGAPP.TABLE.REPORT_CACHE",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.report_cache (\n    cache_id BIGINT NOT NULL,\n    report_key VARCHAR(100) NOT NULL,\n    section VARCHAR(50) NOT NULL,\n    report_date TIMESTAMP,\n    metric_name VARCHAR(100) NOT NULL,\n    metric_value NUMERIC(15,2),\n    dimension1 VARCHAR(200),\n    dimension2 VARCHAR(200),\n    dimension3 VARCHAR(200),\n    generated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    CONSTRAINT pk_report_cache PRIMARY KEY (cache_id)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle NUMBER mapped to BIGINT for cache_id",
+        "Oracle NUMBER(p,s) mapped to NUMERIC(p,s) for metric_value",
+        "Oracle VARCHAR2 mapped to VARCHAR",
+        "Oracle DATE mapped to TIMESTAMP (Oracle DATE includes time)",
+        "Oracle SYSTIMESTAMP mapped to CURRENT_TIMESTAMP",
+        "Oracle tablespace/segment clauses omitted (not applicable in PostgreSQL)"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "SEQUENCE",
+      "schema_name": "divingapp",
+      "name": "seq_customers",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_CUSTOMERS.sql",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_CUSTOMERS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE SEQUENCE IF NOT EXISTS divingapp.seq_customers\n    INCREMENT BY 1\n    MINVALUE 1\n    START WITH 11\n    NO CYCLE;\n\nALTER SEQUENCE divingapp.seq_customers CACHE 1;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint; MAXVALUE omitted",
+        "Oracle NOCACHE converted to CACHE 1",
+        "Oracle NOORDER ignored (PostgreSQL sequences are unordered by default)"
+      ],
+      "depends_on": []
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-001.json"
+}

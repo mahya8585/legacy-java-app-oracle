@@ -1,0 +1,161 @@
+{
+  "chunk_number": 2,
+  "number_of_objects": 8,
+  "object_types": [
+    "SEQUENCE",
+    "TABLE",
+    "INDEX"
+  ],
+  "objects": [
+    {
+      "object_type": "SEQUENCE",
+      "schema_name": "divingapp",
+      "name": "seq_report_cache",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_REPORT_CACHE.sql",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_REPORT_CACHE",
+      "owner": "DIVINGAPP",
+      "content": "CREATE SEQUENCE IF NOT EXISTS divingapp.seq_report_cache\n    INCREMENT BY 1\n    START WITH 1\n    MINVALUE 1\n    NO CYCLE;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle MAXVALUE 9999999999999999999999999999 exceeds bigint; omitted MAXVALUE in PostgreSQL",
+        "Oracle NOCACHE not specified to preserve semantics (PostgreSQL cache defaults apply)",
+        "Oracle NOORDER ignored (PostgreSQL sequences are not order-guaranteed across sessions)"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "SEQUENCE",
+      "schema_name": "divingapp",
+      "name": "seq_reservation_options",
+      "source": "DIVINGAPP/SEQUENCE/SEQ_RESERVATION_OPTIONS.sql",
+      "node_id": "DIVINGAPP.SEQUENCE.SEQ_RESERVATION_OPTIONS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE SEQUENCE IF NOT EXISTS divingapp.seq_reservation_options\n    INCREMENT BY 1\n    START WITH 1\n    MINVALUE 1\n    NO CYCLE;",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Oracle MAXVALUE 9999999999999999999999999999 exceeds bigint; omitted MAXVALUE in PostgreSQL",
+        "Oracle NOCACHE not specified to preserve semantics (PostgreSQL cache defaults apply)",
+        "Oracle NOORDER ignored (PostgreSQL sequences are not order-guaranteed across sessions)"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "customers",
+      "source": "DIVINGAPP/TABLE/CUSTOMERS.sql",
+      "node_id": "DIVINGAPP.TABLE.CUSTOMERS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.customers (\n    customer_id BIGINT NOT NULL,\n    email VARCHAR(255) NOT NULL,\n    password_hash BYTEA NOT NULL,\n    last_name VARCHAR(100) NOT NULL,\n    first_name VARCHAR(100) NOT NULL,\n    last_name_kana VARCHAR(100),\n    first_name_kana VARCHAR(100),\n    phone VARCHAR(20),\n    birth_date TIMESTAMP,\n    license_level VARCHAR(100),\n    dive_count BIGINT DEFAULT 0,\n    emergency_contact VARCHAR(200),\n    status VARCHAR(20) DEFAULT 'ACTIVE' NOT NULL,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    CONSTRAINT pk_customers PRIMARY KEY (customer_id),\n    CONSTRAINT uk_customers_email UNIQUE (email)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "NUMBER converted to BIGINT for integer columns",
+        "RAW(64) converted to BYTEA",
+        "DATE converted to TIMESTAMP",
+        "SYSTIMESTAMP converted to CURRENT_TIMESTAMP"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "report_alerts",
+      "source": "DIVINGAPP/TABLE/REPORT_ALERTS.sql",
+      "node_id": "DIVINGAPP.TABLE.REPORT_ALERTS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.report_alerts (\n    alert_id BIGINT NOT NULL,\n    alert_type VARCHAR(50) NOT NULL,\n    severity VARCHAR(10) NOT NULL,\n    metric_name VARCHAR(100) NOT NULL,\n    current_value NUMERIC(15,2),\n    threshold_value NUMERIC(15,2),\n    deviation NUMERIC(10,4),\n    message VARCHAR(500),\n    detected_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    status VARCHAR(20) DEFAULT 'NEW' NOT NULL,\n    CONSTRAINT ck_ra_severity CHECK (severity IN ('HIGH', 'MEDIUM', 'LOW')),\n    CONSTRAINT ck_ra_status CHECK (status IN ('NEW', 'ACKNOWLEDGED', 'RESOLVED')),\n    CONSTRAINT pk_report_alerts PRIMARY KEY (alert_id)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "NUMBER converted to BIGINT for integer columns",
+        "NUMBER(p,s) converted to NUMERIC(p,s)",
+        "SYSTIMESTAMP converted to CURRENT_TIMESTAMP"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "TABLE",
+      "schema_name": "divingapp",
+      "name": "tours",
+      "source": "DIVINGAPP/TABLE/TOURS.sql",
+      "node_id": "DIVINGAPP.TABLE.TOURS",
+      "owner": "DIVINGAPP",
+      "content": "CREATE TABLE IF NOT EXISTS divingapp.tours (\n    tour_id BIGINT NOT NULL,\n    tour_name VARCHAR(200) NOT NULL,\n    description TEXT,\n    area VARCHAR(100) NOT NULL,\n    difficulty VARCHAR(20) NOT NULL,\n    max_participants BIGINT NOT NULL,\n    base_price BIGINT NOT NULL,\n    duration_days BIGINT DEFAULT 1 NOT NULL,\n    min_dive_count BIGINT DEFAULT 0,\n    featured_flag CHAR(1) DEFAULT 'N' NOT NULL,\n    status VARCHAR(20) DEFAULT 'ACTIVE' NOT NULL,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n    CONSTRAINT ck_tours_difficulty CHECK (difficulty IN ('BEGINNER', 'INTERMEDIATE', 'ADVANCED', 'EXPERT')),\n    CONSTRAINT ck_tours_status CHECK (status IN ('ACTIVE', 'INACTIVE', 'DELETED')),\n    CONSTRAINT ck_tours_featured CHECK (featured_flag IN ('Y', 'N')),\n    CONSTRAINT pk_tours PRIMARY KEY (tour_id)\n);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "NUMBER converted to BIGINT for integer columns",
+        "NUMBER(10,0) converted to BIGINT",
+        "CLOB converted to TEXT",
+        "SYSTIMESTAMP converted to CURRENT_TIMESTAMP",
+        "Oracle SecureFile LOB storage clauses dropped (not applicable in PostgreSQL)"
+      ],
+      "depends_on": []
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_ds_area",
+      "source": "DIVINGAPP/INDEX/IDX_DS_AREA.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_DS_AREA",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_ds_area ON divingapp.dive_sites (area);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Removed Oracle storage/tablespace attributes (PCTFREE/INITRANS/MAXTRANS/STORAGE/TABLESPACE/COMPUTE STATISTICS)"
+      ],
+      "depends_on": [
+        {
+          "name": "dive_sites",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.DIVE_SITES"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_rc_generated",
+      "source": "DIVINGAPP/INDEX/IDX_RC_GENERATED.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_RC_GENERATED",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_rc_generated ON divingapp.report_cache (generated_at);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Removed Oracle storage/tablespace attributes (PCTFREE/INITRANS/MAXTRANS/TABLESPACE/COMPUTE STATISTICS)"
+      ],
+      "depends_on": [
+        {
+          "name": "report_cache",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.REPORT_CACHE"
+        }
+      ]
+    },
+    {
+      "object_type": "INDEX",
+      "schema_name": "divingapp",
+      "name": "idx_rc_key_section",
+      "source": "DIVINGAPP/INDEX/IDX_RC_KEY_SECTION.sql",
+      "node_id": "DIVINGAPP.INDEX.IDX_RC_KEY_SECTION",
+      "owner": "DIVINGAPP",
+      "content": "CREATE INDEX IF NOT EXISTS idx_rc_key_section ON divingapp.report_cache (report_key, section);",
+      "object_status": "converted",
+      "conversion_notes": [
+        "Removed Oracle storage/tablespace attributes (PCTFREE/INITRANS/MAXTRANS/TABLESPACE/COMPUTE STATISTICS)"
+      ],
+      "depends_on": [
+        {
+          "name": "report_cache",
+          "object_type": "TABLE",
+          "owner": "divingapp",
+          "chunk_id": "chunk-001",
+          "node_id": "DIVINGAPP.TABLE.REPORT_CACHE"
+        }
+      ]
+    }
+  ],
+  "source_chunk": "artifacts/chunks/oracle_json/chunk-002.json"
+}

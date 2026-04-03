@@ -1,0 +1,19 @@
+{
+  "chunk_number": 0,
+  "number_of_objects": 1,
+  "tokens": 150,
+  "object_types": [
+    "SCHEMA"
+  ],
+  "objects": [
+    {
+      "object_type": "SCHEMA",
+      "owner": "DIVINGAPP",
+      "name": "DIVINGAPP",
+      "source": "DIVINGAPP/SCHEMA/DIVINGAPP.sql",
+      "content": "-- Transformed from Oracle DDL for PostgreSQL compatibility\n-- Oracle schemas are implicit (tied to users), PostgreSQL requires explicit schemas\n\nCREATE SCHEMA IF NOT EXISTS \"DIVINGAPP\";\n",
+      "node_id": "DIVINGAPP.SCHEMA.DIVINGAPP",
+      "depends_on": []
+    }
+  ]
+}

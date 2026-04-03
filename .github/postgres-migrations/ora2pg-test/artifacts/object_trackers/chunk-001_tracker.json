@@ -1,0 +1,331 @@
+{
+  "chunk_id": "chunk-001",
+  "expected_objects": {
+    "ORACLE.SEQUENCE.SEQ_DIVING_LOGS": {
+      "object_id": "ORACLE.SEQUENCE.SEQ_DIVING_LOGS",
+      "name": "SEQ_DIVING_LOGS",
+      "type": "SEQUENCE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.SEQUENCE.SEQ_RESERVATIONS": {
+      "object_id": "ORACLE.SEQUENCE.SEQ_RESERVATIONS",
+      "name": "SEQ_RESERVATIONS",
+      "type": "SEQUENCE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.SEQUENCE.SEQ_TOURS": {
+      "object_id": "ORACLE.SEQUENCE.SEQ_TOURS",
+      "name": "SEQ_TOURS",
+      "type": "SEQUENCE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.SEQUENCE.SEQ_REPORT_ALERTS": {
+      "object_id": "ORACLE.SEQUENCE.SEQ_REPORT_ALERTS",
+      "name": "SEQ_REPORT_ALERTS",
+      "type": "SEQUENCE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.SEQUENCE.SEQ_CUSTOMERS": {
+      "object_id": "ORACLE.SEQUENCE.SEQ_CUSTOMERS",
+      "name": "SEQ_CUSTOMERS",
+      "type": "SEQUENCE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.TABLE.DIVE_SITES": {
+      "object_id": "ORACLE.TABLE.DIVE_SITES",
+      "name": "DIVE_SITES",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.TABLE.OPTIONS_MASTER": {
+      "object_id": "ORACLE.TABLE.OPTIONS_MASTER",
+      "name": "OPTIONS_MASTER",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.TABLE.INSTRUCTORS": {
+      "object_id": "ORACLE.TABLE.INSTRUCTORS",
+      "name": "INSTRUCTORS",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.TABLE.REPORT_CACHE": {
+      "object_id": "ORACLE.TABLE.REPORT_CACHE",
+      "name": "REPORT_CACHE",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.SEQUENCE.SEQ_DIVING_LOGS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.SEQUENCE.SEQ_DIVING_LOGS",
+        "name": "SEQ_DIVING_LOGS",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "seq_diving_logs",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint; MAXVALUE omitted, Oracle NOCACHE converted to CACHE 1, Oracle NOORDER ignored (PostgreSQL sequences are unordered by default)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:13:55.934918",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.SEQUENCE.SEQ_RESERVATIONS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.SEQUENCE.SEQ_RESERVATIONS",
+        "name": "SEQ_RESERVATIONS",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "seq_reservations",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint; MAXVALUE omitted, Oracle NOCACHE converted to CACHE 1, Oracle NOORDER ignored (PostgreSQL sequences are unordered by default)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:13:55.934918",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.SEQUENCE.SEQ_TOURS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.SEQUENCE.SEQ_TOURS",
+        "name": "SEQ_TOURS",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "seq_tours",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint; MAXVALUE omitted, Oracle NOCACHE converted to CACHE 1, Oracle NOORDER ignored (PostgreSQL sequences are unordered by default)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:13:55.934918",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.SEQUENCE.SEQ_REPORT_ALERTS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.SEQUENCE.SEQ_REPORT_ALERTS",
+        "name": "SEQ_REPORT_ALERTS",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "seq_report_alerts",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint; MAXVALUE omitted, Oracle NOCACHE converted to CACHE 1, Oracle NOORDER ignored (PostgreSQL sequences are unordered by default)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:13:55.934918",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.SEQUENCE.SEQ_CUSTOMERS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.SEQUENCE.SEQ_CUSTOMERS",
+        "name": "SEQ_CUSTOMERS",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "seq_customers",
+        "type": "SEQUENCE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle MAXVALUE 9999999999999999999999999999 exceeds PostgreSQL bigint; MAXVALUE omitted, Oracle NOCACHE converted to CACHE 1, Oracle NOORDER ignored (PostgreSQL sequences are unordered by default)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:13:55.934918",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.TABLE.DIVE_SITES": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.DIVE_SITES",
+        "name": "DIVE_SITES",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "dive_sites",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle NUMBER mapped to BIGINT for site_id, Oracle VARCHAR2 mapped to VARCHAR, Oracle CLOB mapped to TEXT, Oracle SYSTIMESTAMP mapped to CURRENT_TIMESTAMP, Oracle storage/tablespace/lob clauses omitted (not applicable in PostgreSQL)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:13:55.934918",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.TABLE.OPTIONS_MASTER": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.OPTIONS_MASTER",
+        "name": "OPTIONS_MASTER",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "options_master",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle NUMBER mapped to BIGINT for integer columns (option_id, unit_price), Oracle VARCHAR2 mapped to VARCHAR, Oracle SYSTIMESTAMP mapped to CURRENT_TIMESTAMP, Oracle storage/tablespace clauses omitted (not applicable in PostgreSQL)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:13:55.934918",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.TABLE.INSTRUCTORS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.INSTRUCTORS",
+        "name": "INSTRUCTORS",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "instructors",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle NUMBER mapped to BIGINT for integer columns (instructor_id, experience_years), Oracle VARCHAR2 mapped to VARCHAR, Oracle CLOB mapped to TEXT, Oracle SYSTIMESTAMP mapped to CURRENT_TIMESTAMP, Oracle storage/tablespace/lob clauses omitted (not applicable in PostgreSQL)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:13:55.934918",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.TABLE.REPORT_CACHE": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.REPORT_CACHE",
+        "name": "REPORT_CACHE",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "report_cache",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle NUMBER mapped to BIGINT for cache_id, Oracle NUMBER(p,s) mapped to NUMERIC(p,s) for metric_value, Oracle VARCHAR2 mapped to VARCHAR, Oracle DATE mapped to TIMESTAMP (Oracle DATE includes time), Oracle SYSTIMESTAMP mapped to CURRENT_TIMESTAMP, Oracle tablespace/segment clauses omitted (not applicable in PostgreSQL)"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:13:55.934918",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:13:35.578092",
+  "last_updated": "2026-04-03T15:13:35.779408",
+  "total_expected": 9,
+  "total_converted": 9,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}

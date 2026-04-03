@@ -1,0 +1,366 @@
+{
+  "chunk_id": "chunk-004",
+  "expected_objects": {
+    "ORACLE.TABLE.TOUR_INSTRUCTORS": {
+      "object_id": "ORACLE.TABLE.TOUR_INSTRUCTORS",
+      "name": "TOUR_INSTRUCTORS",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.TABLE.TOUR_DIVE_SITES": {
+      "object_id": "ORACLE.TABLE.TOUR_DIVE_SITES",
+      "name": "TOUR_DIVE_SITES",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.TABLE.TOUR_SCHEDULES": {
+      "object_id": "ORACLE.TABLE.TOUR_SCHEDULES",
+      "name": "TOUR_SCHEDULES",
+      "type": "TABLE",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_CUSTOMERS_STATUS": {
+      "object_id": "ORACLE.INDEX.IDX_CUSTOMERS_STATUS",
+      "name": "IDX_CUSTOMERS_STATUS",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_RA_DETECTED": {
+      "object_id": "ORACLE.INDEX.IDX_RA_DETECTED",
+      "name": "IDX_RA_DETECTED",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_RA_SEVERITY": {
+      "object_id": "ORACLE.INDEX.IDX_RA_SEVERITY",
+      "name": "IDX_RA_SEVERITY",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_TOURS_AREA": {
+      "object_id": "ORACLE.INDEX.IDX_TOURS_AREA",
+      "name": "IDX_TOURS_AREA",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_TOURS_DIFFICULTY": {
+      "object_id": "ORACLE.INDEX.IDX_TOURS_DIFFICULTY",
+      "name": "IDX_TOURS_DIFFICULTY",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_TOURS_FEATURED": {
+      "object_id": "ORACLE.INDEX.IDX_TOURS_FEATURED",
+      "name": "IDX_TOURS_FEATURED",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    },
+    "ORACLE.INDEX.IDX_TOURS_STATUS": {
+      "object_id": "ORACLE.INDEX.IDX_TOURS_STATUS",
+      "name": "IDX_TOURS_STATUS",
+      "type": "INDEX",
+      "schema_name": "DIVINGAPP",
+      "source_line": null,
+      "dependencies": [],
+      "estimated_complexity": null
+    }
+  },
+  "processed_objects": {
+    "ORACLE.TABLE.TOUR_INSTRUCTORS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.TOUR_INSTRUCTORS",
+        "name": "TOUR_INSTRUCTORS",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "tour_instructors",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "NUMBER mapped to BIGINT, VARCHAR2 mapped to VARCHAR"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:15.338960",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.TABLE.TOUR_DIVE_SITES": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.TOUR_DIVE_SITES",
+        "name": "TOUR_DIVE_SITES",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "tour_dive_sites",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "NUMBER mapped to BIGINT"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:15.338960",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.TABLE.TOUR_SCHEDULES": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.TABLE.TOUR_SCHEDULES",
+        "name": "TOUR_SCHEDULES",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "tour_schedules",
+        "type": "TABLE",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle DATE mapped to TIMESTAMP, SYSTIMESTAMP mapped to CURRENT_TIMESTAMP, NUMBER mapped to BIGINT, VARCHAR2 mapped to VARCHAR"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:15.338960",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_CUSTOMERS_STATUS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_CUSTOMERS_STATUS",
+        "name": "IDX_CUSTOMERS_STATUS",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_customers_status",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle storage/tablespace clauses omitted"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:15.338960",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_RA_DETECTED": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_RA_DETECTED",
+        "name": "IDX_RA_DETECTED",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_ra_detected",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle tablespace clause omitted"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:15.338960",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_RA_SEVERITY": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_RA_SEVERITY",
+        "name": "IDX_RA_SEVERITY",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_ra_severity",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle tablespace clause omitted"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:15.338960",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_TOURS_AREA": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_TOURS_AREA",
+        "name": "IDX_TOURS_AREA",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_tours_area",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle storage/tablespace clauses omitted"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:15.338960",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_TOURS_DIFFICULTY": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_TOURS_DIFFICULTY",
+        "name": "IDX_TOURS_DIFFICULTY",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_tours_difficulty",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle storage/tablespace clauses omitted"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:15.338960",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_TOURS_FEATURED": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_TOURS_FEATURED",
+        "name": "IDX_TOURS_FEATURED",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_tours_featured",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle storage/tablespace clauses omitted"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:15.338960",
+      "processing_duration_seconds": null
+    },
+    "ORACLE.INDEX.IDX_TOURS_STATUS": {
+      "status": "converted",
+      "oracle_info": {
+        "object_id": "ORACLE.INDEX.IDX_TOURS_STATUS",
+        "name": "IDX_TOURS_STATUS",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "source_line": null,
+        "dependencies": [],
+        "estimated_complexity": null
+      },
+      "postgres_info": {
+        "name": "idx_tours_status",
+        "type": "INDEX",
+        "schema_name": "DIVINGAPP",
+        "ddl_snippet": null,
+        "target_line": null,
+        "conversion_notes": [
+          "Oracle storage/tablespace clauses omitted"
+        ]
+      },
+      "skip_reason": null,
+      "error_message": null,
+      "timestamp": "2026-04-03T15:19:15.338960",
+      "processing_duration_seconds": null
+    }
+  },
+  "created_at": "2026-04-03T15:18:53.204718",
+  "last_updated": "2026-04-03T15:18:53.223866",
+  "total_expected": 10,
+  "total_converted": 10,
+  "total_skipped": 0,
+  "total_failed": 0,
+  "success_rate": 100.0,
+  "is_complete": true,
+  "missing_objects": []
+}
