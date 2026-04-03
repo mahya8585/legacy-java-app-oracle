@@ -10,3 +10,4 @@ target/
 .env.*
 !.env.example
 docker/
+!docker/oracle/init-scripts/

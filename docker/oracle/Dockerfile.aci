@@ -1,0 +1,41 @@
+# =============================================================
+# Dockerfile.aci
+# ACI デプロイ用 Oracle 21c XE イメージ
+# 全 SQL スクリプト (migration, packages, seed) をイメージにベイク
+# =============================================================
+
+ARG ACR_NAME=acrdivingapp7659
+FROM ${ACR_NAME}.azurecr.io/gvenzl/oracle-xe:21-slim
+
+ENV ORACLE_PASSWORD=oracle123
+ENV APP_USER=DIVINGAPP
+ENV APP_USER_PASSWORD=divingapp123
+
+# 初期化スクリプト（DB初回起動時に自動実行される）
+# ビルドコンテキストはプロジェクトルート（-f で本 Dockerfile を指定）
+COPY docker/oracle/init-scripts/ /container-entrypoint-initdb.d/
+
+# SQL スクリプト本体をイメージ内に格納
+# （ローカル docker-compose ではボリュームマウントだが、ACI ではイメージにベイク）
+COPY db/migration/ /opt/oracle/scripts/migration/
+COPY db/packages/ /opt/oracle/scripts/packages/
+COPY db/seed/ /opt/oracle/scripts/seed/
+
+# ACI では /dev/shm が 64MB のため、Bicep の command プロパティで
+# privileged モード + mount -t tmpfs で /dev/shm を 1GB に拡張
+USER root
+
+# slim イメージには mount コマンドがないためインストール
+RUN microdnf install -y util-linux && microdnf clean all
+
+# container-entrypoint.sh を /usr/local/bin にシンボリックリンク
+# （root ユーザーの PATH に含まれるようにする）
+RUN for d in /opt/oracle /opt/oracle/product/21c/dbhomeXE/bin /usr/local/bin /usr/bin; do \
+      if [ -f "$d/container-entrypoint.sh" ]; then \
+        echo "Found entrypoint at: $d/container-entrypoint.sh"; \
+        ln -sf "$d/container-entrypoint.sh" /usr/local/bin/container-entrypoint.sh 2>/dev/null || true; \
+        break; \
+      fi; \
+    done && \
+    ls -la /usr/local/bin/container-entrypoint.sh 2>&1 || \
+    echo "WARNING: container-entrypoint.sh not found in known locations"

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "japaneast"
+    },
+    "projectName": {
+      "value": "divingapp"
+    },
+    "acrName": {
+      "value": "acrdivingapp7659"
+    },
+    "oraclePassword": {
+      "value": "oracle123"
+    },
+    "appDbUsername": {
+      "value": "DIVINGAPP"
+    },
+    "appDbPassword": {
+      "value": "divingapp123"
+    },
+    "containerCpuCores": {
+      "value": 2
+    },
+    "containerMemoryGb": {
+      "value": 4
+    }
+  }
+}

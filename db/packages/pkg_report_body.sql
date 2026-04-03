@@ -698,7 +698,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_REPORT AS
         -- Z-score計算 → 異常値判定 → MERGE + INSERT
         -- =========================================================
 
-        -- まず全指標を集約してキャッシュ & アラートを生成
+        -- まず全指標を集約してキャッシュ AND アラートを生成
         MERGE INTO REPORT_CACHE rc
         USING (
             WITH all_metrics AS (
