@@ -1,6 +1,7 @@
 package com.divingapp.dao;
 
 import java.math.BigDecimal;
+import java.sql.Types;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +18,6 @@ import org.springframework.stereotype.Repository;
 import com.divingapp.dto.ReservationDto;
 import com.divingapp.dto.ReservationOptionDto;
 
-import oracle.jdbc.OracleTypes;
-
 @Repository
 public class ReservationDao {
 
@@ -30,42 +29,42 @@ public class ReservationDao {
 
     private static final RowMapper<ReservationDto> RESERVATION_ROW_MAPPER = (rs, rowNum) -> {
         ReservationDto dto = new ReservationDto();
-        dto.setReservationId(rs.getLong("RESERVATION_ID"));
-        dto.setCustomerId(rs.getLong("CUSTOMER_ID"));
-        dto.setScheduleId(rs.getLong("SCHEDULE_ID"));
-        dto.setNumParticipants(rs.getInt("NUM_PARTICIPANTS"));
-        dto.setTotalPrice(rs.getBigDecimal("TOTAL_PRICE"));
-        dto.setStatus(rs.getString("STATUS"));
-        dto.setCancelReason(rs.getString("CANCEL_REASON"));
-        dto.setRefundAmount(rs.getBigDecimal("REFUND_AMOUNT"));
-        dto.setNotes(rs.getString("NOTES"));
-        dto.setCreatedAt(rs.getTimestamp("CREATED_AT"));
-        try { dto.setTourName(rs.getString("TOUR_NAME")); } catch (Exception e) { /* column may not exist */ }
-        try { dto.setArea(rs.getString("AREA")); } catch (Exception e) { }
-        try { dto.setTourDate(rs.getDate("TOUR_DATE")); } catch (Exception e) { }
-        try { dto.setStartTime(rs.getString("START_TIME")); } catch (Exception e) { }
-        try { dto.setCustomerName(rs.getString("CUSTOMER_NAME")); } catch (Exception e) { }
+        dto.setReservationId(rs.getLong("reservation_id"));
+        dto.setCustomerId(rs.getLong("customer_id"));
+        dto.setScheduleId(rs.getLong("schedule_id"));
+        dto.setNumParticipants(rs.getInt("num_participants"));
+        dto.setTotalPrice(rs.getBigDecimal("total_price"));
+        dto.setStatus(rs.getString("status"));
+        dto.setCancelReason(rs.getString("cancel_reason"));
+        dto.setRefundAmount(rs.getBigDecimal("refund_amount"));
+        dto.setNotes(rs.getString("notes"));
+        dto.setCreatedAt(rs.getTimestamp("created_at"));
+        try { dto.setTourName(rs.getString("tour_name")); } catch (Exception e) { /* column may not exist */ }
+        try { dto.setArea(rs.getString("area")); } catch (Exception e) { }
+        try { dto.setTourDate(rs.getDate("tour_date")); } catch (Exception e) { }
+        try { dto.setStartTime(rs.getString("start_time")); } catch (Exception e) { }
+        try { dto.setCustomerName(rs.getString("customer_name")); } catch (Exception e) { }
         return dto;
     };
 
     private static final RowMapper<ReservationOptionDto> OPTION_ROW_MAPPER = (rs, rowNum) -> {
         ReservationOptionDto dto = new ReservationOptionDto();
-        dto.setResOptionId(rs.getLong("RES_OPTION_ID"));
-        dto.setReservationId(rs.getLong("RESERVATION_ID"));
-        dto.setOptionId(rs.getLong("OPTION_ID"));
-        dto.setOptionName(rs.getString("OPTION_NAME"));
-        dto.setOptionCategory(rs.getString("OPTION_CATEGORY"));
-        dto.setQuantity(rs.getInt("QUANTITY"));
-        dto.setUnitPrice(rs.getBigDecimal("UNIT_PRICE"));
-        dto.setSubtotal(rs.getBigDecimal("SUBTOTAL"));
+        dto.setResOptionId(rs.getLong("res_option_id"));
+        dto.setReservationId(rs.getLong("reservation_id"));
+        dto.setOptionId(rs.getLong("option_id"));
+        dto.setOptionName(rs.getString("option_name"));
+        dto.setOptionCategory(rs.getString("option_category"));
+        dto.setQuantity(rs.getInt("quantity"));
+        dto.setUnitPrice(rs.getBigDecimal("unit_price"));
+        dto.setSubtotal(rs.getBigDecimal("subtotal"));
         return dto;
     };
 
     public Map<String, Object> createReservation(Long customerId, Long scheduleId,
             int numParticipants, String optionIds, String optionQuantities, String notes) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_RESERVATION")
-            .withProcedureName("CREATE_RESERVATION");
+            .withSchemaName("divingapp")
+            .withProcedureName("create_reservation");
 
         MapSqlParameterSource params = new MapSqlParameterSource()
             .addValue("p_customer_id", customerId)
@@ -80,8 +79,8 @@ public class ReservationDao {
 
     public Map<String, Object> cancelReservation(Long reservationId, Long customerId, String cancelReason) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_RESERVATION")
-            .withProcedureName("CANCEL_RESERVATION");
+            .withSchemaName("divingapp")
+            .withProcedureName("cancel_reservation");
 
         MapSqlParameterSource params = new MapSqlParameterSource()
             .addValue("p_reservation_id", reservationId)
@@ -94,12 +93,12 @@ public class ReservationDao {
     @SuppressWarnings("unchecked")
     public Map<String, Object> getReservationDetail(Long reservationId) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_RESERVATION")
-            .withProcedureName("GET_RESERVATION_DETAIL")
+            .withSchemaName("divingapp")
+            .withProcedureName("get_reservation_detail")
             .declareParameters(
-                new SqlParameter("p_reservation_id", java.sql.Types.NUMERIC),
-                new SqlOutParameter("o_reservation", OracleTypes.CURSOR, RESERVATION_ROW_MAPPER),
-                new SqlOutParameter("o_options", OracleTypes.CURSOR, OPTION_ROW_MAPPER)
+                new SqlParameter("p_reservation_id", Types.NUMERIC),
+                new SqlOutParameter("o_reservation", Types.REF_CURSOR, RESERVATION_ROW_MAPPER),
+                new SqlOutParameter("o_options", Types.REF_CURSOR, OPTION_ROW_MAPPER)
             );
 
         return call.execute(new MapSqlParameterSource("p_reservation_id", reservationId));
@@ -108,12 +107,12 @@ public class ReservationDao {
     @SuppressWarnings("unchecked")
     public List<ReservationDto> getCustomerReservations(Long customerId, String status) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_RESERVATION")
-            .withProcedureName("GET_CUSTOMER_RESERVATIONS")
+            .withSchemaName("divingapp")
+            .withProcedureName("get_customer_reservations")
             .declareParameters(
-                new SqlParameter("p_customer_id", java.sql.Types.NUMERIC),
-                new SqlParameter("p_status", java.sql.Types.VARCHAR),
-                new SqlOutParameter("o_reservations", OracleTypes.CURSOR, RESERVATION_ROW_MAPPER)
+                new SqlParameter("p_customer_id", Types.NUMERIC),
+                new SqlParameter("p_status", Types.VARCHAR),
+                new SqlOutParameter("o_reservations", Types.REF_CURSOR, RESERVATION_ROW_MAPPER)
             );
 
         MapSqlParameterSource params = new MapSqlParameterSource()
@@ -127,8 +126,8 @@ public class ReservationDao {
     public BigDecimal calcTotalPrice(Long scheduleId, int numParticipants,
             String optionIds, String optionQuantities) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_RESERVATION")
-            .withFunctionName("CALC_TOTAL_PRICE");
+            .withSchemaName("divingapp")
+            .withFunctionName("calc_total_price");
 
         MapSqlParameterSource params = new MapSqlParameterSource()
             .addValue("p_schedule_id", scheduleId)
@@ -143,16 +142,16 @@ public class ReservationDao {
     public Map<String, Object> getAllReservations(String status, Date dateFrom, Date dateTo,
             int page, int pageSize) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_RESERVATION")
-            .withProcedureName("GET_ALL_RESERVATIONS")
+            .withSchemaName("divingapp")
+            .withProcedureName("get_all_reservations")
             .declareParameters(
-                new SqlParameter("p_status", java.sql.Types.VARCHAR),
-                new SqlParameter("p_date_from", java.sql.Types.DATE),
-                new SqlParameter("p_date_to", java.sql.Types.DATE),
-                new SqlParameter("p_page", java.sql.Types.NUMERIC),
-                new SqlParameter("p_page_size", java.sql.Types.NUMERIC),
-                new SqlOutParameter("o_reservations", OracleTypes.CURSOR, RESERVATION_ROW_MAPPER),
-                new SqlOutParameter("o_total_count", java.sql.Types.NUMERIC)
+                new SqlParameter("p_status", Types.VARCHAR),
+                new SqlParameter("p_date_from", Types.DATE),
+                new SqlParameter("p_date_to", Types.DATE),
+                new SqlParameter("p_page", Types.NUMERIC),
+                new SqlParameter("p_page_size", Types.NUMERIC),
+                new SqlOutParameter("o_reservations", Types.REF_CURSOR, RESERVATION_ROW_MAPPER),
+                new SqlOutParameter("o_total_count", Types.NUMERIC)
             );
 
         MapSqlParameterSource params = new MapSqlParameterSource()

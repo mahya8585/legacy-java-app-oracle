@@ -6,10 +6,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521/XEPDB1
-    username: DIVINGAPP
+    url: jdbc:postgresql://localhost:5432/divingapp
+    username: divingapp
     password: divingapp123
-    driver-class-name: oracle.jdbc.OracleDriver
+    driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 10
       minimum-idle: 2
@@ -32,6 +32,6 @@ spring:
     activate:
       on-profile: docker
   datasource:
-    url: jdbc:oracle:thin:@oracle-db:1521/XEPDB1
-    username: ${APP_DB_USERNAME:DIVINGAPP}
+    url: jdbc:postgresql://${DB_HOST:postgres-db}:5432/${DB_NAME:divingapp}
+    username: ${APP_DB_USERNAME:divingapp}
     password: ${APP_DB_PASSWORD:divingapp123}

@@ -1,5 +1,6 @@
 package com.divingapp.dao;
 
+import java.sql.Types;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import com.divingapp.dto.CustomerDto;
 
-import oracle.jdbc.OracleTypes;
-
 @Repository
 public class CustomerDao {
 
@@ -28,26 +27,26 @@ public class CustomerDao {
 
     private static final RowMapper<CustomerDto> CUSTOMER_ROW_MAPPER = (rs, rowNum) -> {
         CustomerDto dto = new CustomerDto();
-        dto.setCustomerId(rs.getLong("CUSTOMER_ID"));
-        dto.setEmail(rs.getString("EMAIL"));
-        dto.setLastName(rs.getString("LAST_NAME"));
-        dto.setFirstName(rs.getString("FIRST_NAME"));
-        dto.setLastNameKana(rs.getString("LAST_NAME_KANA"));
-        dto.setFirstNameKana(rs.getString("FIRST_NAME_KANA"));
-        dto.setPhone(rs.getString("PHONE"));
-        dto.setBirthDate(rs.getDate("BIRTH_DATE"));
-        dto.setLicenseLevel(rs.getString("LICENSE_LEVEL"));
-        dto.setDiveCount(rs.getInt("DIVE_COUNT"));
-        dto.setEmergencyContact(rs.getString("EMERGENCY_CONTACT"));
-        dto.setStatus(rs.getString("STATUS"));
-        dto.setCreatedAt(rs.getTimestamp("CREATED_AT"));
+        dto.setCustomerId(rs.getLong("customer_id"));
+        dto.setEmail(rs.getString("email"));
+        dto.setLastName(rs.getString("last_name"));
+        dto.setFirstName(rs.getString("first_name"));
+        dto.setLastNameKana(rs.getString("last_name_kana"));
+        dto.setFirstNameKana(rs.getString("first_name_kana"));
+        dto.setPhone(rs.getString("phone"));
+        dto.setBirthDate(rs.getDate("birth_date"));
+        dto.setLicenseLevel(rs.getString("license_level"));
+        dto.setDiveCount(rs.getInt("dive_count"));
+        dto.setEmergencyContact(rs.getString("emergency_contact"));
+        dto.setStatus(rs.getString("status"));
+        dto.setCreatedAt(rs.getTimestamp("created_at"));
         return dto;
     };
 
     public Map<String, Object> authenticate(String email, String password) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_CUSTOMER")
-            .withProcedureName("AUTHENTICATE");
+            .withSchemaName("divingapp")
+            .withProcedureName("pkg_customer_authenticate");
 
         MapSqlParameterSource params = new MapSqlParameterSource()
             .addValue("p_email", email)
@@ -60,8 +59,8 @@ public class CustomerDao {
             String lastName, String firstName, String lastNameKana, String firstNameKana,
             String phone, Date birthDate, String licenseLevel) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_CUSTOMER")
-            .withProcedureName("REGISTER_CUSTOMER");
+            .withSchemaName("divingapp")
+            .withProcedureName("pkg_customer_register_customer");
 
         MapSqlParameterSource params = new MapSqlParameterSource()
             .addValue("p_email", email)
@@ -81,8 +80,8 @@ public class CustomerDao {
             String lastNameKana, String firstNameKana, String phone, Date birthDate,
             String licenseLevel, String emergencyContact) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_CUSTOMER")
-            .withProcedureName("UPDATE_PROFILE");
+            .withSchemaName("divingapp")
+            .withProcedureName("pkg_customer_update_profile");
 
         MapSqlParameterSource params = new MapSqlParameterSource()
             .addValue("p_customer_id", customerId)
@@ -101,11 +100,11 @@ public class CustomerDao {
     @SuppressWarnings("unchecked")
     public CustomerDto getCustomerInfo(Long customerId) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_CUSTOMER")
-            .withProcedureName("GET_CUSTOMER_INFO")
+            .withSchemaName("divingapp")
+            .withProcedureName("pkg_customer_get_customer_info")
             .declareParameters(
-                new SqlParameter("p_customer_id", java.sql.Types.NUMERIC),
-                new SqlOutParameter("o_customer", OracleTypes.CURSOR, CUSTOMER_ROW_MAPPER)
+                new SqlParameter("p_customer_id", Types.NUMERIC),
+                new SqlOutParameter("o_customer", Types.REF_CURSOR, CUSTOMER_ROW_MAPPER)
             );
 
         Map<String, Object> result = call.execute(new MapSqlParameterSource("p_customer_id", customerId));
@@ -116,15 +115,15 @@ public class CustomerDao {
     @SuppressWarnings("unchecked")
     public Map<String, Object> getAllCustomers(String keyword, String status, int page, int pageSize) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_CUSTOMER")
-            .withProcedureName("GET_ALL_CUSTOMERS")
+            .withSchemaName("divingapp")
+            .withProcedureName("pkg_customer_get_all_customers")
             .declareParameters(
-                new SqlParameter("p_keyword", java.sql.Types.VARCHAR),
-                new SqlParameter("p_status", java.sql.Types.VARCHAR),
-                new SqlParameter("p_page", java.sql.Types.NUMERIC),
-                new SqlParameter("p_page_size", java.sql.Types.NUMERIC),
-                new SqlOutParameter("o_customers", OracleTypes.CURSOR, CUSTOMER_ROW_MAPPER),
-                new SqlOutParameter("o_total_count", java.sql.Types.NUMERIC)
+                new SqlParameter("p_keyword", Types.VARCHAR),
+                new SqlParameter("p_status", Types.VARCHAR),
+                new SqlParameter("p_page", Types.NUMERIC),
+                new SqlParameter("p_page_size", Types.NUMERIC),
+                new SqlOutParameter("o_customers", Types.REF_CURSOR, CUSTOMER_ROW_MAPPER),
+                new SqlOutParameter("o_total_count", Types.NUMERIC)
             );
 
         MapSqlParameterSource params = new MapSqlParameterSource()

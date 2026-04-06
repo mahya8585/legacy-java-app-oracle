@@ -1,5 +1,6 @@
 package com.divingapp.dao;
 
+import java.sql.Types;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +16,6 @@ import org.springframework.stereotype.Repository;
 import com.divingapp.dto.DiveSiteDto;
 import com.divingapp.dto.TourDto;
 
-import oracle.jdbc.OracleTypes;
-
 @Repository
 public class DiveSiteDao {
 
@@ -28,39 +27,39 @@ public class DiveSiteDao {
 
     private static final RowMapper<DiveSiteDto> SITE_ROW_MAPPER = (rs, rowNum) -> {
         DiveSiteDto dto = new DiveSiteDto();
-        dto.setSiteId(rs.getLong("SITE_ID"));
-        dto.setSiteName(rs.getString("SITE_NAME"));
-        dto.setArea(rs.getString("AREA"));
-        dto.setDescription(rs.getString("DESCRIPTION"));
-        dto.setMaxDepth(rs.getBigDecimal("MAX_DEPTH"));
-        dto.setWaterTemperatureMin(rs.getBigDecimal("WATER_TEMPERATURE_MIN"));
-        dto.setWaterTemperatureMax(rs.getBigDecimal("WATER_TEMPERATURE_MAX"));
-        dto.setDifficulty(rs.getString("DIFFICULTY"));
-        dto.setMarineLife(rs.getString("MARINE_LIFE"));
-        dto.setAccessInfo(rs.getString("ACCESS_INFO"));
-        dto.setStatus(rs.getString("STATUS"));
+        dto.setSiteId(rs.getLong("site_id"));
+        dto.setSiteName(rs.getString("site_name"));
+        dto.setArea(rs.getString("area"));
+        dto.setDescription(rs.getString("description"));
+        dto.setMaxDepth(rs.getBigDecimal("max_depth"));
+        dto.setWaterTemperatureMin(rs.getBigDecimal("water_temperature_min"));
+        dto.setWaterTemperatureMax(rs.getBigDecimal("water_temperature_max"));
+        dto.setDifficulty(rs.getString("difficulty"));
+        dto.setMarineLife(rs.getString("marine_life"));
+        dto.setAccessInfo(rs.getString("access_info"));
+        dto.setStatus(rs.getString("status"));
         return dto;
     };
 
     private static final RowMapper<TourDto> TOUR_ROW_MAPPER = (rs, rowNum) -> {
         TourDto dto = new TourDto();
-        dto.setTourId(rs.getLong("TOUR_ID"));
-        dto.setTourName(rs.getString("TOUR_NAME"));
-        dto.setArea(rs.getString("AREA"));
-        dto.setBasePrice(rs.getBigDecimal("BASE_PRICE"));
-        dto.setDifficulty(rs.getString("DIFFICULTY"));
+        dto.setTourId(rs.getLong("tour_id"));
+        dto.setTourName(rs.getString("tour_name"));
+        dto.setArea(rs.getString("area"));
+        dto.setBasePrice(rs.getBigDecimal("base_price"));
+        dto.setDifficulty(rs.getString("difficulty"));
         return dto;
     };
 
     @SuppressWarnings("unchecked")
     public List<DiveSiteDto> getDiveSites(String area, String difficulty) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_DIVE_SITE")
-            .withProcedureName("GET_DIVE_SITES")
+            .withSchemaName("divingapp")
+            .withProcedureName("get_dive_sites")
             .declareParameters(
-                new SqlParameter("p_area", java.sql.Types.VARCHAR),
-                new SqlParameter("p_difficulty", java.sql.Types.VARCHAR),
-                new SqlOutParameter("o_sites", OracleTypes.CURSOR, SITE_ROW_MAPPER)
+                new SqlParameter("p_area", Types.VARCHAR),
+                new SqlParameter("p_difficulty", Types.VARCHAR),
+                new SqlOutParameter("o_sites", Types.REF_CURSOR, SITE_ROW_MAPPER)
             );
 
         MapSqlParameterSource params = new MapSqlParameterSource()
@@ -73,15 +72,30 @@ public class DiveSiteDao {
 
     @SuppressWarnings("unchecked")
     public Map<String, Object> getDiveSiteDetail(Long siteId) {
-        SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_DIVE_SITE")
-            .withProcedureName("GET_DIVE_SITE_DETAIL")
+        // PostgreSQL uses separate functions for site and related tours
+        SimpleJdbcCall siteCall = new SimpleJdbcCall(dataSource)
+            .withSchemaName("divingapp")
+            .withProcedureName("get_dive_site_detail_site")
             .declareParameters(
-                new SqlParameter("p_site_id", java.sql.Types.NUMERIC),
-                new SqlOutParameter("o_site", OracleTypes.CURSOR, SITE_ROW_MAPPER),
-                new SqlOutParameter("o_related_tours", OracleTypes.CURSOR, TOUR_ROW_MAPPER)
+                new SqlParameter("p_site_id", Types.NUMERIC),
+                new SqlOutParameter("o_site", Types.REF_CURSOR, SITE_ROW_MAPPER)
             );
 
-        return call.execute(new MapSqlParameterSource("p_site_id", siteId));
+        SimpleJdbcCall toursCall = new SimpleJdbcCall(dataSource)
+            .withSchemaName("divingapp")
+            .withProcedureName("get_dive_site_detail_related_tours")
+            .declareParameters(
+                new SqlParameter("p_site_id", Types.NUMERIC),
+                new SqlOutParameter("o_related_tours", Types.REF_CURSOR, TOUR_ROW_MAPPER)
+            );
+
+        MapSqlParameterSource params = new MapSqlParameterSource("p_site_id", siteId);
+        
+        Map<String, Object> siteResult = siteCall.execute(params);
+        Map<String, Object> toursResult = toursCall.execute(params);
+        
+        // Combine results
+        siteResult.put("o_related_tours", toursResult.get("o_related_tours"));
+        return siteResult;
     }
 }

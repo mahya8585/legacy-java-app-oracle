@@ -1,6 +1,7 @@
 package com.divingapp.dao;
 
 import java.math.BigDecimal;
+import java.sql.Types;
 import java.util.Date;
 import java.util.Map;
 
@@ -15,8 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import com.divingapp.dto.DivingLogDto;
 
-import oracle.jdbc.OracleTypes;
-
 @Repository
 public class DivingLogDao {
 
@@ -28,31 +27,31 @@ public class DivingLogDao {
 
     private static final RowMapper<DivingLogDto> LOG_ROW_MAPPER = (rs, rowNum) -> {
         DivingLogDto dto = new DivingLogDto();
-        dto.setLogId(rs.getLong("LOG_ID"));
-        dto.setCustomerId(rs.getLong("CUSTOMER_ID"));
-        dto.setSiteId(rs.getLong("SITE_ID"));
-        dto.setDiveDate(rs.getDate("DIVE_DATE"));
-        dto.setMaxDepth(rs.getBigDecimal("MAX_DEPTH"));
-        dto.setDiveTime(rs.getInt("DIVE_TIME"));
-        dto.setWaterTemp(rs.getBigDecimal("WATER_TEMP"));
-        dto.setVisibility(rs.getBigDecimal("VISIBILITY"));
-        dto.setWeather(rs.getString("WEATHER"));
-        dto.setBuddy(rs.getString("BUDDY"));
-        dto.setNotes(rs.getString("NOTES"));
-        try { dto.setSiteName(rs.getString("SITE_NAME")); } catch (Exception e) { }
+        dto.setLogId(rs.getLong("log_id"));
+        dto.setCustomerId(rs.getLong("customer_id"));
+        dto.setSiteId(rs.getLong("site_id"));
+        dto.setDiveDate(rs.getDate("dive_date"));
+        dto.setMaxDepth(rs.getBigDecimal("max_depth"));
+        dto.setDiveTime(rs.getInt("dive_time"));
+        dto.setWaterTemp(rs.getBigDecimal("water_temp"));
+        dto.setVisibility(rs.getBigDecimal("visibility"));
+        dto.setWeather(rs.getString("weather"));
+        dto.setBuddy(rs.getString("buddy"));
+        dto.setNotes(rs.getString("notes"));
+        try { dto.setSiteName(rs.getString("site_name")); } catch (Exception e) { }
         return dto;
     };
 
     public Map<String, Object> getCustomerLogs(Long customerId, int page, int pageSize) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_DIVING_LOG")
-            .withProcedureName("GET_CUSTOMER_LOGS")
+            .withSchemaName("divingapp")
+            .withProcedureName("get_customer_logs")
             .declareParameters(
-                new SqlParameter("p_customer_id", java.sql.Types.NUMERIC),
-                new SqlParameter("p_page", java.sql.Types.NUMERIC),
-                new SqlParameter("p_page_size", java.sql.Types.NUMERIC),
-                new SqlOutParameter("o_logs", OracleTypes.CURSOR, LOG_ROW_MAPPER),
-                new SqlOutParameter("o_total_count", java.sql.Types.NUMERIC)
+                new SqlParameter("p_customer_id", Types.NUMERIC),
+                new SqlParameter("p_page", Types.NUMERIC),
+                new SqlParameter("p_page_size", Types.NUMERIC),
+                new SqlOutParameter("o_logs", Types.REF_CURSOR, LOG_ROW_MAPPER),
+                new SqlOutParameter("o_total_count", Types.NUMERIC)
             );
 
         MapSqlParameterSource params = new MapSqlParameterSource()
@@ -68,8 +67,8 @@ public class DivingLogDao {
             BigDecimal waterTemp, BigDecimal visibility, String weather,
             String buddy, String notes) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_DIVING_LOG")
-            .withProcedureName("SAVE_DIVING_LOG");
+            .withSchemaName("divingapp")
+            .withProcedureName("save_diving_log");
 
         MapSqlParameterSource params = new MapSqlParameterSource()
             .addValue("p_log_id", logId)

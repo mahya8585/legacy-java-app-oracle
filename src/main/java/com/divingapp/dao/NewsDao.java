@@ -1,5 +1,6 @@
 package com.divingapp.dao;
 
+import java.sql.Types;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import com.divingapp.dto.NewsDto;
 
-import oracle.jdbc.OracleTypes;
-
 @Repository
 public class NewsDao {
 
@@ -28,25 +27,25 @@ public class NewsDao {
 
     private static final RowMapper<NewsDto> NEWS_ROW_MAPPER = (rs, rowNum) -> {
         NewsDto dto = new NewsDto();
-        dto.setNewsId(rs.getLong("NEWS_ID"));
-        dto.setTitle(rs.getString("TITLE"));
-        dto.setContent(rs.getString("CONTENT"));
-        dto.setCategory(rs.getString("CATEGORY"));
-        dto.setPublishDate(rs.getDate("PUBLISH_DATE"));
-        dto.setStatus(rs.getString("STATUS"));
-        dto.setCreatedAt(rs.getTimestamp("CREATED_AT"));
+        dto.setNewsId(rs.getLong("news_id"));
+        dto.setTitle(rs.getString("title"));
+        dto.setContent(rs.getString("content"));
+        dto.setCategory(rs.getString("category"));
+        dto.setPublishDate(rs.getDate("publish_date"));
+        dto.setStatus(rs.getString("status"));
+        dto.setCreatedAt(rs.getTimestamp("created_at"));
         return dto;
     };
 
     @SuppressWarnings("unchecked")
     public List<NewsDto> getLatestNews(int limit, String category) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_NEWS")
-            .withProcedureName("GET_LATEST_NEWS")
+            .withSchemaName("divingapp")
+            .withProcedureName("pkg_news_get_latest_news")
             .declareParameters(
-                new SqlParameter("p_limit", java.sql.Types.NUMERIC),
-                new SqlParameter("p_category", java.sql.Types.VARCHAR),
-                new SqlOutParameter("o_news", OracleTypes.CURSOR, NEWS_ROW_MAPPER)
+                new SqlParameter("p_limit", Types.NUMERIC),
+                new SqlParameter("p_category", Types.VARCHAR),
+                new SqlOutParameter("o_news", Types.REF_CURSOR, NEWS_ROW_MAPPER)
             );
 
         MapSqlParameterSource params = new MapSqlParameterSource()
@@ -60,8 +59,8 @@ public class NewsDao {
     public Map<String, Object> saveNews(Long newsId, String title, String content,
             String category, Date publishDate, String status) {
         SimpleJdbcCall call = new SimpleJdbcCall(dataSource)
-            .withCatalogName("PKG_NEWS")
-            .withProcedureName("SAVE_NEWS");
+            .withSchemaName("divingapp")
+            .withProcedureName("pkg_news_save_news");
 
         MapSqlParameterSource params = new MapSqlParameterSource()
             .addValue("p_news_id", newsId)
